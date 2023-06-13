@@ -1,27 +1,87 @@
-# ExamPortalFrontendV2
+# Exam Portal Front-End
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.4.
+This is the front-end application for an exam portal built using Angular and PrimeNG. It provides a user interface for managing exams, questions, and student results.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Login and authentication system.
+- Admin dashboard for managing exams, questions, and students.
+- Student dashboard for taking exams and viewing results.
+- CRUD operations for exams and questions.
+- Interactive user interfaces using PrimeNG components.
 
-## Code scaffolding
+## Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js (v18.16.0 or higher)
+- Angular CLI (v16.1.0 or higher)
+
+## Installation
+
+1. Clone the repository:
+
+```shell
+git clone https://github.com/viren-rathod/exam-portal-frontend.git
+cd exam-portal-frontend
+```
+
+2. Install the dependencies:
+
+```shell
+npm install
+```
+
+## Configuration
+
+1. Open the `src/environments/environment.ts` file and update the API endpoint URL:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://127.0.0.1:8080/api' 
+};
+```
+
+2. If necessary, update other configuration parameters in the `environment.ts` file.
+
+## Development Server
+
+To run the development server, use the following command:
+
+```shell
+ng serve
+```
+
+The application will be served at `http://localhost:4200/`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To build the application for production, use the following command:
 
-## Running unit tests
+```shell
+ng build --prod
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The build artifacts will be stored in the `dist/` directory.
 
-## Running end-to-end tests
+## Deployment
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Deploy the generated `dist/` directory to your web server or hosting platform of choice.
 
-## Further help
+## Contributing
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Contributions are welcome! If you find any issues or have suggestions for improvement, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+- [Angular](https://angular.io/)
+- [PrimeNG](https://www.primefaces.org/primeng/)
+
+## Contact
+
+For any questions or inquiries, please contact [viren.rathod.2023@gmail.com](mailto:viren.rathod.2023@gmail.com).
+
+---
