@@ -1,6 +1,6 @@
 # Exam Portal Front-End
 
-This is the front-end application for an exam portal built using Angular and PrimeNG. It provides a user interface for managing exams, questions, and student results.
+This is the front-end application for an exam portal built using Angular and Bootstrap. It provides a user interface for managing exams, questions, and student results.
 
 ## Features
 
@@ -8,7 +8,7 @@ This is the front-end application for an exam portal built using Angular and Pri
 - Admin dashboard for managing exams, questions, and students.
 - Student dashboard for taking exams and viewing results.
 - CRUD operations for exams and questions.
-- Interactive user interfaces using PrimeNG components.
+- Interactive user interfaces using Bootstrap components.
 
 ## Prerequisites
 
@@ -78,7 +78,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## Acknowledgements
 
 - [Angular](https://angular.io/)
-- [PrimeNG](https://www.primefaces.org/primeng/)
+- [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
 ## Contact
 
