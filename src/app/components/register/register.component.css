@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css?family=Damion|Muli:400,600");
+body {
+  font-family: "Muli", sans-serif;
+  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
+}
+
+:focus {
+  outline: none;
+}
+
+/* necessary to give position: relative to parent. */
+input[type="text"] {
+  font: 15px/24px "Muli", sans-serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  border-radius: 5px;
+}
+
+.col3 {
+  float: left;
+  width: 27.33%;
+  margin: 40px 3%;
+  position: relative;
+}
+
+.effect-11 {
+  border: 0;
+  padding: 7px 15px;
+  border: 1px solid #ccc;
+  position: relative;
+  background: transparent;
+}
+.effect-11 ~ .focus-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #ededed;
+  transition: 0.3s;
+  z-index: -1;
+}
+.effect-11:focus ~ .focus-bg {
+  transition: 0.3s;
+  width: 100%;
+}   
