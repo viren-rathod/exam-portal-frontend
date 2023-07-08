@@ -1,53 +1,118 @@
-<section>
-  <div class="container">
-    <div class="d-flex w-100">
-      <div class="image">
-        <img src="../../../assets/images/signup-img.jpg" alt="" srcset="" class="w-100">
+<div class="split-screen row">
+  <div class="left col"></div>
+
+  <div class="container right">
+    <div class="sub-container">
+      <div class="logo">
+        <img src="../../../assets/images/Green-Black-Logo.svg" alt="" />
       </div>
-      <form action="" class="w-100">
-        <div class="d-flex flex-column w-100">
-          <div class="w-100">
-            <div class="col3 w-100">
-              <input
-                class="effect-11 w-100"
-                type="text"
-                placeholder="Placeholder Text"
-              />
-              <span class="focus-bg"></span>
-            </div>
+      <section class="copy">
+        <h2 class="mt-2">Register</h2>
+        <small
+          >Welcome to Portal, please put your details below to start using the
+          portal</small
+        >
+      </section>
+      <form [formGroup]="registerationData" (ngSubmit)="formSubmit()">
+        <div class="input-container name">
+          <div class="col3 w-100">
+            <label for="username">User Name</label>
+            <input
+              id="username"
+              class="effect w-100"
+              type="text"
+              placeholder="Username"
+              formControlName="username"
+            />
+            <span class="focus-bg"></span>
           </div>
-          <div>
-            <div class="col3 w-100">
-              <input
-                class="effect-11 w-100"
-                type="text"
-                placeholder="Placeholder Text"
-              />
-              <span class="focus-bg"></span>
-            </div>
-          </div>
-          <div>
-            <div class="col3 w-100">
-              <input
-                class="effect-11 w-100"
-                type="text"
-                placeholder="Placeholder Text"
-              />
-              <span class="focus-bg"></span>
-            </div>
-          </div>
-          <div>
-            <div class="col3 w-100">
-              <input
-                class="effect-11 w-100"
-                type="text"
-                placeholder="Placeholder Text"
-              />
-              <span class="focus-bg"></span>
-            </div>
+          <div
+            *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+          >
+            <small *ngIf="username?.errors?.['required']" class="text-danger"
+              >*Username is required.</small
+            >
+            <small *ngIf="username?.errors?.['minlength']" class="text-danger">
+              *Username must be at least 4 characters long.
+            </small>
           </div>
         </div>
+
+        <div class="input-container email">
+          <div class="col3 w-100">
+            <label for="email">Email ID</label>
+            <input
+              id="email"
+              class="effect w-100"
+              type="text"
+              placeholder="Email ID"
+              formControlName="email"
+            />
+            <span class="focus-bg"></span>
+          </div>
+
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <small *ngIf="email?.errors?.['required']" class="text-danger"
+              >*Email Id is required.</small
+            >
+            <small *ngIf="email?.errors?.['email']" class="text-danger">*Invalid Email Id</small>
+          </div>
+        </div>
+
+        <div class="input-container password">
+          <div class="col3 w-100">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              class="effect w-100"
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+            <span class="focus-bg"></span>
+          </div>
+          <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+            <small *ngIf="password?.errors?.['required']" class="text-danger"
+              >*Password is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="input-container repeat-password">
+          <div class="col3 w-100">
+            <label for="repeat-password">Repeat Password</label>
+            <input
+              type="password"
+              name="repeat-password"
+              id="repeat-password"
+              class="effect w-100"
+              placeholder="Repeat Password"
+            />
+            <span class="focus-bg"></span>
+          </div>
+        </div>
+
+        <div class="input-container cta">
+          <label for="tnc" class="checkbox-container">
+            <input type="checkbox" class="mx-2" name="tnc" id="tnc" />
+            <span class="checkmark"></span>
+            I agree to the <a href="">Terms & Conditions</a>
+          </label>
+        </div>
+
+        <button
+          class="register"
+          type="submit"
+          [disabled]="!registerationData.valid"
+        >
+          Register
+        </button>
+
+        <section class="legal text-center">
+          <small> Already an User? <a href="">Login Here</a> </small>
+        </section>
       </form>
     </div>
   </div>
-</section>
+</div>
