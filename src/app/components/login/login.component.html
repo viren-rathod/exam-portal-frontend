@@ -16,13 +16,13 @@
       <form [formGroup]="loginData" (ngSubmit)="formSubmit()">
         <div class="input-container email">
           <div class="col3 w-100">
-            <label for="email">Email ID</label>
+            <label for="usernameOrEmail">Email ID</label>
             <input
               id="email"
               class="effect w-100"
               type="text"
               placeholder="Email ID"
-              formControlName="email"
+              formControlName="usernameOrEmail"
             />
             <span class="focus-bg"></span>
           </div>

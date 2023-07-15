@@ -24,12 +24,15 @@ export class LoginComponent implements OnInit {
     private toast: NgToastService
   ) {}
   loginData = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    usernameOrEmail: new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
     password: new FormControl('', Validators.required),
   });
 
   get email() {
-    return this.loginData.get('email');
+    return this.loginData.get('usernameOrEmail');
   }
   get password() {
     return this.loginData.get('password');
@@ -37,17 +40,16 @@ export class LoginComponent implements OnInit {
 
   formSubmit() {
     console.log(this.loginData.value);
-    this.loginService.loginUser(this.loginData.value).subscribe(
-      (data) => {
-        console.log(data);
+    this.loginService.loginUser(this.loginData.value).subscribe({
+      next: (data: any) => {
+        console.log('DATA :-> ' + data);
         this.openSuccess();
       },
-      (error) => {
-        console.log(error.error);
-
+      error: (error) => {
+        console.log('ERROR:-> ' + error.error.message);
         this.openError(error.error);
-      }
-    );
+      },
+    });
     return;
   }
   //toasts

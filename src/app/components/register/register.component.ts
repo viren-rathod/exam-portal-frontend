@@ -48,7 +48,14 @@ export class RegisterComponent implements OnInit {
   formSubmit() {
     const req = this.userService
       .addUser(this.registerationData.value)
-      .subscribe(); 
+      .subscribe({
+        next: (data) => {
+          this.openSuccess();
+        },
+        error: (error) => {
+          this.openError(error.error);
+        },
+      });
     return;
   }
 
