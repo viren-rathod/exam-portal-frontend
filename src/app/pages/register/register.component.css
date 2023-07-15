@@ -1,0 +1,64 @@
+body {
+    font-family: "Muli", sans-serif;
+  }
+  
+  :focus {
+    outline: none;
+  }
+  
+  .col3 {
+    /* float: left; */
+    /* width: 25%; */
+    margin: 40px 3%;
+    position: relative;
+    z-index: 1;
+  }
+  
+  input[type="text"],input[type="password"] {
+    font-size: 20px !important;
+    font: 15px/24px "Lato", Arial, sans-serif;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+  }
+  
+  .effect-16 {
+    border: 0;
+    padding: 4px 0;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    
+  }
+  
+  .effect-16 ~ .focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #4caf50;
+    transition: 0.4s;
+  }
+  .effect-16:focus ~ .focus-border,
+  .has-content.effect-16 ~ .focus-border {
+    width: 100%;
+    transition: 0.4s;
+  }
+  .effect-16 ~ label {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 9px;
+    color: #aaa;
+    transition: 0.3s;
+    z-index: -1;
+    letter-spacing: 0.5px;
+  }
+  .effect-16:focus ~ label,
+  .has-content.effect-16 ~ label {
+    top: -16px;
+    font-size: 14px;
+    color: #4caf50;
+    transition: 0.3s;
+  }
