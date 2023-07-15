@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
-import { UserService } from 'src/app/services/user.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   styles: [
     `
       :host {
@@ -17,53 +17,51 @@ import { UserService } from 'src/app/services/user.service';
     `,
   ],
 })
-export class RegisterComponent implements OnInit {
+export class LoginComponent implements OnInit {
+  ngOnInit(): void {}
   constructor(
-    private userService: UserService,
+    private loginService: LoginService,
     private toast: NgToastService
   ) {}
-
-  ngOnInit(): void {}
-
-  registerationData = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(4),
-    ]),
+  loginData = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
   });
 
-  get username() {
-    return this.registerationData.get('username');
-  }
   get email() {
-    return this.registerationData.get('email');
+    return this.loginData.get('email');
   }
   get password() {
-    return this.registerationData.get('password');
+    return this.loginData.get('password');
   }
 
-  res: any;
   formSubmit() {
-    const req = this.userService
-      .addUser(this.registerationData.value)
-      .subscribe(); 
+    console.log(this.loginData.value);
+    this.loginService.loginUser(this.loginData.value).subscribe(
+      (data) => {
+        console.log(data);
+        this.openSuccess();
+      },
+      (error) => {
+        console.log(error.error);
+
+        this.openError(error.error);
+      }
+    );
     return;
   }
-
   //toasts
   openSuccess() {
     this.toast.success({
-      detail: 'Registered',
-      summary: 'Registered Successfully!',
+      detail: 'Logied In',
+      summary: 'Login Successfully!',
       duration: 3000,
       position: 'topRight',
     });
   }
   openError(error: any) {
     this.toast.error({
-      detail: 'Registration Failed!',
+      detail: 'Login Failed!',
       summary: error.message,
       duration: 3000,
       position: 'topRight',

@@ -27,7 +27,10 @@
             <span class="focus-bg"></span>
           </div>
           <div
-            *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+            *ngIf="
+              registerationData.controls.username?.invalid &&
+              (registerationData.controls.username?.dirty || username?.touched)
+            "
           >
             <small *ngIf="username?.errors?.['required']" class="text-danger"
               >*Username is required.</small
@@ -55,7 +58,9 @@
             <small *ngIf="email?.errors?.['required']" class="text-danger"
               >*Email Id is required.</small
             >
-            <small *ngIf="email?.errors?.['email']" class="text-danger">*Invalid Email Id</small>
+            <small *ngIf="email?.errors?.['email']" class="text-danger"
+              >*Invalid Email Id</small
+            >
           </div>
         </div>
 
@@ -72,7 +77,9 @@
             />
             <span class="focus-bg"></span>
           </div>
-          <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+          <div
+            *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          >
             <small *ngIf="password?.errors?.['required']" class="text-danger"
               >*Password is required.</small
             >
@@ -101,16 +108,10 @@
           </label>
         </div>
 
-        <button
-          class="register"
-          type="submit"
-          [disabled]="!registerationData.valid"
-        >
-          Register
-        </button>
+        <button class="register" type="submit">Register</button>
 
         <section class="legal text-center">
-          <small> Already an User? <a href="">Login Here</a> </small>
+          <small> Already have an Account? <a href="/login">Login Here</a> </small>
         </section>
       </form>
     </div>

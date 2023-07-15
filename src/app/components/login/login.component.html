@@ -1,0 +1,78 @@
+<div class="split-screen row">
+  <div class="left col"></div>
+
+  <div class="container right">
+    <div class="sub-container">
+      <div class="logo">
+        <img src="../../../assets/images/Green-Black-Logo.svg" alt="" />
+      </div>
+      <section class="copy">
+        <h2 class="mt-2">Login</h2>
+        <small
+          >Welcome to Portal, please put your login credentials below to start
+          using the portal
+        </small>
+      </section>
+      <form [formGroup]="loginData" (ngSubmit)="formSubmit()">
+        <div class="input-container email">
+          <div class="col3 w-100">
+            <label for="email">Email ID</label>
+            <input
+              id="email"
+              class="effect w-100"
+              type="text"
+              placeholder="Email ID"
+              formControlName="email"
+            />
+            <span class="focus-bg"></span>
+          </div>
+
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+            <small *ngIf="email?.errors?.['required']" class="text-danger"
+              >*Email Id is required.</small
+            >
+            <small *ngIf="email?.errors?.['email']" class="text-danger"
+              >*Invalid Email Id</small
+            >
+          </div>
+        </div>
+
+        <div class="input-container password">
+          <div class="col3 w-100">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              class="effect w-100"
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+            <span class="focus-bg"></span>
+          </div>
+          <div
+            *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          >
+            <small *ngIf="password?.errors?.['required']" class="text-danger"
+              >*Password is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="text-end">
+          <label class="checkbox-container mt-0">
+            <small><a href="">Forgot Password?</a></small>
+          </label>
+        </div>
+
+        <button class="register" type="submit">Login</button>
+
+        <section class="legal text-center">
+          <small>
+            Do not have an Account? <a href="/register">Create One</a>
+          </small>
+        </section>
+      </form>
+    </div>
+  </div>
+</div>
