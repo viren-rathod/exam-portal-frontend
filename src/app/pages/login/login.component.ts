@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     console.log(this.loginData.value);
     this.loginService.loginUser(this.loginData.value).subscribe({
       next: (data: any) => {
-        console.log('DATA :-> ' + data);
+        this.loginService.setToken(data.accessToken);
         this.openSuccess();
       },
       error: (error) => {
