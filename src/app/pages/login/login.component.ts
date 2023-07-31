@@ -39,10 +39,17 @@ export class LoginComponent implements OnInit {
   }
 
   formSubmit() {
-    console.log(this.loginData.value);
     this.loginService.loginUser(this.loginData.value).subscribe({
       next: (data: any) => {
         this.loginService.setToken(data.accessToken);
+        this.loginService.getCurrentUser().subscribe({
+          next: (user: any) => {
+            console.log('use :-> ', user);
+          },
+          error: (e) => {
+            console.error(e);
+          },
+        });
         this.openSuccess();
       },
       error: (error) => {

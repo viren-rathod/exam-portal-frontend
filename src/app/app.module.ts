@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar/navbar.component';
+import { authIntercepterProviders } from './services/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, RegisterComponent, LoginComponent, HomeComponent, NavbarComponent],
@@ -18,7 +19,7 @@ import { NavbarComponent } from './components/navbar/navbar/navbar.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [authIntercepterProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

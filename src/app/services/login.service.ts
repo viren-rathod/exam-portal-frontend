@@ -14,7 +14,9 @@ export class LoginService {
   }
 
   public getCurrentUser() {
-    return this.http.get(`${BASE_URL}/getUser`);
+    // console.log('getCurrentUser starts');
+
+    return this.http.get(`${BASE_URL}/api/auth/getCurrentUser`);
   }
 
   public setToken(token: any) {
@@ -62,7 +64,7 @@ export class LoginService {
 
   public getUserRole() {
     let user = this.getUserDetailsFromLocalStorage();
-
+    console.log(user);
     return user.authorities[0].authority;
   }
 }
