@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
   constructor(
     private loginService: LoginService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private route: Router
   ) {}
   loginData = new FormGroup({
     usernameOrEmail: new FormControl('', [
@@ -39,24 +41,33 @@ export class LoginComponent implements OnInit {
   }
 
   formSubmit() {
-    this.loginService.loginUser(this.loginData.value).subscribe({
-      next: (data: any) => {
-        this.loginService.setToken(data.accessToken);
-        this.loginService.getCurrentUser().subscribe({
-          next: (user: any) => {
-            console.log('use :-> ', user);
-          },
-          error: (e) => {
-            console.error(e);
-          },
-        });
-        this.openSuccess();
-      },
-      error: (error) => {
-        console.log('ERROR:-> ' + error.error.message);
-        this.openError(error.error);
-      },
+    Object.keys(this.loginData.controls).forEach((key) => {
+      this.loginData.get(key)?.markAsDirty();
+      this.loginData.get(key)?.markAsTouched();
     });
+    if (this.loginData.valid) {
+      this.loginService.loginUser(this.loginData.value).subscribe({
+        next: (data: any) => {
+          this.loginService.setToken(data.accessToken);
+          this.loginService.getCurrentUser().subscribe({
+            next: (user: any) => {
+              // console.log('userRole :-> ', user.roles[0].name);
+              if (user.roles[0].name === 'USER') {
+                this.route.navigate(['home']);
+              }
+            },
+            error: (error) => {
+              this.openError(error.error);
+            },
+          });
+          this.openSuccess();
+        },
+        error: (error) => {
+          console.log('ERROR:-> ' + error.error.message);
+          this.openError(error.error);
+        },
+      });
+    }
     return;
   }
   //toasts

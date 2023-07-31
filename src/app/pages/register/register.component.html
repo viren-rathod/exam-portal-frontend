@@ -88,32 +88,54 @@
 
         <div class="input-container repeat-password">
           <div class="col3 w-100">
-            <label for="repeat-password">Repeat Password</label>
+            <label for="repeatPassword">Repeat Password</label>
             <input
               type="password"
-              name="repeat-password"
-              id="repeat-password"
+              name="repeatPassword"
+              id="repeatPassword"
               class="effect w-100"
               placeholder="Repeat Password"
+              formControlName="repeatPassword"
             />
             <span class="focus-bg"></span>
           </div>
+          <div
+            *ngIf="
+              repeatPassword?.touched &&
+              registerationData.errors?.['passwordMatchError']
+            "
+          >
+            <small class="text-danger">*Password didn't Match!.</small>
+          </div>
         </div>
 
-        <div class="input-container cta">
+        <div class="input-container cta mb-2">
           <label for="tnc" class="checkbox-container">
-            <input type="checkbox" class="mx-2" name="tnc" id="tnc" />
+            <input
+              type="checkbox"
+              class="mx-2"
+              name="tnc"
+              id="tnc"
+              formControlName="tnc"
+            />
             <span class="checkmark"></span>
             I agree to the <a href="">Terms & Conditions</a>
           </label>
+          <div *ngIf="tnc?.invalid && submitted" class="mb-2">
+            <small *ngIf="tnc?.errors" class="text-danger"
+              >*Please accept the Terms & Condition!</small
+            >
+          </div>
         </div>
 
         <button class="register" type="submit">Register</button>
 
         <section class="legal text-center">
-          <small> Already have an Account? <a [routerLink]="'/login'">Login Here</a> </small>
+          <small>
+            Already have an Account? <a [routerLink]="'/login'">Login Here</a>
+          </small>
         </section>
-      </form>''
+      </form>
     </div>
   </div>
 </div>

@@ -19,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     let authRequest = request;
     const accessToken = this.loginSevice.getTokenFromLocalStorage();
-    console.log('AccessToken in Interceptor --> ', accessToken);
     if (accessToken != null) {
       authRequest = authRequest.clone({
         setHeaders: {
@@ -27,8 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
         },
       });
     }
-
-    return next.handle(request);
+    return next.handle(authRequest);
   }
 }
 

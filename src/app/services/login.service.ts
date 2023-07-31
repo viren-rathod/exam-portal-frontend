@@ -14,8 +14,6 @@ export class LoginService {
   }
 
   public getCurrentUser() {
-    // console.log('getCurrentUser starts');
-
     return this.http.get(`${BASE_URL}/api/auth/getCurrentUser`);
   }
 
