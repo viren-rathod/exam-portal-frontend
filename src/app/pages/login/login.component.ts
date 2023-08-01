@@ -51,9 +51,13 @@ export class LoginComponent implements OnInit {
           this.loginService.setToken(data.accessToken);
           this.loginService.getCurrentUser().subscribe({
             next: (user: any) => {
-              // console.log('userRole :-> ', user.roles[0].name);
-              if (user.roles[0].name === 'USER') {
+              this.loginService.setUserDetailsLocalStorage(user);
+              console.log('USER --> ', user);
+
+              if (this.loginService.getUserRole() === 'USER') {
                 this.route.navigate(['home']);
+              } else if (this.loginService.getUserRole() === 'ADMIN') {
+                this.route.navigate(['register']);
               }
             },
             error: (error) => {

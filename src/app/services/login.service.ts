@@ -50,10 +50,10 @@ export class LoginService {
    * getUserDetailsFromLocalStorage
    */
   public getUserDetailsFromLocalStorage() {
-    let userStr = localStorage.getItem('user');
-
-    if (userStr != null) {
-      return JSON.parse(userStr);
+    let userInfo = localStorage.getItem('user');
+    // console.log("userinfo --> ",userInfo);
+    if (userInfo != null) {
+      return JSON.parse(userInfo);
     } else {
       this.removeTokenFromStorage();
       return null;
@@ -62,7 +62,7 @@ export class LoginService {
 
   public getUserRole() {
     let user = this.getUserDetailsFromLocalStorage();
-    console.log(user);
-    return user.authorities[0].authority;
+    // console.log(user);
+    return user.roles[0].name;
   }
 }
