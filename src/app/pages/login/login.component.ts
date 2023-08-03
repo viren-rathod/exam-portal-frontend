@@ -19,7 +19,11 @@ import { LoginService } from 'src/app/services/login.service';
   ],
 })
 export class LoginComponent implements OnInit {
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.loginService.getTokenFromLocalStorage() != null) {
+      this.route.navigate(['home']);
+    }
+  }
   constructor(
     private loginService: LoginService,
     private toast: NgToastService,

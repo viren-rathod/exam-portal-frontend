@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { confirmPassword } from 'src/app/Validators/password.validators';
+import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,11 +23,16 @@ import { UserService } from 'src/app/services/user.service';
 export class RegisterComponent implements OnInit {
   constructor(
     private userService: UserService,
+    private loginService: LoginService,
     private toast: NgToastService,
     private route: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.loginService.getTokenFromLocalStorage() != null) {
+      this.route.navigate(['home']);
+    }
+  }
 
   submitted = false;
   registerationData = new FormGroup(
@@ -96,7 +102,7 @@ export class RegisterComponent implements OnInit {
   openError(error: any) {
     this.toast.error({
       detail: 'Registration Failed!',
-      summary: 'Can\'t Register due to Error!!',
+      summary: "Can't Register due to Error!!",
       duration: 3000,
       position: 'topRight',
     });
