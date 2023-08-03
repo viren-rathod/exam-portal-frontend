@@ -4,7 +4,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NgToastModule, NgToastComponent } from 'ng-angular-popup';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar/navbar.component';
+import { authGuard } from './services/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,17 +16,13 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full',
+    // canActivate: [!authGuard]
   },
   {
-    path: '',
-    component: NavbarComponent,
-    children: [
-      {
-        path: 'home',
-        component: HomeComponent,
-        pathMatch: 'full',
-      },
-    ],
+    path: 'home',
+    component: HomeComponent,
+    pathMatch: 'full',
+    canActivate: [authGuard],
   },
 ];
 
