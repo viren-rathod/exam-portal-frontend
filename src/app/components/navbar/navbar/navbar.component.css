@@ -1,0 +1,16 @@
+.btn-link,
+.btn-primary {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.btn-link:hover {
+  color: #386bc0;
+  background-color: #f5f5f5;
+  border-color: transparent;
+}
+.btn-primary {
+  background-color: #3b71ca !important;
+  border-radius: 0.25rem !important;
+  padding: 10px 24px 8px 24px;
+  box-shadow: 0 4px 9px -4px #3b71ca;
+}

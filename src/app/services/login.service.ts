@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import BASE_URL from './util';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router) {}
 
   //login users
   public loginUser(loginData: any) {
@@ -34,7 +35,7 @@ export class LoginService {
   public removeTokenFromStorage() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    // this.router.navigate(['login']);
+    this.router.navigate(['login']);
     return true;
   }
 
