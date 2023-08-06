@@ -7,8 +7,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar/navbar.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { authIntercepterProviders } from './services/interceptors/auth.interceptor';
 
 @NgModule({
