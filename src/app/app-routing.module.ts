@@ -9,6 +9,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
+  {
     path: 'register',
     component: RegisterComponent,
     pathMatch: 'full',
@@ -17,11 +22,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full',
-    // canActivate: [!authGuard]
   },
   {
     path: '',
-    // component: NavbarComponent,
+    component: NavbarComponent,
     children: [
       {
         path: 'home',

@@ -1,29 +1,28 @@
-<!--  -->
-<nav class="navbar bg-light">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-        height="16"
-        alt="MDB Logo"
-        loading="lazy"
-        class="d-inline-block"
-        style="margin-top: -1px"
-      />
-      Bootstrap
-    </a>
-    <div class="d-flex align-items-center">
-      <button
-        (click)="onLogout()"
-        type="button"
-        class="btn btn-link px-3 text-decoration-none text-uppercase me-2"
-      >
-        Logout
-      </button>
-      <button type="button" class="btn btn-primary text-uppercase me-3">
-        profile
-      </button>
-    </div>
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+  <div class="logo-container">
+    <button class="logo">A</button>
+    <div class="logo-text" *ngIf="collapsed">Angular</div>
+    <button
+      class="close-btn"
+      [ngClass]="!collapsed ? 'p-4' : ''"
+      (click)="toggleCollapse()"
+    >
+      <i class="bi bi-list"></i>
+    </button>
   </div>
-</nav>
-<router-outlet></router-outlet>
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let data of navData">
+      <a
+        class="sidenav-nav-link"
+        [routerLink]="[data.routerLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidenav-link-icon" [class]="data.icon"></i>
+        <span class="sidenav-link-text" *ngIf="collapsed">{{
+          data.label
+        }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
