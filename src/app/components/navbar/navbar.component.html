@@ -7,7 +7,10 @@
       [ngClass]="!collapsed ? 'p-4' : ''"
       (click)="toggleCollapse()"
     >
-      <i class="bi bi-list"></i>
+      <i
+        class="bi bi-list"
+        [ngClass]="!collapsed ? 'text-dark-emphasis' : ''"
+      ></i>
     </button>
   </div>
   <ul class="sidenav-nav">

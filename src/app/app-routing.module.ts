@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './services/guard/auth.guard';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileComponent } from './modules/admin/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -30,8 +31,14 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
-        pathMatch: 'full',
+        // pathMatch: 'full',
         canActivate: [authGuard],
+        children: [
+          {
+            path: 'profile',
+            component: ProfileComponent,
+          },
+        ],
       },
     ],
   },

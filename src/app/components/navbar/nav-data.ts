@@ -5,8 +5,8 @@ export const navbarData = [
     label: 'Dashboard',
   },
   {
-    routerLink: 'dashboard',
-    icon: 'bi bi-house',
-    label: 'Dashboard',
+    routerLink: 'home/profile',
+    icon: 'bi bi-person-circle',
+    label: 'Profile',
   },
 ];
