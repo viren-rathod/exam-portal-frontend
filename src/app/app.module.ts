@@ -3,23 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { authIntercepterProviders } from './services/interceptors/auth.interceptor';
-import { ProfileComponent } from './modules/admin/profile/profile.component';
+import { LoginComponent } from './modules/login/login.component';
+import { authIntercepterProviders } from './shared/interceptors/auth.interceptor';
+import { RegisterComponent } from './modules/register/register.component';
+import { SideNavigationComponent } from './core/layout/side-navigation/side-navigation.component';
+import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    HomeComponent,
-    NavbarComponent,
-    ProfileComponent,
+    SideNavigationComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

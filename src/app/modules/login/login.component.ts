@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { LoginService } from 'src/app/services/login.service';
+import { User, UserLoginRequest } from 'src/app/shared/models/auth.model';
+import { LoginService } from 'src/app/shared/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -19,42 +20,47 @@ import { LoginService } from 'src/app/services/login.service';
   ],
 })
 export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
   ngOnInit(): void {
     if (this.loginService.getTokenFromLocalStorage() != null) {
       this.route.navigate(['home']);
     }
+    this.loginForm = new FormGroup({
+      usernameOrEmail: new FormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      password: new FormControl('', Validators.required),
+    });
   }
   constructor(
     private loginService: LoginService,
     private toast: NgToastService,
     private route: Router
-  ) {}
-  loginData = new FormGroup({
-    usernameOrEmail: new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]),
-    password: new FormControl('', Validators.required),
-  });
+  ) { }
 
   get email() {
-    return this.loginData.get('usernameOrEmail');
+    return this.loginForm.get('usernameOrEmail');
   }
   get password() {
-    return this.loginData.get('password');
+    return this.loginForm.get('password');
   }
 
-  formSubmit() {
-    Object.keys(this.loginData.controls).forEach((key) => {
-      this.loginData.get(key)?.markAsDirty();
-      this.loginData.get(key)?.markAsTouched();
+  formSubmit(): void {
+    Object.keys(this.loginForm.controls).forEach((key) => {
+      this.loginForm.get(key)?.markAsDirty();
+      this.loginForm.get(key)?.markAsTouched();
     });
-    if (this.loginData.valid) {
-      this.loginService.loginUser(this.loginData.value).subscribe({
-        next: (data: any) => {
-          this.loginService.setToken(data.accessToken);
+    if (this.loginForm.valid) {
+      const data: UserLoginRequest = {
+        usernameOrEmail: this.loginForm.value.usernameOrEmail,
+        password: this.loginForm.value.password,
+      };
+      this.loginService.loginUser(data).subscribe({
+        next: (res) => {
+          this.loginService.setToken(res.data.accessToken);
           this.loginService.getCurrentUser().subscribe({
-            next: (user: any) => {
+            next: (user: User) => {
               this.loginService.setUserDetailsLocalStorage(user);
               console.log('USER --> ', user);
 
@@ -87,7 +93,7 @@ export class LoginComponent implements OnInit {
       position: 'topRight',
     });
   }
-  openError(error: any) {
+  openError(error: Error) {
     this.toast.error({
       detail: 'Login Failed!',
       summary: error.message,

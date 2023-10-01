@@ -13,7 +13,7 @@
           portal</small
         >
       </section>
-      <form [formGroup]="registerationData" (ngSubmit)="formSubmit()">
+      <form [formGroup]="registerForm" (ngSubmit)="formSubmit()">
         <div class="input-container name">
           <div class="col3 w-100">
             <label for="username">User Name</label>
@@ -27,10 +27,7 @@
             <span class="focus-bg"></span>
           </div>
           <div
-            *ngIf="
-              registerationData.controls.username?.invalid &&
-              (registerationData.controls.username?.dirty || username?.touched)
-            "
+            *ngIf="username?.invalid && (username?.dirty || username?.touched)"
           >
             <small *ngIf="username?.errors?.['required']" class="text-danger"
               >*Username is required.</small
@@ -102,7 +99,7 @@
           <div
             *ngIf="
               repeatPassword?.touched &&
-              registerationData.errors?.['passwordMatchError']
+              registerForm.errors?.['passwordMatchError']
             "
           >
             <small class="text-danger">*Password didn't Match!.</small>

@@ -1,0 +1,124 @@
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #11101d;
+  z-index: 100;
+  transition: all 0.5s ease;
+}
+.sidebar.close {
+  width: 78px;
+}
+.sidebar .logo-details {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.sidebar .logo-details i,
+.sidebar .logo-details img {
+  font-size: 30px;
+  color: #fff;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+}
+.sidebar .logo-details img .full-img {
+  height: 54px;
+}
+.sidebar .logo-details .logo_name {
+  font-size: 22px;
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s ease;
+  /* transition-delay: 0.1s; */
+}
+.sidebar.close .logo-details .logo_name {
+  transition-delay: 0s;
+  opacity: 0;
+  pointer-events: none;
+}
+.sidebar .nav-links {
+  height: 100%;
+  padding: 30px 0 150px 0;
+  overflow: auto;
+}
+.sidebar.close .nav-links {
+  overflow: visible;
+}
+.sidebar .nav-links::-webkit-scrollbar {
+  display: none;
+}
+.sidebar .nav-links li {
+  position: relative;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+.sidebar .nav-links li:hover {
+  background: #1d1b31;
+}
+.sidebar .nav-links li i {
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-links li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.sidebar .nav-links li a .link_name {
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  transition: all 0.4s ease;
+}
+.sidebar.close .nav-links li a .link_name {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.home-section {
+  position: relative;
+  background: #e4e9f7;
+  height: 100vh;
+  left: 260px;
+  width: calc(100% - 260px);
+  transition: all 0.5s ease;
+}
+.sidebar.close ~ .home-section {
+  left: 78px;
+  width: calc(100% - 78px);
+}
+.home-section .home-content {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.home-section .home-content .bx-menu,
+.home-section .home-content .text {
+  color: #11101d;
+  font-size: 35px;
+}
+.home-section .home-content .bx-menu {
+  margin: 0 15px;
+  cursor: pointer;
+}
+.home-section .home-content .text {
+  font-size: 26px;
+  font-weight: 600;
+}
+@media (max-width: 420px) {
+  .sidebar.close .nav-links li .sub-menu {
+    display: none;
+  }
+}

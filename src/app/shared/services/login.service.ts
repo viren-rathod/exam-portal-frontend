@@ -2,23 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import BASE_URL from './util';
 import { Router } from '@angular/router';
+import {
+  User,
+  UserLoginRequest,
+  UserLoginResponse,
+} from '../models/auth.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private http: HttpClient,private router:Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   //login users
-  public loginUser(loginData: any) {
-    return this.http.post(`${BASE_URL}/api/auth/login`, loginData);
+  public loginUser(loginData: UserLoginRequest): Observable<UserLoginResponse> {
+    return this.http.post<UserLoginResponse>(
+      `${BASE_URL}/api/auth/login`,
+      loginData
+    );
   }
 
-  public getCurrentUser() {
-    return this.http.get(`${BASE_URL}/api/auth/getCurrentUser`);
+  public getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${BASE_URL}/api/auth/getCurrentUser`);
   }
 
-  public setToken(token: any) {
+  public setToken(token: string) {
     localStorage.setItem('token', token);
     return true;
   }
@@ -43,7 +52,7 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-  public setUserDetailsLocalStorage(user: any) {
+  public setUserDetailsLocalStorage(user: User): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
 

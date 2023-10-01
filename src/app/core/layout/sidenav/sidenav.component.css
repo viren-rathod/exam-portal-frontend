@@ -1,44 +1,38 @@
 .sidenav {
   background: #263238;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   position: fixed;
   z-index: 1;
   top: 0;
   width: 5rem;
+  /* width: 16.5625rem; */
   height: 100vh;
   box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
 }
-
 .sidenav .logo-container {
   display: flex;
   align-items: center;
-  padding: 0.938rem 0.938rem 0 0.938rem;
+  padding: 0.938rem 0.938rem 0.938rem;
   width: 100%;
 }
-
 .sidenav .logo-container .logo {
   background: #fff;
   text-align: center;
+  width: 3rem;
   min-width: 3rem;
-  max-width: 3rem;
   border-radius: 0.313rem;
   padding: 0.313rem;
   font-size: 24px;
-  font-weight: 900;
   cursor: pointer;
   border: none;
 }
-
 .sidenav .logo-container .logo-text {
   margin-left: 1.5rem;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 7000;
   color: #fff;
 }
-
-.sidenav .logo-container .close-btn {
-  display: flex;
-  align-items: center;
+.sidenav .logo-container .btn-closed {
   margin-left: auto;
   cursor: pointer;
   width: 2rem;
@@ -47,18 +41,16 @@
   background-color: transparent;
   border: none;
 }
-.sidenav .logo-container .close-btn i {
+.sidenav .logo-container .btn-closed .bi-list {
   color: #fff;
-  font-size: 30px;
-  padding: 0 0.625rem;
+  font-size: 24px;
 }
 .sidenav-collapsed {
-  width: 16.525rem;
+  width: 16.5625rem;
 }
-
 .sidenav-nav {
   list-style: none;
-  padding: 0.98rem;
+  padding: 0.938rem;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -70,7 +62,6 @@
   width: 100%;
   margin-bottom: 0.625rem;
 }
-
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link {
   display: flex;
   align-items: center;
@@ -90,16 +81,7 @@
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
   margin-left: 1.5rem;
 }
-
-.sidenav-nav .sidenav-nav-item .sidenav-nav-link:hover {
-  background: #fff;
-  color: #000;
-}
-
-.active {
+.sidenav-nav .sidenav-nav-item:hover .sidenav-nav-link {
   background-color: #fff;
-}
-.active .sidenav-link-icon, .sidenav-link-text {
   color: #000;
-
 }

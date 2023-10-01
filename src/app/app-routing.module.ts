@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './pages/register/register.component';
 import { NgToastModule, NgToastComponent } from 'ng-angular-popup';
-import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
-import { authGuard } from './services/guard/auth.guard';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './modules/login/login.component';
+import { authGuard } from './shared/guard/auth.guard';
+import { RegisterComponent } from './modules/register/register.component';
+import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
 import { ProfileComponent } from './modules/admin/profile/profile.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '',
+  //   // redirectTo: '/home',
+  //   pathMatch: 'full',
+  // },
   {
     path: 'register',
     component: RegisterComponent,
@@ -26,20 +25,15 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: NavbarComponent,
+    component: SidenavComponent,
+    canActivate: [authGuard],
+    data: { onToggleSidenav: 'onToggleSidenav' },
     children: [
       {
-        path: 'home',
-        component: HomeComponent,
-        // pathMatch: 'full',
-        canActivate: [authGuard],
-        children: [
-          {
-            path: 'profile',
-            component: ProfileComponent,
-          },
-        ],
-      },
+        path: 'profile',
+        component: ProfileComponent,
+        pathMatch: 'full'
+      }
     ],
   },
 ];
@@ -48,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes), NgToastModule],
   exports: [RouterModule, NgToastComponent],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

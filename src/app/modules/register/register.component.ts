@@ -3,8 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { confirmPassword } from 'src/app/validators/password.validators';
-import { LoginService } from 'src/app/services/login.service';
-import { UserService } from 'src/app/services/user.service';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { UserRegistrationRequest } from 'src/app/shared/models/auth.model';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +22,7 @@ import { UserService } from 'src/app/services/user.service';
   ],
 })
 export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
   constructor(
     private userService: UserService,
     private loginService: LoginService,
@@ -32,51 +34,57 @@ export class RegisterComponent implements OnInit {
     if (this.loginService.getTokenFromLocalStorage() != null) {
       this.route.navigate(['home']);
     }
+    this.registerForm = new FormGroup(
+      {
+        username: new FormControl('', [
+          Validators.required,
+          Validators.minLength(4),
+        ]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', Validators.required),
+        repeatPassword: new FormControl('', [Validators.required]),
+        tnc: new FormControl(false, Validators.requiredTrue),
+      },
+      {
+        validators: confirmPassword,
+      }
+    );
   }
 
   submitted = false;
-  registerationData = new FormGroup(
-    {
-      username: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      repeatPassword: new FormControl('', [Validators.required]),
-      tnc: new FormControl(false, Validators.requiredTrue),
-    },
-    {
-      validators: confirmPassword,
-    }
-  );
 
   get username() {
-    return this.registerationData.get('username');
+    return this.registerForm.get('username');
   }
   get email() {
-    return this.registerationData.get('email');
+    return this.registerForm.get('email');
   }
   get password() {
-    return this.registerationData.get('password');
+    return this.registerForm.get('password');
   }
   get repeatPassword() {
-    return this.registerationData.get('repeatPassword');
+    return this.registerForm.get('repeatPassword');
   }
   get tnc() {
-    return this.registerationData.get('tnc');
+    return this.registerForm.get('tnc');
   }
 
-  res: any;
   formSubmit() {
     this.submitted = true;
-    Object.keys(this.registerationData.controls).forEach((key) => {
-      this.registerationData.get(key)?.markAsDirty();
-      this.registerationData.get(key)?.markAsTouched();
+    Object.keys(this.registerForm.controls).forEach((key) => {
+      this.registerForm.get(key)?.markAsDirty();
+      this.registerForm.get(key)?.markAsTouched();
     });
 
-    if (this.registerationData.valid) {
-      this.userService.addUser(this.registerationData.value).subscribe({
+    if (this.registerForm.valid) {
+      const data: UserRegistrationRequest = {
+        username: this.registerForm.value.username,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+      };
+      console.log("UserRegistrationRequest --> ",data);
+      
+      this.userService.addUser(data).subscribe({
         next: () => {
           this.route.navigate(['login']);
           this.openSuccess();
@@ -86,7 +94,6 @@ export class RegisterComponent implements OnInit {
         },
       });
     }
-
     return;
   }
 
@@ -99,10 +106,10 @@ export class RegisterComponent implements OnInit {
       position: 'topRight',
     });
   }
-  openError(error: any) {
+  openError(error: Error) {
     this.toast.error({
       detail: 'Registration Failed!',
-      summary: "Can't Register due to Error!!",
+      summary: error.message,
       duration: 3000,
       position: 'topRight',
     });
