@@ -1,10 +1,10 @@
-<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''" >
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
   <div class="logo-container">
-    <button class="logo" (click)="toggleCollapse()">V</button>
+    <button class="logo">V</button>
     <div class="logo-text" *ngIf="collapsed">Portal</div>
-    <button class="btn-closed" *ngIf="collapsed" (click)="closeSidenav()">
-        <i class="bi bi-list close-icon"></i>
-    </button>
+    <!-- <button class="btn-closed" *ngIf="collapsed" (click)="closeSidenav()">
+      <i class="bi bi-list close-icon"></i>
+    </button> -->
   </div>
   <ul class="sidenav-nav">
     <li class="sidenav-nav-item" *ngFor="let data of navData">
@@ -17,4 +17,37 @@
     </li>
   </ul>
 </div>
-<router-outlet></router-outlet>
+
+<div
+  class="main-body-wrap"
+  [ngClass]="collapsed ? 'main-body-wrap-collapsed' : ''"
+>
+  <header class="header" [ngClass]="collapsed ? 'full-header' : ''">
+    <!-- <ul class="header-menu"> -->
+    <button class="btn-closed" (click)="toggleCollapse()">
+      <i class="bi bi-list close-icon"></i>
+    </button>
+    
+    <!-- <li class="header-user">
+        <a>
+          <span><i nz-icon nzType="user" nzTheme="outline"></i></span>
+          Viren
+           {{ loginUserName | titlecase }} 
+        </a>
+      </li>
+       <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul class="header-dropdown" nz-menu nzSelectable>
+                  <li class="log-out" nz-menu-item *ngIf="isAuth" (click)="onLogout()">
+                      <span><span nz-icon nzType="logout" nzTheme="outline"></span></span>Log Out
+                  </li>
+              </ul>
+          </nz-dropdown-menu> 
+    </ul>   -->
+  </header>
+  <main class="main-body">
+    <router-outlet></router-outlet>
+  </main>
+  <footer class="footer">©2022 eSparkbiz Exam Portal</footer>
+</div>
+
+<!-- <router-outlet></router-outlet> -->
