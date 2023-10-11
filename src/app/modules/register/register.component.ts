@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { confirmPassword } from 'src/app/validators/password.validators';
+import { confirmPassword } from 'src/app/Validators/password.validators';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { UserRegistrationRequest } from 'src/app/shared/models/auth.model';
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.loginService.getTokenFromLocalStorage() != null) {
-      this.route.navigate(['home']);
+      this.route.navigate(['']);
     }
     this.registerForm = new FormGroup(
       {

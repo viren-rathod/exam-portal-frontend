@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { User, UserLoginRequest } from 'src/app/shared/models/auth.model';
+import { CurrentUser, UserLoginRequest } from 'src/app/shared/models/auth.model';
 import { LoginService } from 'src/app/shared/services/login.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   ngOnInit(): void {
     if (this.loginService.getTokenFromLocalStorage() != null) {
-      this.route.navigate(['home']);
+      this.route.navigate(['']);
     }
     this.loginForm = new FormGroup({
       usernameOrEmail: new FormControl('', [
@@ -60,12 +60,12 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           this.loginService.setToken(res.data.accessToken);
           this.loginService.getCurrentUser().subscribe({
-            next: (user: User) => {
-              this.loginService.setUserDetailsLocalStorage(user);
+            next: (user: CurrentUser) => {
+              this.loginService.setUserDetailsLocalStorage(user.data);
               console.log('USER --> ', user);
 
               if (this.loginService.getUserRole() === 'USER') {
-                this.route.navigate(['home']);
+                this.route.navigate(['/profile']);
               } else if (this.loginService.getUserRole() === 'ADMIN') {
                 this.route.navigate(['register']);
               }

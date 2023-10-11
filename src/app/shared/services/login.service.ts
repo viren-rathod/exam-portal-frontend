@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import BASE_URL from './util';
 import { Router } from '@angular/router';
 import {
+  CurrentUser,
   User,
   UserLoginRequest,
   UserLoginResponse,
@@ -23,16 +24,16 @@ export class LoginService {
     );
   }
 
-  public getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${BASE_URL}/api/auth/getCurrentUser`);
+  public getCurrentUser(): Observable<CurrentUser> {
+    return this.http.get<CurrentUser>(`${BASE_URL}/api/auth/getCurrentUser`);
   }
 
-  public setToken(token: string) {
+  public setToken(token: string): boolean {
     localStorage.setItem('token', token);
     return true;
   }
 
-  public isUserLoggedIn() {
+  public isUserLoggedIn(): boolean {
     let tokenStr = localStorage.getItem('token');
     if (tokenStr == undefined || tokenStr == '' || tokenStr == null) {
       return false;
@@ -41,7 +42,7 @@ export class LoginService {
     }
   }
 
-  public removeTokenFromStorage() {
+  public removeTokenFromStorage(): boolean {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.router.navigate(['login']);
@@ -59,7 +60,7 @@ export class LoginService {
   /**
    * getUserDetailsFromLocalStorage
    */
-  public getUserDetailsFromLocalStorage() {
+  public getUserDetailsFromLocalStorage(): User | null {
     let userInfo = localStorage.getItem('user');
     // console.log("userinfo --> ",userInfo);
     if (userInfo != null) {
@@ -73,6 +74,6 @@ export class LoginService {
   public getUserRole() {
     let user = this.getUserDetailsFromLocalStorage();
     // console.log(user);
-    return user.roles[0].name;
+    return user?.roles[0];
   }
 }

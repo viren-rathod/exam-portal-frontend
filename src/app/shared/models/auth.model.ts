@@ -4,8 +4,9 @@ export interface User {
   id: number;
   username: string;
   email: string;
-  roles: [];
+  roles: Array<string>;
 }
+
 export interface UserRegistrationRequest {
   username: string;
   email: string;
@@ -23,4 +24,8 @@ export interface UserLoginResponse extends BaseResponse {
     accessToken: string;
     tokenType: string;
   };
+}
+
+export interface CurrentUser extends BaseResponse {
+  data: User;
 }
