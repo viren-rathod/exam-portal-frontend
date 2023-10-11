@@ -1,6 +1,6 @@
 .sidenav {
   /* background: #132f4c; */
-  background: #263238;
+  background: #002f4b;
   transition: all 0.5s ease;
   position: fixed;
   z-index: 1;
@@ -12,15 +12,14 @@
 }
 .sidenav .logo-container {
   /* background: #fff; */
-  display: flex;
+  /* display: flex;
   align-items: center;
-  padding: 0.938rem 0.938rem 0.938rem;
-  width: 100%;
+  padding: 0.938rem 0.938rem 0.938rem; */
+  height: 100px;
 }
 .sidenav .logo-container .logo {
-  background: #fff;
+  background: transparent;
   text-align: center;
-  width: 3rem;
   min-width: 3rem;
   border-radius: 0.313rem;
   padding: 0.313rem;
@@ -36,7 +35,7 @@
 }
 /* .sidenav .logo-container */
 .btn-closed {
-  margin-left: auto;
+  /* margin-left: auto; */
   cursor: pointer;
   width: 2rem;
   height: 2rem;
@@ -73,7 +72,7 @@
   color: #f3f3f3;
   text-decoration: none;
   border-radius: 0.625rem;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
   font-size: 22px;
@@ -98,8 +97,8 @@
   left: auto;
   right: 0;
   transition: all 0.5s ease;
-  background: #263238;
-  height: 64px;
+  background: #002f4b;
+  height: 100px;
 }
 
 .full-header {
@@ -108,7 +107,7 @@
 
 .main-body-wrap {
   margin-left: 5rem;
-  padding-top: 64px;
+  padding-top: 100px;
   /* transition: 0.3s ease all; */
   transition: all 0.5s ease;
   min-height: 100vh;

@@ -1,10 +1,22 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
-  <div class="logo-container">
-    <button class="logo">V</button>
-    <div class="logo-text" *ngIf="collapsed">Portal</div>
-    <!-- <button class="btn-closed" *ngIf="collapsed" (click)="closeSidenav()">
-      <i class="bi bi-list close-icon"></i>
-    </button> -->
+  <div class="logo-container d-flex justify-content-center align-items-center">
+    <!-- <button *ngIf="!collapsed" class="logo">V</button> -->
+    <!-- <div> -->
+      <img
+        style="width: 4rem"
+        src="../../../../assets/images/Logo-Mark-SVG.svg"
+        class=""
+        *ngIf="!collapsed"
+      />
+    <!-- </div> -->
+    <!-- <div> -->
+      <img
+        style="width: 16.5635rem"
+        src="../../../../assets/images/Green-Black-Logo.svg"
+        class=""
+        *ngIf="collapsed"
+      />
+    <!-- </div> -->
   </div>
   <ul class="sidenav-nav">
     <li class="sidenav-nav-item" *ngFor="let data of navData">
@@ -19,15 +31,18 @@
 </div>
 
 <div
-  class="main-body-wrap"
+  class="main-body-wrap px-5"
   [ngClass]="collapsed ? 'main-body-wrap-collapsed' : ''"
 >
-  <header class="header" [ngClass]="collapsed ? 'full-header' : ''">
+  <header
+    class="header d-flex align-items-center"
+    [ngClass]="collapsed ? 'full-header' : ''"
+  >
     <!-- <ul class="header-menu"> -->
-    <button class="btn-closed" (click)="toggleCollapse()">
+    <button class="btn-closed d-flex justify-content-center align-items-center" (click)="toggleCollapse()">
       <i class="bi bi-list close-icon"></i>
     </button>
-    
+
     <!-- <li class="header-user">
         <a>
           <span><i nz-icon nzType="user" nzTheme="outline"></i></span>
@@ -47,7 +62,5 @@
   <main class="main-body">
     <router-outlet></router-outlet>
   </main>
-  <footer class="footer">©2022 eSparkbiz Exam Portal</footer>
+  <footer class="footer">©2022 Exam Portal | All rights reserved</footer>
 </div>
-
-<!-- <router-outlet></router-outlet> -->

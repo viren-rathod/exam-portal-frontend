@@ -1,3 +1,78 @@
-h1 {
-  width: calc(100% - 16.5625rem);
+.pt-30 {
+  padding-top: 30px;
+}
+
+.breadcrumb-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 30px 20px;
+  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12),
+    0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+  border-radius: 7px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.icon-card .icon.purple {
+  background: rgba(155, 81, 224, 0.1);
+  color: #9b51e0;
+}
+
+i.bi {
+  display: inline-block;
+  font: normal normal normal 1em/1 "lineicons";
+  color: inherit;
+  flex-shrink: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon-card .icon {
+  max-width: 46px;
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  margin-right: 20px;
+  background: rgba(54, 92, 245, 0.1);
+  color: #365cf5;
+  font-weight: 700;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.text-sm {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.icon.success {
+  background: rgba(33, 150, 83, 0.1);
+  color: #219653;
+}
+
+.icon.orange {
+  background: rgba(242, 153, 74, 0.1);
+  color: #f2994a;
+}
+
+.icon.primary {
+  background: rgba(54, 92, 245, 0.1);
+  color: #365cf5;
 }

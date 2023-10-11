@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './modules/login/login.component';
 import { authIntercepterProviders } from './shared/interceptors/auth.interceptor';
 import { RegisterComponent } from './modules/register/register.component';
-import { SideNavigationComponent } from './core/layout/side-navigation/side-navigation.component';
 import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    SideNavigationComponent,
     SidenavComponent,
   ],
   imports: [
@@ -28,4 +26,4 @@ import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
   providers: [authIntercepterProviders],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
