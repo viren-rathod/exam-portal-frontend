@@ -1,24 +1,18 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
-  <div class="logo-container d-flex justify-content-center align-items-center">
-    <!-- <button *ngIf="!collapsed" class="logo">V</button> -->
-    <!-- <div> -->
-      <img
-        style="width: 4rem"
-        src="../../../../assets/images/Logo-Mark-SVG.svg"
-        class=""
-        *ngIf="!collapsed"
-      />
-    <!-- </div> -->
-    <!-- <div> -->
-      <img
-        style="width: 16.5635rem"
-        src="../../../../assets/images/Green-Black-Logo.svg"
-        class=""
-        *ngIf="collapsed"
-      />
+  <div class="logo-container d-flex justify-content-center align-items-center bg-body border-end">
+    <img
+      src="../../../../assets/images/Logo-Mark-SVG.svg"
+      class="logo"
+      *ngIf="!collapsed"
+    />
+    <img
+      src="../../../../assets/images/Green-Black-Logo.svg"
+      class="logo-collapsed"
+      *ngIf="collapsed"
+    />
     <!-- </div> -->
   </div>
-  <ul class="sidenav-nav">
+  <ul class="sidenav-nav p-0">
     <li class="sidenav-nav-item" *ngFor="let data of navData">
       <a class="sidenav-nav-link" [routerLink]="[data.routerLink]">
         <i class="sidenav-link-icon" [class]="data.icon"></i>
@@ -39,7 +33,10 @@
     [ngClass]="collapsed ? 'full-header' : ''"
   >
     <!-- <ul class="header-menu"> -->
-    <button class="btn-closed d-flex justify-content-center align-items-center" (click)="toggleCollapse()">
+    <button
+      class="btn-closed d-flex justify-content-center align-items-center ms-5"
+      (click)="toggleCollapse()"
+    >
       <i class="bi bi-list close-icon"></i>
     </button>
 

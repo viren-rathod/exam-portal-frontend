@@ -15,18 +15,28 @@
   /* display: flex;
   align-items: center;
   padding: 0.938rem 0.938rem 0.938rem; */
-  height: 100px;
+  height: 65px;
 }
 .sidenav .logo-container .logo {
+  width: 4rem;
+  padding: 0.5rem;
+}
+
+.sidenav .logo-container .logo-collapsed {
+  width: 16.5635rem;
+  padding: 1.5rem;
+}
+
+/* .sidenav .logo-container .logo {
   background: transparent;
   text-align: center;
   min-width: 3rem;
   border-radius: 0.313rem;
   padding: 0.313rem;
-  font-size: 24px;
-  /* cursor: pointer; */
-  border: none;
-}
+  font-size: 24px; */
+/* cursor: pointer; */
+/* border: none; */
+/* } */
 .sidenav .logo-container .logo-text {
   margin-left: 1.5rem;
   font-size: 24px;
@@ -45,15 +55,15 @@
 }
 /* .sidenav .logo-container  */
 .btn-closed .bi-list {
-  color: #fff;
-  font-size: 24px;
+  color: #000;
+  font-size: 30px;
 }
 .sidenav-collapsed {
   width: 16.5625rem;
 }
 .sidenav-nav {
   list-style: none;
-  padding: 0.938rem;
+  /* padding: 0 0 0.938rem 0; */
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -63,7 +73,7 @@
 }
 .sidenav-nav .sidenav-nav-item {
   width: 100%;
-  margin-bottom: 0.625rem;
+  /* margin-bottom: 0.625rem; */
 }
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link {
   display: flex;
@@ -71,22 +81,20 @@
   height: 3rem;
   color: #f3f3f3;
   text-decoration: none;
-  border-radius: 0.625rem;
   transition: all 0.5s ease;
 }
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
   font-size: 22px;
   width: 2rem;
   min-width: 2rem;
-  margin: 0 0.5rem;
+  margin: 0 0 0 1rem;
   text-align: center;
 }
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
   margin-left: 1.5rem;
 }
 .sidenav-nav .sidenav-nav-item:hover .sidenav-nav-link {
-  background-color: #fff;
-  color: #000;
+  background-color: #0059b2;
 }
 
 .header {
@@ -97,8 +105,8 @@
   left: auto;
   right: 0;
   transition: all 0.5s ease;
-  background: #002f4b;
-  height: 100px;
+  background: #fff;
+  height: 65px;
 }
 
 .full-header {
@@ -107,7 +115,7 @@
 
 .main-body-wrap {
   margin-left: 5rem;
-  padding-top: 100px;
+  padding-top: 65px;
   /* transition: 0.3s ease all; */
   transition: all 0.5s ease;
   min-height: 100vh;
