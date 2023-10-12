@@ -1,24 +1,37 @@
-<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
-  <div class="logo-container d-flex justify-content-center align-items-center bg-body border-end">
+<div
+  class="sidenav position-fixed z-1 top-0"
+  [ngClass]="collapsed ? 'sidenav-collapsed' : ''"
+>
+  <div
+    class="logo-container d-flex justify-content-center align-items-center bg-body border-end"
+  >
     <img
       src="../../../../assets/images/Logo-Mark-SVG.svg"
-      class="logo"
+      class="logo p-2"
       *ngIf="!collapsed"
     />
     <img
       src="../../../../assets/images/Green-Black-Logo.svg"
-      class="logo-collapsed"
+      class="logo-collapsed p-4"
       *ngIf="collapsed"
     />
-    <!-- </div> -->
   </div>
-  <ul class="sidenav-nav p-0">
-    <li class="sidenav-nav-item" *ngFor="let data of navData">
-      <a class="sidenav-nav-link" [routerLink]="[data.routerLink]">
-        <i class="sidenav-link-icon" [class]="data.icon"></i>
-        <span class="sidenav-link-text" *ngIf="collapsed">{{
-          data.label
-        }}</span>
+  <ul
+    class="sidenav-nav p-0 m-0 list-unstyled d-flex flex-column align-items-center"
+  >
+    <li class="sidenav-nav-item w-100" *ngFor="let data of navData">
+      <a
+        class="sidenav-nav-link d-flex align-items-center text-decoration-none"
+        [routerLink]="[data.routerLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="sidenav-link-icon text-center" [class]="data.icon"></i>
+        <span
+          class="sidenav-link-text text-light opacity-75 ms-3"
+          *ngIf="collapsed"
+          >{{ data.label }}</span
+        >
       </a>
     </li>
   </ul>
@@ -29,15 +42,15 @@
   [ngClass]="collapsed ? 'main-body-wrap-collapsed' : ''"
 >
   <header
-    class="header d-flex align-items-center"
+    class="header d-flex align-items-center position-fixed top-0 end-0 bg-light"
     [ngClass]="collapsed ? 'full-header' : ''"
   >
     <!-- <ul class="header-menu"> -->
     <button
-      class="btn-closed d-flex justify-content-center align-items-center ms-5"
+      class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
       (click)="toggleCollapse()"
     >
-      <i class="bi bi-list close-icon"></i>
+      <i class="bi bi-list-nested text-black fs-4"></i>
     </button>
 
     <!-- <li class="header-user">
