@@ -3,9 +3,6 @@
 }
 body {
   font-weight: 500;
-  /* font-family: "", sans-serif; */
-  /* font-family: Open Sans, sans-serif; */
-  /* overflow: hidden; */
 }
 h1 {
   font-size: 2.2rem;
@@ -22,14 +19,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-.small {
-  font-size: 80%;
-  text-align: center;
-}
-.split-screen {
-  display: flex;
-  flex-direction: column;
-}
 .left {
   min-height: 250px;
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
@@ -37,27 +26,11 @@ a:hover {
   background-size: cover;
   object-fit: cover;
 }
-.sub-container {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
 .sub-container .logo {
   width: 400px;
 }
-.logo img {
-  width: 100%;
-}
 .copy {
   width: 80%;
-}
-.left,
-.right {
-  display: flex;
-  justify-content: center;
-  /*align-items: center; */
-  flex-direction: column;
 }
 .left .copy {
   color: #fff;
@@ -198,10 +171,6 @@ label {
 }
 button:disabled,
 button[disabled] {
-  /* background-color: #cccccc;
-      color: #666666;
-      cursor: not-allowed !important; */
-  /* pointer-events: none; */
   cursor: not-allowed !important;
 }
 .register:hover {
