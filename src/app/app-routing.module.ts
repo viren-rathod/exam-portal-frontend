@@ -5,14 +5,14 @@ import { LoginComponent } from './modules/login/login.component';
 import { authGuard } from './shared/guard/auth.guard';
 import { RegisterComponent } from './modules/register/register.component';
 import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
-import { ProfileComponent } from './modules/admin/profile/profile.component';
+import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   // redirectTo: '/home',
-  //   pathMatch: 'full',
-  // },
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
+  },
   {
     path: 'register',
     component: RegisterComponent,
@@ -27,14 +27,14 @@ const routes: Routes = [
     path: '',
     component: SidenavComponent,
     canActivate: [authGuard],
-    data: { onToggleSidenav: 'onToggleSidenav' },
     children: [
       {
-        path: 'profile',
-        component: ProfileComponent,
-        pathMatch: 'full'
+        path: 'dashboard',
+        component: DashboardComponent,
+        pathMatch: "full"
       }
-    ],
+    ]
+
   },
 ];
 

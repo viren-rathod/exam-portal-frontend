@@ -33,7 +33,7 @@ export class SidenavComponent {
 
 const NAVBAR_DATA = [
   {
-    routerLink: '',
+    routerLink: 'dashboard',
     icon: 'bi bi-house',
     label: 'Dashhboard'
   },

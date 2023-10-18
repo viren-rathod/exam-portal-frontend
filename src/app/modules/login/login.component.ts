@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
               console.log('USER --> ', user);
 
               if (this.loginService.getUserRole() === 'USER') {
-                this.route.navigate(['/profile']);
+                this.route.navigate(['/dashboard']);
               } else if (this.loginService.getUserRole() === 'ADMIN') {
                 this.route.navigate(['register']);
               }
