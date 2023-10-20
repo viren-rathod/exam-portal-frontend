@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { Roles } from 'src/app/shared/enums/roles.enum';
 import { CurrentUser, UserLoginRequest } from 'src/app/shared/models/auth.model';
 import { LoginService } from 'src/app/shared/services/login.service';
 
@@ -63,10 +64,9 @@ export class LoginComponent implements OnInit {
             next: (user: CurrentUser) => {
               this.loginService.setUserDetailsLocalStorage(user.data);
               console.log('USER --> ', user);
-
-              if (this.loginService.getUserRole() === 'USER') {
+              if (this.loginService.getUserRole() === Roles.User) {
                 this.route.navigate(['/dashboard']);
-              } else if (this.loginService.getUserRole() === 'ADMIN') {
+              } else if (this.loginService.getUserRole() === Roles.Admin) {
                 this.route.navigate(['register']);
               }
             },

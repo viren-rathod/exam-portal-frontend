@@ -1,10 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CategoryService } from '../../services/category/category.service';
+import { Category } from '../../models/api/category.model';
+import { ExamService } from '../../services/exam/exam.service';
+import { QuestionService } from '../../services/question/question.service';
+import { Exam } from '../../models/api/exam.model';
+import { Question } from '../../models/api/question.model';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
+  examData: Array<Exam> = [];
+  categoryData: Array<Category> = [];
+  questionData: Array<Question> = [];
+
+  constructor(
+    private categoryService: CategoryService,
+    private examService: ExamService,
+    private questionService: QuestionService
+  ) { }
+  ngOnInit(): void {
+
+    /**
+     * Get Category details
+     */
+    this.categoryService.getAllCategories().subscribe({
+      next: (res) => {
+        this.categoryData = res.data;
+        console.log("getAllCategories-->", this.categoryData);
+      },
+      error: (error) => {
+        console.log("ERROR-->", error);
+      },
+    }
+    )
+
+    /**
+     * Get Exam Details
+     */
+    this.examService.getAllExams().subscribe({
+      next: (res) => {
+        this.examData = res;
+        console.log("getAllExams-->", res);
+      },
+      error: (error) => console.log(error.error.message)
+    })
+
+    /**
+     * Get Questions details
+     */
+    this.questionService.getAllQuestions().subscribe({
+      next: (res) => {
+        this.questionData = res.data
+        console.log("getAllQuestions-->", this.questionData);
+      },
+      error: (error) => console.log(error.error)
+
+    })
+  }
 }

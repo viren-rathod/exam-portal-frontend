@@ -25,7 +25,7 @@ export class LoginService {
   }
 
   public getCurrentUser(): Observable<CurrentUser> {
-    return this.http.get<CurrentUser>(`${BASE_URL}/api/auth/getCurrentUser`);
+    return this.http.get<CurrentUser>(`${BASE_URL}/api/user/getCurrentUser`);
   }
 
   public setToken(token: string): boolean {

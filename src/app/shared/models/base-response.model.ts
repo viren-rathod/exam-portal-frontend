@@ -1,6 +1,10 @@
+import { Status } from "../enums/status.enum";
+
 export interface BaseResponse {
     message: string;
     response_code: number;
-    status: boolean;
+    status: Status;
     toast: boolean;
+    length: number
+    empty: boolean
 }
