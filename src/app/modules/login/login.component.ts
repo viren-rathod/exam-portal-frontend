@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
               this.loginService.setUserDetailsLocalStorage(user.data);
               console.log('USER --> ', user);
               if (this.loginService.getUserRole() === Roles.User) {
-                this.route.navigate(['/dashboard']);
+                this.route.navigate(['/exam-portal/dashboard']);
               } else if (this.loginService.getUserRole() === Roles.Admin) {
                 this.route.navigate(['register']);
               }

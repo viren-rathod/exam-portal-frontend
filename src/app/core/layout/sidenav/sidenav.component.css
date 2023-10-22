@@ -34,7 +34,7 @@
 
 .sidenav-nav {
   height: calc(100% - 3.65rem);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link {

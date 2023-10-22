@@ -5,6 +5,8 @@ import { ExamService } from '../../services/exam/exam.service';
 import { QuestionService } from '../../services/question/question.service';
 import { Exam } from '../../models/api/exam.model';
 import { Question } from '../../models/api/question.model';
+import { CandidateService } from '../../services/candidate/candidate.service';
+import { Candidate } from '../../models/api/candidate.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,11 +18,13 @@ export class DashboardComponent implements OnInit {
   examData: Array<Exam> = [];
   categoryData: Array<Category> = [];
   questionData: Array<Question> = [];
+  candidateData: Array<Candidate> = [];
 
   constructor(
     private categoryService: CategoryService,
     private examService: ExamService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private candidateService: CandidateService
   ) { }
   ngOnInit(): void {
 
@@ -43,8 +47,8 @@ export class DashboardComponent implements OnInit {
      */
     this.examService.getAllExams().subscribe({
       next: (res) => {
-        this.examData = res;
-        console.log("getAllExams-->", res);
+        this.examData = res.data;
+        console.log("getAllExams-->", this.examData);
       },
       error: (error) => console.log(error.error.message)
     })
@@ -59,6 +63,17 @@ export class DashboardComponent implements OnInit {
       },
       error: (error) => console.log(error.error)
 
+    })
+
+    /**
+     * Get Candidate Details
+     */
+    this.candidateService.getAllCandidates().subscribe({
+      next: (res) => {
+        this.candidateData = res.data;
+        console.log("getAllCandidates-->", this.candidateData);
+      },
+      error: (error) => console.log(error.error)
     })
   }
 }

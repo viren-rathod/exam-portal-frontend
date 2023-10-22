@@ -26,7 +26,7 @@
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <i class="sidenav-link-icon text-center" [class]="data.icon"></i>
+        <i class="sidenav-link-icon text-center d-flex justify-content-center " [class]="data.icon"></i>
         <span
           class="sidenav-link-text text-light opacity-75 ms-3"
           *ngIf="collapsed"
@@ -69,7 +69,7 @@
           </nz-dropdown-menu> 
     </ul>   -->
   </header>
-  <main class="main-body">
+  <main class="main-body py-5">
     <router-outlet></router-outlet>
   </main>
   <footer class="footer">©2022 Exam Portal | All rights reserved</footer>

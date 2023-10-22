@@ -10,7 +10,7 @@ import { DashboardComponent } from './shared/components/dashboard/dashboard.comp
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/exam-portal/dashboard',
     pathMatch: 'full',
   },
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '',
+    path: 'exam-portal',
     component: SidenavComponent,
     canActivate: [authGuard],
     children: [
@@ -32,7 +32,11 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         pathMatch: "full"
-      }
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+      },
     ]
 
   },

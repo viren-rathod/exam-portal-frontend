@@ -31,7 +31,7 @@
       </div>
       <div class="content">
         <h6 class="mb-2">Exams</h6>
-        <h3 class="mb-2 text-bold">{{ examData.length }}</h3>
+        <h3 class="mb-2 text-bold">{{ examData ? examData.length : 0 }}</h3>
         <p class="text-sm text-success">
           <i class="bi bi-arrow-up"></i> +2.00%
           <span class="text-gray text-secondary">(30 days)</span>
@@ -48,7 +48,9 @@
       </div>
       <div class="content">
         <h6 class="mb-2">Total Categories</h6>
-        <h3 class="text-bold mb-2">{{ categoryData.length }}</h3>
+        <h3 class="text-bold mb-2">
+          {{ categoryData ? categoryData.length : 0 }}
+        </h3>
         <p class="text-sm text-success">
           <i class="lni lni-arrow-up"></i> +5.45%
           <span class="text-gray">Increased</span>
@@ -65,7 +67,9 @@
       </div>
       <div class="content">
         <h6 class="mb-2">Total Questions</h6>
-        <h3 class="text-bold mb-2">{{ questionData.length }}</h3>
+        <h3 class="text-bold mb-2">
+          {{ questionData ? questionData.length : 0 }}
+        </h3>
         <p class="text-sm text-danger">
           <i class="lni lni-arrow-down"></i> -2.00%
           <span class="text-gray">Expense</span>
@@ -93,16 +97,3 @@
   </div>
   <!-- End Col -->
 </div>
-<p>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis similique
-  iusto cumque voluptate natus beatae obcaecati minus recusandae. Quidem,
-  quisquam facilis et saepe ad odit esse nobis corporis, consectetur explicabo
-  odio facere sapiente enim consequuntur nesciunt placeat atque. Non officia
-  totam repellendus maiores sit veritatis. Incidunt illo at quam, magni aliquid
-  ipsam ipsum porro, libero corrupti ipsa quis quod maxime facere accusamus
-  minus eaque delectus! Dolor accusamus harum inventore perferendis modi. Magni
-  expedita officia inventore? Tempora nesciunt facere quidem voluptatum
-  repudiandae veniam nihil officiis quo rem, quaerat cumque voluptatibus hic
-  cupiditate esse dolores non ipsa? Pariatur enim ipsam molestiae impedit?
-</p>
-<!-- </div> -->
