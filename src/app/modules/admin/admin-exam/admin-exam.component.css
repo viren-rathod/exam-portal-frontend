@@ -54,9 +54,6 @@ input[type="password"] {
   background-color: #fff !important;
   color: #000 !important;
 }
-.card hr {
-  opacity: 0.1 !important;
-}
 thead tr th {
   background: #002f4b !important;
   color: #fff !important;

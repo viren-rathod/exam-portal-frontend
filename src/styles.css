@@ -13,3 +13,6 @@ body {
   background: #f1f5f9;
   font-family: "Plus Jakarta Sans", sans-serif;
 }
+.card hr {
+  opacity: 0.1 !important;
+}

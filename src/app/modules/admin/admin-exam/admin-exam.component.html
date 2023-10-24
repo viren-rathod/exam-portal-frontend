@@ -2,7 +2,11 @@
   <div class="card-head">
     <div class="d-flex exams justify-content-between align-items-center p-3">
       <div class="title fs-5 fw-bold">Exams</div>
-      <div id="addExam" class="btn btn-danger rounded-0">+ Add Exam</div>
+      <a [routerLink]="['/exam-portal/admin/exam/add']">
+        <button id="addExam" class="btn btn-danger rounded-0">
+          + Add Exam
+        </button>
+      </a>
     </div>
   </div>
 
@@ -21,63 +25,55 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th class="border-0" scope="col">
+            <th scope="col">
               <span class="d-flex justify-content-between">
-                <span>#</span>
-                <span class="opacity-25">|</span>
+                <span class="fw-medium">Name</span>
+                <span class="fw-light">|</span>
               </span>
             </th>
             <th scope="col">
               <span class="d-flex justify-content-between">
-                <span>First</span>
-                <span class="opacity-25">|</span>
+                <span class="fw-medium">Total Candidates</span>
+                <span class="fw-light">|</span>
               </span>
             </th>
             <th scope="col">
               <span class="d-flex justify-content-between">
-                <span>Last</span>
-                <span class="opacity-25">|</span>
+                <span class="fw-medium">Total Questions</span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
+              <span class="d-flex justify-content-between">
+                <span class="fw-medium">Exam Status</span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
+              <span class="d-flex justify-content-between">
+                <span class="fw-medium">Result</span>
+                <span class="fw-light">|</span>
               </span>
             </th>
             <th scope="col">
               <span class="d-flex justify-content-center">
-                <span>Action</span>
+                <span class="fw-medium">Action</span>
               </span>
             </th>
           </tr>
         </thead>
-        <tbody class="border">
+        <tbody class="border" *ngFor="let exam of examData">
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
+            <td>{{ exam.title }}</td>
+            <td>2</td>
+            <td>{{ exam.totalQuestions }}</td>
+            <td>{{ exam.status }}</td>
+            <td>50</td>
             <td class="text-center">
               <span>
-                <div class="btn btn-success rounded-0 shadow-sm text-center">
-                  Start
-                </div>
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td class="text-center">
-              <span>
-                <div class="btn btn-success rounded-0 shadow-sm text-center">
-                  Start
-                </div>
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry the Bird</td>
-            <td>Leo</td>
-            <td class="text-center">
-              <span>
-                <div class="btn btn-success rounded-0 shadow-sm text-center">
+                <div
+                  class="btn btn-success rounded-0 shadow-sm text-center w-75"
+                >
                   Start
                 </div>
               </span>
