@@ -7,34 +7,63 @@
 
   <hr class="p-0 m-0" />
   <div class="card-body z-0">
-    <form>
+    <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-6">
-          <div class="name py-2">
-            <label class="fw-semibold py-2" for="title">Exam Name </label>
-            <input
-              class="form-control"
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Exam Name"
-            />
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="title">Exam Name</label>
+              <input
+                id="title"
+                class="effect w-100"
+                type="text"
+                placeholder="Exam Name"
+                formControlName="title"
+              />
+              <span class="focus-bg"></span>
+            </div>
+            <div *ngIf="title?.invalid && (title?.dirty || title?.touched)">
+              <small *ngIf="title?.errors?.['required']" class="text-danger"
+                >*Exam name is required.</small
+              >
+              <small *ngIf="title?.errors?.['maxlength']" class="text-danger"
+                >*Exam Name Must Not Be Greater Than 100 Characters</small
+              >
+            </div>
           </div>
-          <div class="examTime py-2">
-            <label class="fw-semibold py-2" for="examTime">Exam Time </label>
-            <input
-              class="form-control"
-              type="text"
-              id="examTime"
-              name="examTime"
-              placeholder="Exam Time"
-            />
+
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="examTime">Exam Time</label>
+              <input
+                id="examTime"
+                class="effect w-100"
+                type="text"
+                placeholder="Exam Time"
+                formControlName="examTime"
+              />
+              <span class="focus-bg"></span>
+            </div>
+            <div
+              *ngIf="
+                examTime?.invalid && (examTime?.dirty || examTime?.touched)
+              "
+            >
+              <small *ngIf="examTime?.errors?.['required']" class="text-danger"
+                >*Exam time is required.</small
+              >
+            </div>
           </div>
-          <div class="categories py-2">
-            <label class="fw-semibold py-2" for="categories"
-              >Question Category
-            </label>
-            <select class="form-select" id="categories" name="categories">
+
+          <div class="input-container">
+            <label for="categories">Question Category </label>
+            <select
+              multiple
+              class="effect w-100 rounded-1"
+              id="categories"
+              name="categories"
+              formControlName="categories"
+            >
               <option selected hidden disabled>Select Question Category</option>
               <option
                 *ngFor="let category of categoryList"
@@ -43,26 +72,94 @@
                 {{ category.title }}
               </option>
             </select>
+            <div
+              *ngIf="
+                categories?.invalid &&
+                (categories?.dirty || categories?.touched)
+              "
+            >
+              <small
+                *ngIf="categories?.errors?.['required']"
+                class="text-danger"
+                >*Exam category is required.</small
+              >
+            </div>
           </div>
 
-          <div class="totalQuestions py-2">
-            <label class="fw-semibold py-2" for="totalQuestions"
-              >Total Questions
-            </label>
-            <input
-              class="form-control"
-              type="text"
-              id="totalQuestions"
-              name="totalQuestions"
-              placeholder="Total Questions"
-            />
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="totalQuestions">Total Questions</label>
+              <input
+                id="totalQuestions"
+                name="totalQuestion"
+                class="effect w-100"
+                type="text"
+                placeholder="Total Questions"
+                formControlName="totalQuestions"
+              />
+              <span class="focus-bg"></span>
+            </div>
+            <div
+              *ngIf="
+                totalQuestions?.invalid &&
+                (totalQuestions?.dirty || totalQuestions?.touched)
+              "
+            >
+              <small
+                *ngIf="totalQuestions?.errors?.['required']"
+                class="text-danger"
+                >*This field is required.</small
+              >
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="maxMarks">Max Marks</label>
+              <input
+                id="maxMarks"
+                name="totalQuestion"
+                class="effect w-100"
+                type="text"
+                placeholder="Max Marks"
+                formControlName="maxMarks"
+              />
+              <span class="focus-bg"></span>
+            </div>
+            <div
+              *ngIf="
+                totalQuestions?.invalid &&
+                (maxMarks?.dirty || maxMarks?.touched)
+              "
+            >
+              <small *ngIf="maxMarks?.errors?.['required']" class="text-danger"
+                >*This field is required.</small
+              >
+            </div>
           </div>
         </div>
+
         <div class="col-6">
-          <div>
-            <label for="">Instructions</label>
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="description">Instructions</label>
+              <textarea
+                id="description"
+                class="effect w-100 rounded-1"
+                type="text"
+                placeholder="Instructions"
+                rows="17"
+                formControlName="description"
+              ></textarea>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 my-3">
+        <button class="btn btn-success rounded-0 px-4" type="submit">
+          Create
+        </button>
+        <button class="btn btn-danger rounded-0 px-4">Cancel</button>
       </div>
     </form>
   </div>

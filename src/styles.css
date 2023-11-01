@@ -13,6 +13,107 @@ body {
   background: #f1f5f9;
   font-family: "Plus Jakarta Sans", sans-serif;
 }
+:focus {
+  outline: none !important;
+  /* border: none !important; */
+  box-shadow: none !important;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-blue);
+}
 .card hr {
   opacity: 0.1 !important;
+}
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  font: 16px/24px "Montserrat", sans-serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+::placeholder {
+  font-weight: 400 !important;
+  font-size: 14px;
+}
+.col3 {
+  float: left;
+  width: 27.33%;
+  margin: 10px 0 0 0;
+  position: relative;
+}
+
+.effect {
+  border: 0;
+  padding: 7px 15px;
+  border: 1px solid #ccc;
+  position: relative;
+  background: transparent;
+}
+.effect ~ .focus-bg {
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 54%;
+  background-color: #ededed;
+  transition: 0.3s;
+  z-index: -1;
+}
+.effect:focus ~ .focus-bg {
+  transition: 0.3s;
+  width: 100%;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+}
+.checkbox-container {
+  position: relative;
+  padding-left: 2rem;
+  user-select: none;
+  margin: 1rem 0 0 1rem;
+  cursor: pointer;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--primary-blue);
+  border: 1px solid var(--primary-blue);
+}
+.checkmark {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  width: 5px;
+  height: 10px;
+  left: 7px;
+  top: 3px;
+  transform: rotate(45deg);
 }
