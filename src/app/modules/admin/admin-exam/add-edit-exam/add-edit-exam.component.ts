@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/shared/models/api/category.model';
+import { Exam } from 'src/app/shared/models/api/exam.model';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { ExamService } from 'src/app/shared/services/exam/exam.service';
 
 @Component({
   selector: 'app-add-edit-exam',
@@ -14,12 +17,13 @@ export class AddEditExamComponent implements OnInit {
   editMode: boolean = false;
   id: number = 0;
   selectedCategory: number[] = [];
-  totalQuestion: number = 0;
   selectedCategoryCount: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
-    private categoryService: CategoryService
+    private examService: ExamService,
+    private categoryService: CategoryService,
+    private router: Router
   ) {}
 
   get title() {
@@ -39,9 +43,85 @@ export class AddEditExamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /**
-     * Get Category details
-     */
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.examForm = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      examTime: [, Validators.required],
+      categories: [[], Validators.required],
+      totalQuestions: ['', [Validators.required, Validators.min(1)]],
+      maxMarks: ['', Validators.required],
+      description: '',
+    });
+    this.getQuestionCategories();
+  }
+
+  /**
+   * Submit the add/edit exam
+   */
+  onSubmit(): void {
+    Object.keys(this.examForm.controls).forEach((key) => {
+      this.examForm.get(key)?.markAsDirty();
+      this.examForm.get(key)?.markAsTouched();
+    });
+    if (this.examForm.valid) {
+      let addExamData: Exam = {
+        title: this.examForm.value.title,
+        description: this.examForm.value.description,
+        maxMarks: this.examForm.value.maxMarks,
+        totalQuestions: this.examForm.value,
+        examTime: this.examForm.value.examTime,
+        categories: this.selectedCategory,
+      };
+      console.log('addExamData()-->', { ...addExamData });
+      this.examService.addExam(addExamData).subscribe({
+        next: (res) => {
+          console.log('Exam addes successfully...', res.data);
+          this.router.navigate(['exam-portal/admin/exam']);
+        },
+        error: (err) => console.log('Error adding Exam!!', err),
+      });
+    }
+  }
+
+  /**
+   * Navigate to exam list on cancel click
+   */
+  onCancel(): void {
+    this.router.navigate(['exam-portal/admin/exam']);
+  }
+
+  /**
+   * Adding selected Category
+   */
+  handleCategoryChange(event: number[]): void {
+    this.selectedCategoryCount = event.length;
+    if (event.length > this.selectedCategory.length) {
+      event.filter((ele) => {
+        if (!this.selectedCategory.includes(ele)) {
+          this.selectedCategory.push(ele);
+        }
+      });
+    } else {
+      this.selectedCategory.filter((ele, i) => {
+        if (!event.includes(ele)) {
+          this.selectedCategory.forEach((value, i) => {
+            if (ele === value) {
+              this.selectedCategory.splice(i, 1);
+            }
+          });
+        }
+      });
+    }
+    console.log('Selected Categories : ', this.selectedCategory);
+  }
+
+  /**
+   * Get Category details
+   */
+  getQuestionCategories(): void {
     this.categoryService.getAllCategories().subscribe({
       next: (res) => {
         this.categoryList = res.data;
@@ -51,27 +131,5 @@ export class AddEditExamComponent implements OnInit {
         console.log('ERROR-->', error);
       },
     });
-    this.initForm();
-  }
-  initForm(): void {
-    this.examForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.maxLength(100)]],
-      examTime: [, Validators.required],
-      categories: [[], Validators.required],
-      // categoryquestions: this.formBuilder.array([], Validators.required),
-      totalQuestions: ['', [Validators.required, Validators.min(1)]],
-      maxMarks: ['', Validators.required],
-      description: '',
-    });
-  }
-
-  onSubmit() {
-    Object.keys(this.examForm.controls).forEach((key) => {
-      this.examForm.get(key)?.markAsDirty();
-      this.examForm.get(key)?.markAsTouched();
-    });
-    if(this.examForm.valid) {
-      
-    }
   }
 }

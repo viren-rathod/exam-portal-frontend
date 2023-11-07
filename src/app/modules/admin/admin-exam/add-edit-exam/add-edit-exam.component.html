@@ -63,11 +63,12 @@
               id="categories"
               name="categories"
               formControlName="categories"
+              (ngModelChange)="handleCategoryChange($event)"
             >
               <option selected hidden disabled>Select Question Category</option>
               <option
                 *ngFor="let category of categoryList"
-                value="{{ category.id }}"
+                [ngValue]="category.id"
               >
                 {{ category.title }}
               </option>
@@ -159,7 +160,9 @@
         <button class="btn btn-success rounded-0 px-4" type="submit">
           Create
         </button>
-        <button class="btn btn-danger rounded-0 px-4">Cancel</button>
+        <button class="btn btn-danger rounded-0 px-4" (click)="onCancel()">
+          Cancel
+        </button>
       </div>
     </form>
   </div>

@@ -2,14 +2,13 @@ import { Roles } from '../../enums/roles.enum';
 import { BaseResponse } from '../base-response.model';
 
 export interface Exam {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   maxMarks: string;
   totalQuestions: string;
-  status: Roles;
   examTime: number;
-  examCode: number;
+  categories: number[];
 }
 
 export interface ExamDataRequest {
@@ -23,4 +22,7 @@ export interface ExamDataRequest {
 
 export interface ExamResponse extends BaseResponse {
   data: Array<Exam>;
+}
+export interface AddExamResponse extends BaseResponse {
+  data: Exam;
 }
