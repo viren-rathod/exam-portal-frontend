@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
+import { Status } from 'src/app/shared/enums/status.enum';
 import { Category } from 'src/app/shared/models/api/category.model';
 import { Exam } from 'src/app/shared/models/api/exam.model';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
@@ -23,6 +25,7 @@ export class AddEditExamComponent implements OnInit {
     private formBuilder: FormBuilder,
     private examService: ExamService,
     private categoryService: CategoryService,
+    private toast: NgToastService,
     private router: Router
   ) {}
 
@@ -71,17 +74,32 @@ export class AddEditExamComponent implements OnInit {
         title: this.examForm.value.title,
         description: this.examForm.value.description,
         maxMarks: this.examForm.value.maxMarks,
-        totalQuestions: this.examForm.value,
+        totalQuestions: this.examForm.value.totalQuestions,
         examTime: this.examForm.value.examTime,
         categories: this.selectedCategory,
+        status: Status.InActive,
       };
       console.log('addExamData()-->', { ...addExamData });
       this.examService.addExam(addExamData).subscribe({
         next: (res) => {
           console.log('Exam addes successfully...', res.data);
+          this.toast.success({
+            detail: 'Success',
+            summary: 'Exam Created Successfully!',
+            duration: 3000,
+            position: 'topRight',
+          });
           this.router.navigate(['exam-portal/admin/exam']);
         },
-        error: (err) => console.log('Error adding Exam!!', err),
+        error: (error) => {
+          console.log('Error adding Exam!!', error.error.message);
+          this.toast.error({
+            detail: 'Failed!',
+            summary: error.error,
+            duration: 3000,
+            position: 'topRight',
+          });
+        },
       });
     }
   }

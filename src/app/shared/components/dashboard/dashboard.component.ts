@@ -7,14 +7,14 @@ import { Exam } from '../../models/api/exam.model';
 import { Question } from '../../models/api/question.model';
 import { CandidateService } from '../../services/candidate/candidate.service';
 import { Candidate } from '../../models/api/candidate.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
   examData: Array<Exam> = [];
   categoryData: Array<Category> = [];
   questionData: Array<Question> = [];
@@ -24,23 +24,22 @@ export class DashboardComponent implements OnInit {
     private categoryService: CategoryService,
     private examService: ExamService,
     private questionService: QuestionService,
-    private candidateService: CandidateService
-  ) { }
+    private candidateService: CandidateService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
-
     /**
      * Get Category details
      */
     this.categoryService.getAllCategories().subscribe({
       next: (res) => {
         this.categoryData = res.data;
-        console.log("getAllCategories-->", this.categoryData);
+        console.log('getAllCategories-->', this.categoryData);
       },
       error: (error) => {
-        console.log("ERROR-->", error);
+        console.log('ERROR-->', error);
       },
-    }
-    )
+    });
 
     /**
      * Get Exam Details
@@ -48,22 +47,21 @@ export class DashboardComponent implements OnInit {
     this.examService.getAllExams().subscribe({
       next: (res) => {
         this.examData = res.data;
-        console.log("getAllExams-->", this.examData);
+        console.log('getAllExams-->', this.examData);
       },
-      error: (error) => console.log(error.error.message)
-    })
+      error: (error) => console.log(error.error.message),
+    });
 
     /**
      * Get Questions details
      */
     this.questionService.getAllQuestions().subscribe({
       next: (res) => {
-        this.questionData = res.data
-        console.log("getAllQuestions-->", this.questionData);
+        this.questionData = res.data;
+        console.log('getAllQuestions-->', this.questionData);
       },
-      error: (error) => console.log(error.error)
-
-    })
+      error: (error) => console.log(error.error),
+    });
 
     /**
      * Get Candidate Details
@@ -71,9 +69,13 @@ export class DashboardComponent implements OnInit {
     this.candidateService.getAllCandidates().subscribe({
       next: (res) => {
         this.candidateData = res.data;
-        console.log("getAllCandidates-->", this.candidateData);
+        console.log('getAllCandidates-->', this.candidateData);
       },
-      error: (error) => console.log(error.error)
-    })
+      error: (error) => console.log(error.error),
+    });
+  }
+
+  redirectToUrl(url: string) {
+    this.router.navigate([url]);
   }
 }

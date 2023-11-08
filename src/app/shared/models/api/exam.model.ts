@@ -1,4 +1,5 @@
 import { Roles } from '../../enums/roles.enum';
+import { Status } from '../../enums/status.enum';
 import { BaseResponse } from '../base-response.model';
 
 export interface Exam {
@@ -8,6 +9,7 @@ export interface Exam {
   maxMarks: string;
   totalQuestions: string;
   examTime: number;
+  status: Status;
   categories: number[];
 }
 

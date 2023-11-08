@@ -25,7 +25,10 @@
 </div>
 <div class="row">
   <div class="col-xl-3 col-lg-4 col-sm-6">
-    <div class="border-left-primary icon-card mb-4">
+    <div
+      class="border-left-primary icon-card mb-4"
+      (click)="redirectToUrl('/exam-portal/admin/exam')"
+    >
       <div class="icon purple">
         <i class="bi bi-bag-check"></i>
       </div>
@@ -42,7 +45,10 @@
   </div>
   <!-- End Col -->
   <div class="col-xl-3 col-lg-4 col-sm-6">
-    <div class="border-left-success icon-card mb-4">
+    <div
+      class="border-left-success icon-card mb-4"
+      (click)="redirectToUrl('/admin/category')"
+    >
       <div class="icon success">
         <i class="bi bi-currency-dollar"></i>
       </div>
@@ -61,7 +67,10 @@
   </div>
   <!-- End Col -->
   <div class="col-xl-3 col-lg-4 col-sm-6">
-    <div class="border-left-info icon-card mb-4">
+    <div
+      class="border-left-info icon-card mb-4"
+      (click)="redirectToUrl('/admin/question')"
+    >
       <div class="icon primary">
         <i class="bi bi-wallet2"></i>
       </div>
