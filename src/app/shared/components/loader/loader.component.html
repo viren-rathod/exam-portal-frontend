@@ -1,0 +1,8 @@
+<div
+  *ngIf="loader.isLoading$ | async"
+  class="spinner-overlay d-flex justify-content-center align-items-center"
+>
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>

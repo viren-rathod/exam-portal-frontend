@@ -6,17 +6,22 @@ import {
   HttpInterceptor,
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { LoginService } from '../services/login.service';
+import { LoaderService } from '../services/loader.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private loginSevice: LoginService) {}
+  constructor(
+    private loginSevice: LoginService,
+    private loaderService: LoaderService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    this.loaderService.showLoader();
     let authRequest = request;
     const accessToken = this.loginSevice.getTokenFromLocalStorage();
     if (accessToken != null) {
@@ -26,7 +31,11 @@ export class AuthInterceptor implements HttpInterceptor {
         },
       });
     }
-    return next.handle(authRequest);
+    return next.handle(authRequest).pipe(
+      finalize(() => {
+        this.loaderService.hideLoader();
+      })
+    );
   }
 }
 

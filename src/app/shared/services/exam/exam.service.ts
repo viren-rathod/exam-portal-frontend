@@ -35,6 +35,11 @@ export class ExamService {
    *  Get all Exams
    */
   public getAllExams(): Observable<ExamResponse> {
+    setTimeout(() => {
+      console.log("here is log");
+      
+      this.http.get<ExamResponse>(`${BASE_URL}/api/exam/`);
+    }, 5000);
     return this.http.get<ExamResponse>(`${BASE_URL}/api/exam/`);
   }
 

@@ -9,6 +9,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { authIntercepterProviders } from './shared/interceptors/auth.interceptor';
 import { RegisterComponent } from './modules/register/register.component';
 import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
     RegisterComponent,
     LoginComponent,
     SidenavComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
