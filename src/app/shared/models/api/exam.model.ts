@@ -12,7 +12,16 @@ export interface Exam {
   status: Status;
   categories: number[];
 }
-
+export interface ExamList {
+  id: number;
+  title: string;
+  description: string;
+  maxMarks: string;
+  totalQuestions: string;
+  examTime: number;
+  status: Status;
+  categories: number[];
+}
 export interface ExamDataRequest {
   page: number;
   size: number;
@@ -23,8 +32,14 @@ export interface ExamDataRequest {
 }
 
 export interface ExamResponse extends BaseResponse {
-  data: Array<Exam>;
+  data: Array<ExamList>;
 }
 export interface AddExamResponse extends BaseResponse {
   data: Exam;
+}
+export interface GetExamResponse extends BaseResponse {
+  data: Exam;
+}
+export interface DeleteExamResponse extends BaseResponse {
+  data: string;
 }

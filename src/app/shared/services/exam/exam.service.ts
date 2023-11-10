@@ -3,11 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   AddExamResponse,
+  DeleteExamResponse,
   Exam,
   ExamDataRequest,
   ExamResponse,
+  GetExamResponse,
 } from '../../models/api/exam.model';
 import BASE_URL from '../util';
+import { BaseResponse } from '../../models/base-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,15 +38,22 @@ export class ExamService {
    *  Get all Exams
    */
   public getAllExams(): Observable<ExamResponse> {
-    setTimeout(() => {
-      console.log("here is log");
-      
-      this.http.get<ExamResponse>(`${BASE_URL}/api/exam/`);
-    }, 5000);
     return this.http.get<ExamResponse>(`${BASE_URL}/api/exam/`);
   }
 
   public addExam(data: Exam): Observable<AddExamResponse> {
     return this.http.post<AddExamResponse>(`${BASE_URL}/api/exam`, data);
+  }
+
+  public editExam(data: Exam): Observable<AddExamResponse> {
+    return this.http.put<AddExamResponse>(`${BASE_URL}/api/exam/`, data);
+  }
+
+  public deleteExam(id: number): Observable<DeleteExamResponse> {
+    return this.http.delete<DeleteExamResponse>(`${BASE_URL}/api/exam/${id}`);
+  }
+
+  public getExamById(id: number): Observable<GetExamResponse> {
+    return this.http.get<GetExamResponse>(`${BASE_URL}/api/exam/${id}`);
   }
 }

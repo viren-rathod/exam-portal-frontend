@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Exam, ExamDataRequest } from 'src/app/shared/models/api/exam.model';
+import { Status } from 'src/app/shared/enums/status.enum';
+import {
+  Exam,
+  ExamDataRequest,
+  ExamList,
+} from 'src/app/shared/models/api/exam.model';
 import { ExamService } from 'src/app/shared/services/exam/exam.service';
 
 @Component({
@@ -8,19 +13,22 @@ import { ExamService } from 'src/app/shared/services/exam/exam.service';
   styleUrls: ['./admin-exam.component.css'],
 })
 export class AdminExamComponent implements OnInit {
-  examData: Array<Exam> = [];
+  examData: Array<ExamList> = [];
+  StatusType = Status;
   getExamData: ExamDataRequest = {
     page: 1,
     size: 10,
   };
 
   constructor(private examService: ExamService) {}
+
   ngOnInit(): void {
     this.getExam(this.getExamData);
   }
 
   /**
    * Get Exam Details
+   * @param data
    */
   getExam(data: ExamDataRequest) {
     this.examService.getExams(data).subscribe({
@@ -30,5 +38,33 @@ export class AdminExamComponent implements OnInit {
       },
       error: (error) => console.log(error.error.message),
     });
+  }
+
+  /**
+   * @param id
+   * Start Inactive Exam
+   */
+  onStart(id: number) {}
+
+  /**
+   * Stop Active Exam
+   * @param id
+   */
+  onStop(id: number) {}
+
+  /**
+   * Delete Exam
+   * @param id
+   */
+  onDelete(id: number) {
+    if (confirm('Are you sure')) {
+      this.examService.deleteExam(id).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.getExam(this.getExamData);
+        },
+        error: (err) => console.log(err.error.message),
+      });
+    }
   }
 }

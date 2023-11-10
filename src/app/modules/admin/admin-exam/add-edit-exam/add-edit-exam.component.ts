@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { Status } from 'src/app/shared/enums/status.enum';
 import { Category } from 'src/app/shared/models/api/category.model';
@@ -26,7 +26,8 @@ export class AddEditExamComponent implements OnInit {
     private examService: ExamService,
     private categoryService: CategoryService,
     private toast: NgToastService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   get title() {
@@ -59,6 +60,7 @@ export class AddEditExamComponent implements OnInit {
       description: '',
     });
     this.getQuestionCategories();
+    this.checkEditMode();
   }
 
   /**
@@ -80,27 +82,52 @@ export class AddEditExamComponent implements OnInit {
         status: Status.InActive,
       };
       console.log('addExamData()-->', { ...addExamData });
-      this.examService.addExam(addExamData).subscribe({
-        next: (res) => {
-          console.log('Exam addes successfully...', res.data);
-          this.toast.success({
-            detail: 'Success',
-            summary: 'Exam Created Successfully!',
-            duration: 3000,
-            position: 'topRight',
-          });
-          this.router.navigate(['exam-portal/admin/exam']);
-        },
-        error: (error) => {
-          console.log('Error adding Exam!!', error.error.message);
-          this.toast.error({
-            detail: 'Failed!',
-            summary: error.error,
-            duration: 3000,
-            position: 'topRight',
-          });
-        },
-      });
+      if (this.editMode) {
+        addExamData.id = +this.id;
+        this.examService.editExam(addExamData).subscribe({
+          next: (res) => {
+            console.log('Exam Updated successfully...', res.data);
+            this.toast.success({
+              detail: 'Success',
+              summary: 'Exam Updated Successfully!',
+              duration: 3000,
+              position: 'topRight',
+            });
+            this.router.navigate(['exam-portal/admin/exam']);
+          },
+          error: (error) => {
+            console.log('Error updating Exam!!', error.error.message);
+            this.toast.error({
+              detail: 'Failed!',
+              summary: error.error,
+              duration: 3000,
+              position: 'topRight',
+            });
+          },
+        });
+      } else {
+        this.examService.addExam(addExamData).subscribe({
+          next: (res) => {
+            console.log('Exam addes successfully...', res.data);
+            this.toast.success({
+              detail: 'Success',
+              summary: 'Exam Created Successfully!',
+              duration: 3000,
+              position: 'topRight',
+            });
+            this.router.navigate(['exam-portal/admin/exam']);
+          },
+          error: (error) => {
+            console.log('Error adding Exam!!', error.error.message);
+            this.toast.error({
+              detail: 'Failed!',
+              summary: error.error,
+              duration: 3000,
+              position: 'topRight',
+            });
+          },
+        });
+      }
     }
   }
 
@@ -147,6 +174,53 @@ export class AddEditExamComponent implements OnInit {
       },
       error: (error) => {
         console.log('ERROR-->', error);
+      },
+    });
+  }
+
+  /**
+   * Check if Exam to be Save or Update using id in param
+   */
+  checkEditMode(): void {
+    this.route.params.subscribe((params) => {
+      if (params['id'] != null) {
+        this.id = params['id'];
+        this.editMode = true;
+      }
+    });
+    if (this.editMode) {
+      this.getExam();
+    }
+  }
+
+  /**
+   * Get Exam by id
+   */
+  getExam(): void {
+    this.examService.getExamById(this.id).subscribe({
+      next: (res) => {
+        let selectedExamCategory: number[] = [];
+        const examDetails = res.data;
+        examDetails.categories.map((item) => {
+          selectedExamCategory.push(item);
+        });
+        this.examForm.get('categories')?.setValue(selectedExamCategory);
+        let editForm = {
+          title: examDetails.title,
+          description: examDetails.description,
+          maxMarks: examDetails.maxMarks,
+          totalQuestions: examDetails.totalQuestions,
+          examTime: examDetails.examTime,
+        };
+        this.examForm.patchValue(editForm);
+      },
+      error: () => {
+        this.toast.error({
+          detail: 'Failed!',
+          summary: 'Something went Wrong!!',
+          duration: 3000,
+          position: 'topRight',
+        });
       },
     });
   }

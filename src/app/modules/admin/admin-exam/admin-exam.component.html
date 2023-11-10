@@ -31,12 +31,12 @@
                 <span class="fw-light">|</span>
               </span>
             </th>
-            <th scope="col">
+            <!-- <th scope="col">
               <span class="d-flex justify-content-between">
                 <span class="fw-medium">Total Candidates</span>
                 <span class="fw-light">|</span>
               </span>
-            </th>
+            </th> -->
             <th scope="col">
               <span class="d-flex justify-content-between">
                 <span class="fw-medium">Total Questions</span>
@@ -49,13 +49,13 @@
                 <span class="fw-light">|</span>
               </span>
             </th>
-            <th scope="col">
+            <!-- <th scope="col">
               <span class="d-flex justify-content-between">
                 <span class="fw-medium">Result</span>
                 <span class="fw-light">|</span>
               </span>
-            </th>
-            <th scope="col">
+            </th> -->
+            <th scope="col" colspan="2">
               <span class="d-flex justify-content-center">
                 <span class="fw-medium">Action</span>
               </span>
@@ -65,18 +65,40 @@
         <tbody class="border" *ngFor="let exam of examData">
           <tr>
             <td>{{ exam.title }}</td>
-            <td>2</td>
+            <!-- <td>2</td> -->
             <td>{{ exam.totalQuestions }}</td>
             <td>{{ exam.status }}</td>
-            <td>50</td>
+            <!-- <td>50</td> -->
             <td class="text-center">
               <span>
-                <div
+                <a
                   class="btn btn-success rounded-0 shadow-sm text-center w-75"
+                  *ngIf="exam.status == StatusType.InActive ? true : false"
+                  (click)="onStart(+exam.id)"
                 >
                   Start
-                </div>
+                </a>
+                <a
+                  *ngIf="exam.status == StatusType.Active ? true : false"
+                  class="btn btn-danger rounded-0 shadow-sm text-center w-75"
+                  (click)="onStop(+exam.id)"
+                  >Stop</a
+                >
               </span>
+            </td>
+            <td class="action-btn-group text-center">
+              <a
+                class="btn text-light bg-success rounded-0 me-1"
+                [routerLink]="['edit', +exam.id]"
+                *ngIf="exam.status == StatusType.InActive ? true : false"
+                ><i class="bi bi-pen-fill"></i
+              ></a>
+              <a
+                class="btn text-light bg-danger rounded-0 ms-1"
+                (click)="onDelete(+exam.id)"
+                *ngIf="exam.status == StatusType.InActive ? true : false"
+                ><i class="bi bi-trash-fill"></i
+              ></a>
             </td>
           </tr>
         </tbody>
