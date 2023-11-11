@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CategoryDataRequest, CategoryResponse, CategoryResponsePaginated } from '../../models/api/category.model';
+import { AddCategoryResponse, Category, CategoryDataRequest, CategoryResponse, CategoryResponsePaginated, DeleteCategoryResponse, GetCategoryResponse } from '../../models/api/category.model';
 import { Observable } from 'rxjs';
 import BASE_URL from '../util';
 
@@ -20,6 +20,23 @@ export class CategoryService {
 
   public getAllCategories(): Observable<CategoryResponse> {
     return this.http.get<CategoryResponse>(`${BASE_URL}/api/category/`);
+  }
+
+
+  public addCategory(data: Category): Observable<AddCategoryResponse> {
+    return this.http.post<AddCategoryResponse>(`${BASE_URL}/api/category`, data);
+  }
+
+  public editCategory(data: Category): Observable<AddCategoryResponse> {
+    return this.http.put<AddCategoryResponse>(`${BASE_URL}/api/category/`, data);
+  }
+
+  public deleteCategory(id: number): Observable<DeleteCategoryResponse> {
+    return this.http.delete<DeleteCategoryResponse>(`${BASE_URL}/api/category/${id}`);
+  }
+
+  public getCategoryById(id: number): Observable<GetCategoryResponse> {
+    return this.http.get<GetCategoryResponse>(`${BASE_URL}/api/category/${id}`);
   }
 
 }

@@ -1,0 +1,62 @@
+<div class="card rounded-0 border-0">
+    <div class="card-head">
+        <div class="d-flex categories justify-content-between align-items-center p-3">
+            <div class="title fs-5 fw-bold">Category</div>
+            <a [routerLink]="['/exam-portal/admin/category/add']">
+                <button id="addCategory" class="btn btn-danger rounded-0">
+                    + Add Category
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <hr class="p-0 m-0" />
+    <div class="card-body z-0">
+        <div class="input-container">
+            <div class="align-items-center border col3 d-flex float-end rounded-1 mb-3">
+                <input id="" class="effect border-0" type="text" placeholder="Search" />
+                <span class="focus-bg"></span>
+                <i class="bi bi-search text-light bi bi-search px-3 py-2"></i>
+            </div>
+        </div>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <span class="ms-3 d-flex justify-content-between">
+                                <span class="fw-medium">Name</span>
+                                <span class="fw-light">|</span>
+                            </span>
+                        </th>
+                        <th scope="col">
+                            <span class="d-flex justify-content-between">
+                                <span class="fw-medium">Description</span>
+                                <span class="fw-light">|</span>
+                            </span>
+                        </th>
+                        <th scope="col" colspan="2">
+                            <span class="d-flex justify-content-center">
+                                <span class="fw-medium">Action</span>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="border" *ngFor="let category of categoryList">
+                    <tr>
+                        <td class="ps-4">{{ category.title }}</td>
+                        <td>{{ category.description }}</td>
+                        <td class="text-center">
+                        </td>
+                        <td class="action-btn-group text-center">
+                            <a class="btn text-light bg-success rounded-0 me-1" [routerLink]="['edit', +category.id]"><i
+                                    class="bi bi-pen-fill"></i></a>
+                            <a class="btn text-light bg-danger rounded-0 ms-1" (click)="onDelete(+category.id)"><i
+                                    class="bi bi-trash-fill"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

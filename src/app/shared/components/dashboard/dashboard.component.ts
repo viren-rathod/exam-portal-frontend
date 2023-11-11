@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
     private questionService: QuestionService,
     private candidateService: CandidateService,
     private router: Router
-  ) {}
+  ) { }
   ngOnInit(): void {
     /**
      * Get Category details
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
      */
     this.candidateService.getAllCandidates().subscribe({
       next: (res) => {
-        this.candidateData = res.data;
+        this.candidateData = res && res.data;
         console.log('getAllCandidates-->', this.candidateData);
       },
       error: (error) => console.log(error.error),

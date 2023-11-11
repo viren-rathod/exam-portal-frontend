@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Status } from 'src/app/shared/enums/status.enum';
 import {
-  Exam,
   ExamDataRequest,
   ExamList,
 } from 'src/app/shared/models/api/exam.model';
@@ -16,11 +15,11 @@ export class AdminExamComponent implements OnInit {
   examData: Array<ExamList> = [];
   StatusType = Status;
   getExamData: ExamDataRequest = {
-    page: 1,
+    page: 0,
     size: 10,
   };
 
-  constructor(private examService: ExamService) {}
+  constructor(private examService: ExamService) { }
 
   ngOnInit(): void {
     this.getExam(this.getExamData);
@@ -44,13 +43,13 @@ export class AdminExamComponent implements OnInit {
    * @param id
    * Start Inactive Exam
    */
-  onStart(id: number) {}
+  onStart(id: number) { }
 
   /**
    * Stop Active Exam
    * @param id
    */
-  onStop(id: number) {}
+  onStop(id: number) { }
 
   /**
    * Delete Exam

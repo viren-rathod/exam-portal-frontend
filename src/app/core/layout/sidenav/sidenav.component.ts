@@ -11,12 +11,12 @@ export class SidenavComponent {
   collapsed = true;
   screenWidth = 0;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 768) this.collapsed = false;
-    else this.collapsed = true;
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: any) {
+  //   this.screenWidth = window.innerWidth;
+  //   if (this.screenWidth <= 768) this.collapsed = false;
+  //   else this.collapsed = true;
+  // }
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
@@ -42,4 +42,10 @@ const NAVBAR_DATA = [
     icon: 'bi bi-book',
     label: 'Exam'
   },
+  {
+    routerLink: '/exam-portal/admin/category',
+    icon: 'bi bi-list',
+    label: 'Category'
+  },
+
 ]
