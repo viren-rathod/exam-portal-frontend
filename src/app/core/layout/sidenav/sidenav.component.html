@@ -45,32 +45,23 @@
     class="header d-flex align-items-center position-fixed top-0 end-0 bg-light"
     [ngClass]="collapsed ? 'full-header' : ''"
   >
-    <!-- <ul class="header-menu"> -->
-    <button
-      class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
-      (click)="toggleCollapse()"
-    >
-      <i class="bi bi-list-nested text-black fs-4"></i>
-    </button>
-
-    <!-- <li class="header-user">
-        <a>
-          <span><i nz-icon nzType="user" nzTheme="outline"></i></span>
-          Viren
-           {{ loginUserName | titlecase }} 
-        </a>
-      </li>
-       <nz-dropdown-menu #menu="nzDropdownMenu">
-              <ul class="header-dropdown" nz-menu nzSelectable>
-                  <li class="log-out" nz-menu-item *ngIf="isAuth" (click)="onLogout()">
-                      <span><span nz-icon nzType="logout" nzTheme="outline"></span></span>Log Out
-                  </li>
-              </ul>
-          </nz-dropdown-menu> 
-    </ul>   -->
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div>
+        <button
+        class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
+        (click)="toggleCollapse()"
+        >
+          <i class="bi bi-list-nested text-black fs-4"></i>
+        </button>
+      </div>
+      <button class="d-flex align-items-center border-0 bg-transparent" (click)="onLogout()">
+        <i class="bi bi-person-circle fs-5 px-1"></i>
+        <span class="me-5" >{{loginUserName}}</span>
+      </button>
+    </div>
   </header>
   <main class="main-body py-5">
     <router-outlet></router-outlet>
   </main>
-  <footer class="footer">©2022 Exam Portal | All rights reserved</footer>
+  <footer class="footer text-center">©2022 Exam Portal | All rights reserved</footer>
 </div>

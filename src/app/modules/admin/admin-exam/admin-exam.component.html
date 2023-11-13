@@ -31,12 +31,6 @@
                 <span class="fw-light">|</span>
               </span>
             </th>
-            <!-- <th scope="col">
-              <span class="d-flex justify-content-between">
-                <span class="fw-medium">Total Candidates</span>
-                <span class="fw-light">|</span>
-              </span>
-            </th> -->
             <th scope="col">
               <span class="d-flex justify-content-between">
                 <span class="fw-medium">Total Questions</span>
@@ -49,12 +43,6 @@
                 <span class="fw-light">|</span>
               </span>
             </th>
-            <!-- <th scope="col">
-              <span class="d-flex justify-content-between">
-                <span class="fw-medium">Result</span>
-                <span class="fw-light">|</span>
-              </span>
-            </th> -->
             <th scope="col" colspan="2">
               <span class="d-flex justify-content-center">
                 <span class="fw-medium">Action</span>
@@ -64,11 +52,9 @@
         </thead>
         <tbody class="border" *ngFor="let exam of examData">
           <tr>
-            <td class="ps-4">{{ exam.title }}</td>
-            <!-- <td>2</td> -->
-            <td>{{ exam.totalQuestions }}</td>
-            <td>{{ exam.status }}</td>
-            <!-- <td>50</td> -->
+            <td class="pt-3 ps-4">{{ exam.title }}</td>
+            <td class="pt-3">{{ exam.totalQuestions }}</td>
+            <td class="pt-3">{{ exam.status }}</td>
             <td class="text-center">
               <span>
                 <a

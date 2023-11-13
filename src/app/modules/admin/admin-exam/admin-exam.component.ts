@@ -43,13 +43,31 @@ export class AdminExamComponent implements OnInit {
    * @param id
    * Start Inactive Exam
    */
-  onStart(id: number) { }
+  onStart(id: number): void {
+    if (confirm("are u sure")) {
+      this.examService.startExam(id).subscribe({
+        next: () => {
+          this.getExam(this.getExamData);
+        },
+        error: (error) => console.log(error.error.message),
+      })
+    }
+  }
 
   /**
    * Stop Active Exam
    * @param id
    */
-  onStop(id: number) { }
+  onStop(id: number) {
+    if (confirm("are u sure")) {
+      this.examService.stopExam(id).subscribe({
+        next: () => {
+          this.getExam(this.getExamData);
+        },
+        error: (error) => console.log(error.error.message),
+      })
+    }
+  }
 
   /**
    * Delete Exam

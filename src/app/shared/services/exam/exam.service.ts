@@ -16,7 +16,7 @@ import { BaseResponse } from '../../models/base-response.model';
   providedIn: 'root',
 })
 export class ExamService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Get All Exams with filter and Pagination
@@ -55,5 +55,18 @@ export class ExamService {
 
   public getExamById(id: number): Observable<GetExamResponse> {
     return this.http.get<GetExamResponse>(`${BASE_URL}/api/exam/${id}`);
+  }
+
+  /**
+   * 
+   * @param id Start the exam for students
+   * @returns 
+   */
+  public startExam(id: number): Observable<GetExamResponse> {
+    return this.http.put<GetExamResponse>(`${BASE_URL}/api/exam/start`, id)
+  }
+
+  public stopExam(id: number): Observable<GetExamResponse> {
+    return this.http.put<GetExamResponse>(`${BASE_URL}/api/exam/stop`, id)
   }
 }

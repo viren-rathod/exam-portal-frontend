@@ -1,22 +1,17 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/shared/services/login.service';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
 
   navData = NAVBAR_DATA;
   collapsed = true;
   screenWidth = 0;
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: any) {
-  //   this.screenWidth = window.innerWidth;
-  //   if (this.screenWidth <= 768) this.collapsed = false;
-  //   else this.collapsed = true;
-  // }
+  loginUserName:string|undefined;
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
@@ -25,8 +20,16 @@ export class SidenavComponent {
     this.collapsed = false;
   }
 
-  onToggleSidenav(event: Event) {
-    console.log('Sidenav toggled:', event);
+  constructor(private loginService: LoginService){}
+
+  ngOnInit(): void {
+    let loginData = this.loginService.getUserDetailsFromLocalStorage();
+    this.loginUserName = loginData?.username;
+  }
+
+  onLogout() {
+    if(confirm("Are u sure ?"))
+      this.loginService.removeTokenFromStorage();
   }
 
 }

@@ -41,7 +41,7 @@
                   id="description"
                   class="effect w-100"
                   type="text"
-                  placeholder="Exam Time"
+                  placeholder="Category Description"
                   formControlName="description"
                 />
                 <span class="focus-bg"></span>
@@ -55,12 +55,12 @@
                 <small
                   *ngIf="description?.errors?.['required']"
                   class="text-danger"
-                  >*Exam time is required.</small
+                  >*description is required.</small
                 >
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-end gap-2 my-3">
+          <div class="d-flex gap-2 my-3">
             <button class="btn btn-success rounded-0 px-4" type="submit">
               Create
             </button>
