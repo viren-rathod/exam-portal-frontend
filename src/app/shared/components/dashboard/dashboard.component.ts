@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
      */
     this.candidateService.getAllCandidates().subscribe({
       next: (res) => {
-        this.candidateData = res.data;
+        this.candidateData = res?.data;
         console.log('getAllCandidates-->', this.candidateData);
       },
       error: (error) => console.log(error.error),
