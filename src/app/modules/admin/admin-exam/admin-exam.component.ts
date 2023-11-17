@@ -17,6 +17,9 @@ export class AdminExamComponent implements OnInit {
   getExamData: ExamDataRequest = {
     page: 0,
     size: 10,
+    sortField: 'id',
+    sortOrder: 'asc',
+    searchData: '',
   };
 
   constructor(private examService: ExamService) { }
@@ -32,7 +35,7 @@ export class AdminExamComponent implements OnInit {
   getExam(data: ExamDataRequest) {
     this.examService.getExams(data).subscribe({
       next: (res) => {
-        this.examData = res.data;
+        this.examData = res.data.content;
         console.log('getAllExams-->', this.examData);
       },
       error: (error) => console.log(error.error.message),

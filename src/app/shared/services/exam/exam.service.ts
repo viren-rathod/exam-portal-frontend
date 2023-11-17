@@ -8,6 +8,7 @@ import {
   ExamDataRequest,
   ExamResponse,
   GetExamResponse,
+  PaginatedExamResponse,
 } from '../../models/api/exam.model';
 import BASE_URL from '../util';
 import { BaseResponse } from '../../models/base-response.model';
@@ -23,15 +24,18 @@ export class ExamService {
    * @param data
    * @returns
    */
-  public getExams(data: ExamDataRequest): Observable<ExamResponse> {
+  public getExams(data: ExamDataRequest): Observable<PaginatedExamResponse> {
     let params = new HttpParams()
       .append('page', data.page)
-      .append('size', data.size);
-    // .append('sortField', data.sortField)
-    // .append('sortOrder', data.sortOrder)
-    // .append('search', encodeURIComponent(data.searchData.trim()))
+      .append('size', data.size)
+      .append('sortField', data.sortField)
+      .append('sortOrder', data.sortOrder)
+      .append('searchData', data.searchData);
     // .append('filter', JSON.stringify(filterData))
-    return this.http.get<ExamResponse>(`${BASE_URL}/api/exam/`, { params });
+    return this.http.get<PaginatedExamResponse>(
+      `${BASE_URL}/api/exam/paginated`,
+      { params }
+    );
   }
 
   /**

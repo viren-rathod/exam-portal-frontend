@@ -25,14 +25,19 @@ export interface ExamList {
 export interface ExamDataRequest {
   page: number;
   size: number;
-  // sortField: string | null;
-  // sortOrder: string | null;
-  // searchData: string;
+  sortField: string;
+  sortOrder: string;
+  searchData: string;
   // filter?:Filter;
 }
 
 export interface ExamResponse extends BaseResponse {
   data: Array<ExamList>;
+}
+export interface PaginatedExamResponse extends BaseResponse {
+  data: {
+    content: Array<ExamList>;
+  };
 }
 export interface AddExamResponse extends BaseResponse {
   data: Exam;
