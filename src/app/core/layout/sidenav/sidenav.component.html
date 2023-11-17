@@ -26,7 +26,11 @@
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <i class="sidenav-link-icon text-center d-flex justify-content-center " [class]="data.icon"></i>
+        <img
+          class="sidenav-link-icon text-center d-flex justify-content-center text-light"
+          *ngIf="data.img"
+          [src]="data.img"
+        />
         <span
           class="sidenav-link-text text-light opacity-75 ms-3"
           *ngIf="collapsed"
@@ -45,23 +49,28 @@
     class="header d-flex align-items-center position-fixed top-0 end-0 bg-light"
     [ngClass]="collapsed ? 'full-header' : ''"
   >
-    <div class="d-flex justify-content-between align-items-center w-100">
+    <div class="d-flex justify-content-between align-items-center w-100 px-3">
       <div>
         <button
-        class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
-        (click)="toggleCollapse()"
+          class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
+          (click)="toggleCollapse()"
         >
           <i class="bi bi-list-nested text-black fs-4"></i>
         </button>
       </div>
-      <button class="d-flex align-items-center border-0 bg-transparent" (click)="onLogout()">
+      <button
+        class="d-flex align-items-center border-0 bg-transparent me-5"
+        (click)="onLogout()"
+      >
         <i class="bi bi-person-circle fs-5 px-1"></i>
-        <span class="me-5" >{{loginUserName}}</span>
+        <span>{{ loginUserName }}</span>
       </button>
     </div>
   </header>
   <main class="main-body py-5">
     <router-outlet></router-outlet>
   </main>
-  <footer class="footer text-center">©2022 Exam Portal | All rights reserved</footer>
+  <footer class="footer text-center">
+    ©2022 Exam Portal | All rights reserved
+  </footer>
 </div>

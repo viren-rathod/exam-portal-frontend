@@ -57,36 +57,38 @@
 
           <div class="input-container">
             <div class="col3 w-100">
-            <label for="categories">Question Category </label>
-            <select
-              multiple
-              class="effect w-100 rounded-1"
-              id="categories"
-              name="categories"
-              formControlName="categories"
-              (ngModelChange)="handleCategoryChange($event)"
-            >
-              <option selected hidden disabled>Select Question Category</option>
-              <option
-                *ngFor="let category of categoryList"
-                [ngValue]="category.id"
+              <label for="categories">Question Category </label>
+              <select
+                multiple
+                class="effect w-100 rounded-1"
+                id="categories"
+                name="categories"
+                formControlName="categories"
+                (ngModelChange)="handleCategoryChange($event)"
               >
-                {{ category.title }}
-              </option>
-            </select>
-            <div
-              *ngIf="
-                categories?.invalid &&
-                (categories?.dirty || categories?.touched)
-              "
-            >
-              <small
-                *ngIf="categories?.errors?.['required']"
-                class="text-danger"
-                >*Exam category is required.</small
+                <option selected hidden disabled>
+                  Select Question Category
+                </option>
+                <option
+                  *ngFor="let category of categoryList"
+                  [ngValue]="category.id"
+                >
+                  {{ category.title }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  categories?.invalid &&
+                  (categories?.dirty || categories?.touched)
+                "
               >
+                <small
+                  *ngIf="categories?.errors?.['required']"
+                  class="text-danger"
+                  >*Exam category is required.</small
+                >
+              </div>
             </div>
-          </div>
           </div>
 
           <div class="input-container">
@@ -159,10 +161,10 @@
         </div>
       </div>
       <div class="d-flex gap-2 my-3">
-        <button class="btn btn-success rounded-0 px-4" type="submit">
-          Create
+        <button class="btn btn-success rounded-1 px-4" type="submit">
+          {{ id ? "Update" : "Create" }}
         </button>
-        <button class="btn btn-danger rounded-0 px-4" (click)="onCancel()">
+        <button class="btn btn-danger rounded-1 px-4" (click)="onCancel()">
           Cancel
         </button>
       </div>

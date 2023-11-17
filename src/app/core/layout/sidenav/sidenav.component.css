@@ -23,7 +23,9 @@
   border: none;
   transition: 0.5s ease;
 }
-
+.main-body {
+  min-height: 90vh;
+}
 .main-body-wrap .header .btn-closed:hover {
   transform: scale(110%);
 }
@@ -44,9 +46,8 @@
 }
 
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
-  font-size: 22px;
-  width: 2rem;
-  min-width: 2rem;
+  width: 22px;
+  height: 22px;
   margin: 0 0 0 1rem;
 }
 
@@ -72,6 +73,9 @@
 
 .full-header {
   width: calc(100% - 16.5625rem);
+}
+.bi-person-circle {
+  color: #002f4b;
 }
 
 .main-body-wrap {

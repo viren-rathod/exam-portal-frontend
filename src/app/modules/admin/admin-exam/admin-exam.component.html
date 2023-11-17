@@ -3,8 +3,14 @@
     <div class="d-flex exams justify-content-between align-items-center p-3">
       <div class="title fs-5 fw-bold">Exams</div>
       <a [routerLink]="['/exam-portal/admin/exam/add']">
-        <button id="addExam" class="btn btn-danger rounded-0">
-          + Add Exam
+        <button id="addExam" class="btn btn-danger rounded-1 d-flex px-4">
+          <span class="px-1 d-flex align-items-center"
+            ><img
+              src="../../../../assets/images/add-plus.svg"
+              height="22px"
+              alt="Add button"
+          /></span>
+          <span class="px-1 d-flex align-items-center fw-semibold">Add</span>
         </button>
       </a>
     </div>
@@ -58,7 +64,7 @@
             <td class="text-center">
               <span>
                 <a
-                  class="btn btn-success rounded-0 shadow-sm text-center w-75"
+                  class="btn btn-success rounded-1 shadow-sm text-center w-75"
                   *ngIf="exam.status == StatusType.InActive ? true : false"
                   (click)="onStart(+exam.id)"
                 >
@@ -66,7 +72,7 @@
                 </a>
                 <a
                   *ngIf="exam.status == StatusType.Active ? true : false"
-                  class="btn btn-danger rounded-0 shadow-sm text-center w-75"
+                  class="btn btn-danger rounded-1 shadow-sm text-center w-75"
                   (click)="onStop(+exam.id)"
                   >Stop</a
                 >
@@ -74,13 +80,13 @@
             </td>
             <td class="action-btn-group text-center">
               <a
-                class="btn text-light bg-success rounded-0 me-1"
+                class="btn text-light bg-success rounded-1 me-1"
                 [routerLink]="['edit', +exam.id]"
                 *ngIf="exam.status == StatusType.InActive ? true : false"
                 ><i class="bi bi-pen-fill"></i
               ></a>
               <a
-                class="btn text-light bg-danger rounded-0 ms-1"
+                class="btn text-light bg-danger rounded-1 ms-1"
                 (click)="onDelete(+exam.id)"
                 *ngIf="exam.status == StatusType.InActive ? true : false"
                 ><i class="bi bi-trash-fill"></i

@@ -37,18 +37,18 @@ export class SidenavComponent implements OnInit {
 const NAVBAR_DATA = [
   {
     routerLink: '/exam-portal/dashboard',
-    icon: 'bi bi-house',
+    img:'../../../../assets/images/home.svg',
     label: 'Dashhboard'
   },
   {
     routerLink: '/exam-portal/admin/exam',
-    icon: 'bi bi-book',
+    img:'../../../../assets/images/book.svg',
     label: 'Exam'
   },
   {
     routerLink: '/exam-portal/admin/category',
-    icon: 'bi bi-list',
-    label: 'Category'
+    img:'../../../../assets/images/category.svg',
+    label: 'Category',
   },
 
 ]
