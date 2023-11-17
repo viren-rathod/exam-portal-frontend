@@ -65,3 +65,6 @@ thead tr th:first-child {
 thead tr th:last-child {
   border-top-right-radius: 0.375rem;
 }
+.page-link {
+  cursor: pointer;
+}

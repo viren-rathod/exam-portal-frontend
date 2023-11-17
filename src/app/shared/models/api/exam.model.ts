@@ -37,6 +37,11 @@ export interface ExamResponse extends BaseResponse {
 export interface PaginatedExamResponse extends BaseResponse {
   data: {
     content: Array<ExamList>;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+    first: boolean;
+    number: number;
   };
 }
 export interface AddExamResponse extends BaseResponse {

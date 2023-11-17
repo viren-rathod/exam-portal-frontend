@@ -20,13 +20,26 @@
 
   <hr class="p-0 m-0" />
   <div class="card-body z-0">
-    <div class="input-container">
-      <div
-        class="align-items-center border col3 d-flex float-end rounded-1 mb-3"
-      >
-        <input id="" class="effect border-0" type="text" placeholder="Search" />
-        <span class="focus-bg"></span>
-        <i class="bi bi-search text-light bi bi-search px-3 py-2"></i>
+    <div class="d-flex w-100 align-items-center">
+      <select class="form-select w-auto" (change)="handleSizeChange($event)">
+        <option *ngFor="let size of sizeArray" [ngValue]="size.value">
+          {{ size.title }}
+        </option>
+      </select>
+      <div class="input-container d-flex w-100 justify-content-end">
+        <div
+          class="align-items-center border col3 d-flex float-end rounded-1 mb-3"
+        >
+          <input
+            id=""
+            class="effect border-0"
+            type="text"
+            placeholder="Search"
+            (input)="onSearch($event)"
+          />
+          <span class="focus-bg"></span>
+          <i class="bi bi-search text-light bi bi-search px-3 py-2"></i>
+        </div>
       </div>
     </div>
     <div>
@@ -52,6 +65,11 @@
             </th>
           </tr>
         </thead>
+        <tbody *ngIf="categoryList && categoryList.length <= 0">
+          <tr>
+            <td class="text-center" colspan="4">No data found</td>
+          </tr>
+        </tbody>
         <tbody class="border" *ngFor="let category of categoryList">
           <tr>
             <td class="pt-3 ps-4">{{ category.title }}</td>
@@ -72,6 +90,33 @@
           </tr>
         </tbody>
       </table>
+
+      <nav>
+        <ul class="pagination float-end">
+          <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
+            <a class="page-link" (click)="onParamsChange(currentPage - 1)"
+              >Previous</a
+            >
+          </li>
+
+          <li
+            class="page-item"
+            *ngFor="let item of [].constructor(totalPages); let i = index"
+            [class.active]="i === currentPage"
+          >
+            <a class="page-link" (click)="onParamsChange(i)">{{ i + 1 }}</a>
+          </li>
+
+          <li
+            [ngClass]="currentPage >= totalPages - 1 ? 'disabled' : ''"
+            class="page-item"
+          >
+            <a class="page-link" (click)="onParamsChange(currentPage + 1)"
+              >Next</a
+            >
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Status } from 'src/app/shared/enums/status.enum';
 import {
   ExamDataRequest,
@@ -13,18 +14,40 @@ import { ExamService } from 'src/app/shared/services/exam/exam.service';
 })
 export class AdminExamComponent implements OnInit {
   examData: Array<ExamList> = [];
+  totalExams: number = 0;
+  totalPages: number = 0;
+  currentPage: number = 0;
+  pageSize: number = 3;
+  sizeArray = [
+    {
+      value: 3,
+      title: 3,
+    },
+    {
+      value: 5,
+      title: 5,
+    },
+    {
+      value: 10,
+      title: 10,
+    },
+  ];
   StatusType = Status;
   getExamData: ExamDataRequest = {
-    page: 0,
-    size: 10,
+    page: this.currentPage,
+    size: this.pageSize,
     sortField: 'id',
     sortOrder: 'asc',
     searchData: '',
   };
+  private searchSubject = new Subject<string>();
 
-  constructor(private examService: ExamService) { }
+  constructor(private examService: ExamService) {}
 
   ngOnInit(): void {
+    this.searchSubject
+      .pipe(debounceTime(3000), distinctUntilChanged())
+      .subscribe((res) => this.searchHandler(res));
     this.getExam(this.getExamData);
   }
 
@@ -35,8 +58,15 @@ export class AdminExamComponent implements OnInit {
   getExam(data: ExamDataRequest) {
     this.examService.getExams(data).subscribe({
       next: (res) => {
-        this.examData = res.data.content;
-        console.log('getAllExams-->', this.examData);
+        if (res) {
+          this.examData = res.data.content;
+          this.totalExams = res.data.totalElements;
+          this.totalPages = res.data.totalPages;
+          this.currentPage = res.data.number;
+        } else {
+          this.examData = [];
+          this.totalPages = 0;
+        }
       },
       error: (error) => console.log(error.error.message),
     });
@@ -47,13 +77,13 @@ export class AdminExamComponent implements OnInit {
    * Start Inactive Exam
    */
   onStart(id: number): void {
-    if (confirm("are u sure")) {
+    if (confirm('are u sure')) {
       this.examService.startExam(id).subscribe({
         next: () => {
           this.getExam(this.getExamData);
         },
         error: (error) => console.log(error.error.message),
-      })
+      });
     }
   }
 
@@ -62,13 +92,13 @@ export class AdminExamComponent implements OnInit {
    * @param id
    */
   onStop(id: number) {
-    if (confirm("are u sure")) {
+    if (confirm('are u sure')) {
       this.examService.stopExam(id).subscribe({
         next: () => {
           this.getExam(this.getExamData);
         },
         error: (error) => console.log(error.error.message),
-      })
+      });
     }
   }
 
@@ -86,5 +116,47 @@ export class AdminExamComponent implements OnInit {
         error: (err) => console.log(err.error.message),
       });
     }
+  }
+
+  /**
+   * Handling Pagination
+   * @param index
+   */
+  onParamsChange(index: number): void {
+    this.getExamData = { ...this.getExamData, page: index };
+    this.getExam(this.getExamData);
+  }
+
+  /**
+   * Handling Items per page
+   * @param event
+   */
+  handleSizeChange(event: Event) {
+    this.getExamData = {
+      ...this.getExamData,
+      size: +(event.target as HTMLInputElement).value,
+    };
+    this.getExam(this.getExamData);
+  }
+
+  /**
+   * Handling Search with debounce
+   * @param event
+   */
+  onSearch(event: Event) {
+    let saerchString = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(saerchString);
+  }
+
+  /**
+   * Performing search
+   * @param str
+   */
+  searchHandler(str: string) {
+    this.getExamData = {
+      ...this.getExamData,
+      searchData: str,
+    };
+    this.getExam(this.getExamData);
   }
 }
