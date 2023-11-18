@@ -1,0 +1,71 @@
+:focus {
+    outline: none;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font: 16px/24px "Montserrat", sans-serif;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+  ::placeholder {
+    font-weight: 400 !important;
+    font-size: 14px;
+  }
+  .col3 {
+    float: left;
+    width: 27.33%;
+    margin: 10px 0 0 0;
+    position: relative;
+  }
+  
+  .effect {
+    border: 0;
+    padding: 7px 15px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: transparent;
+  }
+  .effect ~ .focus-bg {
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #ededed;
+    transition: 0.3s;
+    z-index: -1;
+  }
+  .effect:focus ~ .focus-bg {
+    transition: 0.3s;
+    width: 100%;
+  }
+  
+  .bi-search {
+    background-color: #002f4b !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #002f4b;
+  }
+  .bi-search:hover {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+  thead tr th {
+    background: #002f4b !important;
+    color: #fff !important;
+  }
+  thead tr th:first-child {
+    border-top-left-radius: 0.375rem;
+  }
+  
+  thead tr th:last-child {
+    border-top-right-radius: 0.375rem;
+  }
+  .page-link {
+    cursor: pointer;
+  }
+  
