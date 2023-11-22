@@ -7,6 +7,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+:root {
+  --badge-purple-bg: #9162c015;
+  --badge-purple-fg: #9162c0;
+  --badge-green-bg: #d1e3e5;
+  --badge-green-fg: #449d5d;
+  --badge-amber-bg: #d1772415;
+  --badge-amber-fg: #d17724;
+  --badge-blue-bg: #3b88e915;
+  --badge-blue-fg: #3b88e9;
+  --badge-red-bg: #efd9e6;
+  --badge-red-fg: #eb5657;
+}
 body {
   /* background-color: #eeeeee; */
   overflow-x: hidden;
@@ -116,4 +128,37 @@ form input[type="password"] {
   left: 7px;
   top: 3px;
   transform: rotate(45deg);
+}
+.tag {
+  display: inline-block;
+  width: 100px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 16px;
+}
+.tag-purple {
+  background: var(--badge-purple-bg);
+  color: var(--badge-purple-fg);
+}
+.tag-green {
+  background: var(--badge-green-bg);
+  color: var(--badge-green-fg);
+  padding-left: 22px;
+  padding-right: 22px;
+}
+.tag-amber {
+  background: var(--badge-amber-bg);
+  color: var(--badge-amber-fg);
+}
+.tag-blue {
+  background: var(--badge-blue-bg);
+  color: var(--badge-blue-fg);
+}
+
+.tag-red {
+  background: var(--badge-red-bg);
+  color: var(--badge-red-fg);
 }

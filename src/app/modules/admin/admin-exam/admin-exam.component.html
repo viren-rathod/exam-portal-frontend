@@ -78,7 +78,11 @@
           <tr>
             <td class="pt-3 ps-4">{{ exam.title }}</td>
             <td class="pt-3">{{ exam.totalQuestions }}</td>
-            <td class="pt-3">{{ exam.status }}</td>
+            <td class="pt-3">
+              <span class="tag" [ngClass]="exam.status == StatusType.Active ? ' tag-green' : ' tag-red'">
+                {{ exam.status }}
+              </span>
+            </td>
             <td class="text-center">
               <span>
                 <a
