@@ -94,8 +94,12 @@
       <nav>
         <ul class="pagination float-end">
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
+            <a class="page-link" (click)="onParamsChange(0)">&laquo;</a>
+          </li>
+
+          <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(currentPage - 1)"
-              >Previous</a
+              >&lsaquo;</a
             >
           </li>
 
@@ -112,7 +116,15 @@
             class="page-item"
           >
             <a class="page-link" (click)="onParamsChange(currentPage + 1)"
-              >Next</a
+              >&rsaquo;</a
+            >
+          </li>
+          <li
+            [ngClass]="currentPage >= totalPages - 1 ? 'disabled' : ''"
+            class="page-item"
+          >
+            <a class="page-link" (click)="onParamsChange(totalPages - 1)"
+              >&raquo;</a
             >
           </li>
         </ul>

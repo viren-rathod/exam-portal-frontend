@@ -20,7 +20,7 @@ export interface CategoryDataRequest {
 }
 
 export interface CategoryResponse extends BaseResponse {
-  data: Array<Category>;
+  data: Array<CategoryList>;
 }
 
 export interface CategoryResponsePaginatedData {

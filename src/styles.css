@@ -161,3 +161,11 @@ form input[type="password"] {
   background: var(--badge-red-bg);
   color: var(--badge-red-fg);
 }
+
+.page-link {
+  color: #002f4b;
+}
+
+.active > .page-link, .page-link.active {
+  background-color: #002f4b !important;
+}

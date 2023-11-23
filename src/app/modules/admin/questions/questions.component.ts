@@ -4,6 +4,7 @@ import {
   QuestionDataRequest,
   QuestionList,
 } from 'src/app/shared/models/api/question.model';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { QuestionService } from 'src/app/shared/services/question/question.service';
 
 @Component({
@@ -38,15 +39,20 @@ export class QuestionsComponent implements OnInit {
     sortOrder: 'asc',
     searchData: '',
   };
+  categories: String[] = [];
   private searchSubject = new Subject<string>();
 
-  constructor(private questionService: QuestionService) {}
+  constructor(
+    private questionService: QuestionService,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
     this.searchSubject
       .pipe(debounceTime(700), distinctUntilChanged())
       .subscribe((res) => this.searchHandler(res));
     this.getQuestions(this.getQuestionData);
+    this.getCategories();
   }
 
   getQuestions(data: QuestionDataRequest) {
@@ -62,6 +68,19 @@ export class QuestionsComponent implements OnInit {
           this.totalPages = 0;
         }
         console.log('getQuestionData() -->', this.questionList);
+      },
+      error: (error) => console.log(error.error.message),
+    });
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe({
+      next: (res) => {
+        if (res) {
+          res.data.map((item) => {
+            this.categories[item.id] = item.title;
+          });
+        }
       },
       error: (error) => console.log(error.error.message),
     });
