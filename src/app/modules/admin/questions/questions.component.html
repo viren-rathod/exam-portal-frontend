@@ -1,123 +1,122 @@
 <div class="card rounded-0 border-0">
-    <div class="card-head">
-      <div
-        class="d-flex questions justify-content-between align-items-center p-3"
-      >
-        <div class="title fs-5 fw-bold">Questions</div>
-        <a [routerLink]="['/exam-portal/admin/questions/add']">
-          <button id="addQuestion" class="btn btn-danger rounded-1 d-flex px-4">
-            <span class="px-1 d-flex align-items-center"
-              ><img
-                src="../../../../assets/images/add-plus.svg"
-                height="22px"
-                alt="Add button"
-            /></span>
-            <span class="px-1 d-flex align-items-center fw-semibold">Add</span>
-          </button>
-        </a>
-      </div>
-    </div>
-  
-    <hr class="p-0 m-0" />
-    <div class="card-body z-0">
-      <div class="d-flex w-100 align-items-center">
-        <!-- <select class="form-select w-auto" (change)="handleSizeChange($event)">
-          <option *ngFor="let size of sizeArray" [ngValue]="size.value">
-            {{ size.title }}
-          </option>
-        </select> -->
-        <div class="input-container d-flex w-100 justify-content-end">
-          <div
-            class="align-items-center border col3 d-flex float-end rounded-1 mb-3"
-          >
-            <!-- <input
-              id=""
-              class="effect border-0"
-              type="text"
-              placeholder="Search"
-              (input)="onSearch($event)"
-            /> -->
-            <span class="focus-bg"></span>
-            <i class="bi bi-search text-light bi bi-search px-3 py-2"></i>
-          </div>
-        </div>
-      </div>
-      <div>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">
-                <span class="ms-3 d-flex justify-content-between">
-                  <span class="fw-medium">Title</span>
-                  <span class="fw-light">|</span>
-                </span>
-              </th>
-              <th scope="col">
-                <span class="d-flex justify-content-between">
-                  <span class="fw-medium">Category</span>
-                  <span class="fw-light">|</span>
-                </span>
-              </th>
-              <th scope="col" colspan="2">
-                <span class="d-flex justify-content-center">
-                  <span class="fw-medium">Action</span>
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <!-- <tbody *ngIf="categoryList && categoryList.length <= 0">
-            <tr>
-              <td class="text-center" colspan="4">No data found</td>
-            </tr>
-          </tbody>
-          <tbody class="border" *ngFor="let category of categoryList">
-            <tr>
-              <td class="pt-3 ps-4">{{ category.title }}</td>
-              <td class="pt-3">{{ category.description }}</td>
-              <td class="text-center"></td>
-              <td class="action-btn-group text-center">
-                <a
-                  class="btn text-light bg-success rounded-1 me-1"
-                  [routerLink]="['edit', +category.id]"
-                  ><i class="bi bi-pen-fill"></i
-                ></a>
-                <a
-                  class="btn text-light bg-danger rounded-1 ms-1"
-                  (click)="onDelete(+category.id)"
-                  ><i class="bi bi-trash-fill"></i
-                ></a>
-              </td>
-            </tr>
-          </tbody> -->
-        </table>
-  
-        <nav>
-          <ul class="pagination float-end">
-            <!-- <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
-              <a class="page-link" (click)="onParamsChange(currentPage - 1)"
-                >Previous</a
-              >
-            </li> -->
-  
-            <!-- <li
-              class="page-item"
-              *ngFor="let item of [].constructor(totalPages); let i = index"
-              [class.active]="i === currentPage"
-            >
-              <a class="page-link" (click)="onParamsChange(i)">{{ i + 1 }}</a>
-            </li> -->
-  
-            <!-- <li
-              [ngClass]="currentPage >= totalPages - 1 ? 'disabled' : ''"
-              class="page-item"
-            >
-              <a class="page-link" (click)="onParamsChange(currentPage + 1)"
-                >Next</a
-              >
-            </li> -->
-          </ul>
-        </nav>
-      </div>
+  <div class="card-head">
+    <div
+      class="d-flex questions justify-content-between align-items-center p-3"
+    >
+      <div class="title fs-5 fw-bold">Questions</div>
+      <a [routerLink]="['/exam-portal/admin/questions/add']">
+        <button id="addQuestion" class="btn btn-danger rounded-1 d-flex px-4">
+          <span class="px-1 d-flex align-items-center"
+            ><img
+              src="../../../../assets/images/add-plus.svg"
+              height="22px"
+              alt="Add button"
+          /></span>
+          <span class="px-1 d-flex align-items-center fw-semibold">Add</span>
+        </button>
+      </a>
     </div>
   </div>
-  
+
+  <hr class="p-0 m-0" />
+  <div class="card-body z-0">
+    <div class="d-flex w-100 align-items-center">
+      <select class="form-select w-auto" (change)="handleSizeChange($event)">
+        <option *ngFor="let size of sizeArray" [ngValue]="size.value">
+          {{ size.title }}
+        </option>
+      </select>
+      <div class="input-container d-flex w-100 justify-content-end">
+        <div
+          class="align-items-center border col3 d-flex float-end rounded-1 mb-3"
+        >
+          <input
+            id=""
+            class="effect border-0"
+            type="text"
+            placeholder="Search"
+            (input)="onSearch($event)"
+          />
+          <span class="focus-bg"></span>
+          <i class="bi bi-search text-light bi bi-search px-3 py-2"></i>
+        </div>
+      </div>
+    </div>
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">
+              <span class="ms-3 d-flex justify-content-between">
+                <span class="fw-medium">Title</span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
+              <span class="d-flex justify-content-between">
+                <span class="fw-medium">Category</span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col" colspan="2">
+              <span class="d-flex justify-content-center">
+                <span class="fw-medium">Action</span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="questionList && questionList.length <= 0">
+          <tr>
+            <td class="text-center" colspan="4">No data found</td>
+          </tr>
+        </tbody>
+        <tbody class="border" *ngFor="let question of questionList">
+          <tr>
+            <td class="pt-3 ps-4">{{ question.title }}</td>
+            <td class="pt-3">{{ question.description }}</td>
+            <td class="text-center"></td>
+            <td class="action-btn-group text-center">
+              <a
+                class="btn text-light bg-success rounded-1 me-1"
+                [routerLink]="['edit', +question.id]"
+                ><i class="bi bi-pen-fill"></i
+              ></a>
+              <a
+                class="btn text-light bg-danger rounded-1 ms-1"
+                (click)="onDelete(+question.id)"
+                ><i class="bi bi-trash-fill"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <nav>
+        <ul class="pagination float-end">
+          <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
+            <a class="page-link" (click)="onParamsChange(currentPage - 1)"
+              >Previous</a
+            >
+          </li>
+
+          <li
+            class="page-item"
+            *ngFor="let item of [].constructor(totalPages); let i = index"
+            [class.active]="i === currentPage"
+          >
+            <a class="page-link" (click)="onParamsChange(i)">{{ i + 1 }}</a>
+          </li>
+
+          <li
+            [ngClass]="currentPage >= totalPages - 1 ? 'disabled' : ''"
+            class="page-item"
+          >
+            <a class="page-link" (click)="onParamsChange(currentPage + 1)"
+              >Next</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -27,8 +27,8 @@ export interface QuestionResponse extends BaseResponse {
   data: Array<Question>;
 }
 
-export interface QuestionResponsePaginatedData extends BaseResponse {
-  content: Array<Question>;
+export interface QuestionResponsePaginatedData {
+  content: Array<QuestionList>;
   pageable: Pageable;
   totalPages: number;
   totalElements: number;
@@ -41,8 +41,8 @@ export interface QuestionResponsePaginatedData extends BaseResponse {
   empty: boolean;
 }
 
-export interface QuestionResponsePaginated {
-  data: QuestionResponsePaginated;
+export interface QuestionResponsePaginated extends BaseResponse {
+  data: QuestionResponsePaginatedData;
 }
 
 export interface AddQuestionResponse extends BaseResponse {
