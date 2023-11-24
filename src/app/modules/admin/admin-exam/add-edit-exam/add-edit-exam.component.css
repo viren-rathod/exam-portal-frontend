@@ -1,11 +1,3 @@
-label {
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: -moz-fit-content;
-  width: fit-content;
-}
 #categories {
   padding: 9px 15px;
 }

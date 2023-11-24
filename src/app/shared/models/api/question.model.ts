@@ -56,3 +56,8 @@ export interface GetQuestionResponse extends BaseResponse {
 export interface DeleteQuestionResponse extends BaseResponse {
   data: string;
 }
+
+export interface SelectBox {
+  key: number;
+  value: string;
+}

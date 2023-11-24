@@ -35,6 +35,14 @@ a {
   text-decoration: none;
   color: var(--primary-blue);
 }
+label {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: -moz-fit-content;
+  width: fit-content;
+}
 .card hr {
   opacity: 0.1 !important;
 }
@@ -166,6 +174,7 @@ form input[type="password"] {
   color: #002f4b;
 }
 
-.active > .page-link, .page-link.active {
+.active > .page-link,
+.page-link.active {
   background-color: #002f4b !important;
 }

@@ -11,6 +11,7 @@ import {
   AddQuestionResponse,
   DeleteQuestionResponse,
 } from '../../models/api/question.model';
+import { QuestionAnswerResponse } from '../../models/api/option.model';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +64,12 @@ export class QuestionService {
   public getQuestionById(id: number): Observable<GetQuestionResponse> {
     return this.http.get<GetQuestionResponse>(
       `${BASE_URL}/api/questions/${id}`
+    );
+  }
+
+  public getAnswerByQuestionId(id: number): Observable<QuestionAnswerResponse> {
+    return this.http.get<QuestionAnswerResponse>(
+      `${BASE_URL}/api/questions/${id}/answer`
     );
   }
 }

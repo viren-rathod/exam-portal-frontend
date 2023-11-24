@@ -1,1 +1,164 @@
-<p>add-edit-question works!</p>
+<div class="card rounded-0 border-0">
+  <div class="card-head">
+    <div class="d-flex exams justify-content-between align-items-center p-3">
+      <div class="title fs-5 fw-bold">
+        {{ editMode ? "Update" : "Edit" + " Question" }}
+      </div>
+    </div>
+  </div>
+
+  <hr class="p-0 m-0" />
+  <div class="card-body z-0">
+    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="categories">Question Category </label>
+              <select
+                class="effect w-100 rounded-1"
+                id="categories"
+                name="categories"
+                formControlName="categories"
+              >
+                <option selected hidden disabled>
+                  Select Question Category
+                </option>
+                <option
+                  *ngFor="let category of categoryList"
+                  [ngValue]="category.key"
+                >
+                  {{ category.value }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  categories?.invalid &&
+                  (categories?.dirty || categories?.touched)
+                "
+              >
+                <small
+                  *ngIf="categories?.errors?.['required']"
+                  class="text-danger"
+                  >*Question category is required!</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="answer">Answer </label>
+              <select
+                class="effect w-100 rounded-1"
+                id="answer"
+                name="answer"
+                formControlName="answer"
+              >
+                <option selected hidden disabled>Select Answer</option>
+                <option
+                  *ngFor="let answer of optionList"
+                  [ngValue]="answer.key"
+                >
+                  {{ answer.value }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  answer?.invalid && (answer?.dirty || answer?.touched)
+                "
+              >
+                <small *ngIf="answer?.errors?.['required']" class="text-danger"
+                  >*Answer is required!</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="description">Description</label>
+              <input
+                id="description"
+                class="effect w-100 rounded-1"
+                type="text"
+                placeholder="Instructions"
+                formControlName="description"
+              />
+              <span class="focus-bg"></span>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label class="d-block">Status</label>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  id="active"
+                  value="active"
+                  formControlName="status"
+                />
+                <label class="form-check-label" for="active">Enable</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="status"
+                  id="inactive"
+                  value="inactive"
+                  formControlName="status"
+                />
+                <label class="form-check-label" for="inactive">Disable</label>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                status?.invalid && (status?.dirty || status?.touched)
+              "
+            >
+              <small *ngIf="status?.errors?.['required']" class="text-danger"
+                >*Please select the status!</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="input-container">
+            <div class="col3 w-100">
+              <label for="title">Question title</label>
+              <ckeditor
+                formControlName="question"
+                [editor]="Editor"
+                [config]="{
+                  placeholder: 'And your question goes here...!'
+                }"
+              ></ckeditor>
+            </div>
+            <div
+              *ngIf="
+                question?.invalid && (question?.dirty || question?.touched)
+              "
+            >
+              <small *ngIf="question?.errors?.['required']" class="text-danger"
+                >*Question Can not be Empty!</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex gap-2 my-3">
+        <button class="btn btn-success rounded-1 px-4" type="submit">
+          {{ id ? "Update" : "Create" }}
+        </button>
+        <button class="btn btn-danger rounded-1 px-4" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

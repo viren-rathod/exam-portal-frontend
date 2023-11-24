@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@ckeditor/ckeditor5-angular": "^7.0.1",
+    "@ckeditor/ckeditor5-build-classic": "^40.1.0",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
     "ng-angular-popup": "^0.4.7",
