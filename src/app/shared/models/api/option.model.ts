@@ -1,12 +1,12 @@
 import { BaseResponse } from '../base-response.model';
 
 export interface Option {
-  id: number;
+  id?: number;
   title: string;
   questionId: number;
 }
 export interface OptionList {
-  id?: number;
+  id: number;
   title: string;
   questionId: number;
 }

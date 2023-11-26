@@ -46,7 +46,7 @@ export interface QuestionResponsePaginated extends BaseResponse {
 }
 
 export interface AddQuestionResponse extends BaseResponse {
-  data: Question;
+  data: QuestionList;
 }
 
 export interface GetQuestionResponse extends BaseResponse {

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {
   AddAllQuestionResponse,
   GetOptionsResponse,
+  Option,
   OptionList,
 } from '../../models/api/option.model';
 import BASE_URL from '../util';
@@ -20,7 +21,7 @@ export class OptionsService {
     );
   }
 
-  public addAllOptions(data: OptionList[]): Observable<AddAllQuestionResponse> {
+  public addAllOptions(data: Option[]): Observable<AddAllQuestionResponse> {
     return this.http.post<AddAllQuestionResponse>(
       `${BASE_URL}/api/option/addAll`,
       data

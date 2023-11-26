@@ -2,7 +2,7 @@
   <div class="card-head">
     <div class="d-flex exams justify-content-between align-items-center p-3">
       <div class="title fs-5 fw-bold">
-        {{ editMode ? "Update" : "Edit" + " Question" }}
+        {{ editMode ? "Edit" : "Save" + " Question" }}
       </div>
     </div>
   </div>
@@ -64,9 +64,7 @@
                 </option>
               </select>
               <div
-                *ngIf="
-                  answer?.invalid && (answer?.dirty || answer?.touched)
-                "
+                *ngIf="answer?.invalid && (answer?.dirty || answer?.touched)"
               >
                 <small *ngIf="answer?.errors?.['required']" class="text-danger"
                   >*Answer is required!</small
@@ -115,11 +113,7 @@
                 <label class="form-check-label" for="inactive">Disable</label>
               </div>
             </div>
-            <div
-              *ngIf="
-                status?.invalid && (status?.dirty || status?.touched)
-              "
-            >
+            <div *ngIf="status?.invalid && (status?.dirty || status?.touched)">
               <small *ngIf="status?.errors?.['required']" class="text-danger"
                 >*Please select the status!</small
               >
@@ -146,6 +140,31 @@
             >
               <small *ngIf="question?.errors?.['required']" class="text-danger"
                 >*Question Can not be Empty!</small
+              >
+            </div>
+          </div>
+
+          <div
+            class="input-container"
+            formArrayName="options"
+            *ngFor="let item of options.controls; let i = index"
+          >
+            <div class="col3 w-100" [formGroupName]="i">
+              <label for="'control'">Option {{ i + 1 }} * </label>
+              <textarea
+                class="w-100"
+                optionField
+                id="option"
+                formControlName="option"
+                [attr.id]="i"
+              ></textarea>
+              <a class="btn btn-icon btn-icon-del text-danger" *ngIf="i != 0"
+                ><i nz-icon nzType="delete" nzTheme="fill"></i
+              ></a>
+            </div>
+            <div *ngIf="options">
+              <small *ngIf="options?.errors?.['required']" class="text-danger"
+                >*options Can not be Empty!</small
               >
             </div>
           </div>
