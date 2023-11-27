@@ -4,7 +4,7 @@ import { Category } from '../../models/api/category.model';
 import { ExamService } from '../../services/exam/exam.service';
 import { QuestionService } from '../../services/question/question.service';
 import { Exam } from '../../models/api/exam.model';
-import { Question } from '../../models/api/question.model';
+import { Question, QuestionList } from '../../models/api/question.model';
 import { CandidateService } from '../../services/candidate/candidate.service';
 import { Candidate } from '../../models/api/candidate.model';
 import { Router } from '@angular/router';
@@ -57,7 +57,16 @@ export class DashboardComponent implements OnInit {
      */
     this.questionService.getAllQuestions().subscribe({
       next: (res) => {
-        this.questionData = res.data;
+        // this.questionData = res.data;
+        res.data.map(item => {
+          let question: QuestionList = {
+            id: item.questionDto.id || 0,
+            title: item.questionDto.title,
+            description: item.questionDto.description,
+            categoryId: item.questionDto.categoryId,
+          }
+          this.questionData.push(question);
+        });
         console.log('getAllQuestions-->', this.questionData);
       },
       error: (error) => console.log(error.error),

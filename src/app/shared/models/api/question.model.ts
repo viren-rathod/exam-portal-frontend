@@ -1,5 +1,6 @@
 import { BaseResponse } from '../base-response.model';
 import { Pageable, Sort } from '../common';
+import { Option, OptionList } from './option.model';
 
 export interface Question {
   id?: number;
@@ -23,12 +24,17 @@ export interface QuestionDataRequest {
   // filter?:Filter;
 }
 
+export interface MapObject {
+  questionDto: QuestionList;
+  optionDtoList: OptionList[];
+}
+
 export interface QuestionResponse extends BaseResponse {
-  data: Array<Question>;
+  data: Array<MapObject>;
 }
 
 export interface QuestionResponsePaginatedData {
-  content: Array<QuestionList>;
+  content: Array<MapObject>;
   pageable: Pageable;
   totalPages: number;
   totalElements: number;
@@ -46,11 +52,11 @@ export interface QuestionResponsePaginated extends BaseResponse {
 }
 
 export interface AddQuestionResponse extends BaseResponse {
-  data: QuestionList;
+  data: MapObject;
 }
 
 export interface GetQuestionResponse extends BaseResponse {
-  data: QuestionList;
+  data: MapObject;
 }
 
 export interface DeleteQuestionResponse extends BaseResponse {

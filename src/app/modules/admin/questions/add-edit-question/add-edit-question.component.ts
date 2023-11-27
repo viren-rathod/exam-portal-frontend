@@ -77,6 +77,7 @@ export class AddEditQuestionComponent implements OnInit {
     if (this.questionForm.valid) {
       let data = this.questionForm.value;
       let questionData: Question = {
+        id: undefined,
         title: data.question,
         description: data.description,
         categoryId: data.categories
@@ -86,7 +87,7 @@ export class AddEditQuestionComponent implements OnInit {
       //Save the question
       this.questionsService.addQuestion(questionData).subscribe({
         next: (res) => {
-          questionId = res.data.id;
+          questionId = res.data.questionDto.id;
           // save the options
           for (let i = 0; i < data.options.length; i++) {
             let optionIdIndex: number;
@@ -230,10 +231,10 @@ export class AddEditQuestionComponent implements OnInit {
     //Get question
     this.questionsService.getQuestionById(this.id).subscribe({
       next: (res) => {
-        editForm.categories = res.data.categoryId;
-        editForm.question = res.data.description;
+        // editForm.categories = res.data.categoryId;
+        // editForm.question = res.data.description;
         editForm.status = res.status === 'ACTIVE' ? 'active' : 'inactive';
-        editForm.description = res.data.title;
+        // editForm.description = res.data.title;
         this.questionForm.controls['categories'].setValue(editForm.categories);
       },
       error: (error) => console.log(error.error.message)

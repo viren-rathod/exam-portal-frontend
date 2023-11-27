@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import {
+  Question,
   QuestionDataRequest,
   QuestionList,
 } from 'src/app/shared/models/api/question.model';
@@ -45,7 +46,7 @@ export class QuestionsComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private categoryService: CategoryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.searchSubject
@@ -59,7 +60,15 @@ export class QuestionsComponent implements OnInit {
     this.questionService.getQuestions(data).subscribe({
       next: (res) => {
         if (res) {
-          this.questionList = res.data.content;
+          res.data.content.map(item => {
+            let question: QuestionList = {
+              id: item.questionDto.id || 0,
+              title: item.questionDto.title,
+              description: item.questionDto.description,
+              categoryId: item.questionDto.categoryId,
+            }
+            this.questionList.push(question);
+          });
           this.totalPages = res.data.totalPages;
           this.currentPage = res.data.number;
           this.totalQuestions = res.data.totalElements;
