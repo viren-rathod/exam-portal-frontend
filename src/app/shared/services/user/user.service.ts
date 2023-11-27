@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import BASE_URL from './util';
-import { UserRegistrationRequest } from '../models/auth.model';
+import BASE_URL from '../util';
+import { UserRegistrationRequest } from '../../models/auth.model';
 
 @Injectable({
   providedIn: 'root',

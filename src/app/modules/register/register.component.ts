@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { confirmPassword } from 'src/app/Validators/password.validators';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { UserService } from 'src/app/shared/services/user.service';
+import { LoginService } from 'src/app/shared/services/auth/login.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 import { UserRegistrationRequest } from 'src/app/shared/models/auth.model';
 
 @Component({

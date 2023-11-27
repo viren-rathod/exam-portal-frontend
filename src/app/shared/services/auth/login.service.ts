@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import BASE_URL from './util';
+import BASE_URL from '../util';
 import { Router } from '@angular/router';
 import {
   CurrentUser,
   User,
   UserLoginRequest,
   UserLoginResponse,
-} from '../models/auth.model';
+} from '../../models/auth.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/shared/services/login.service';
+import { LoginService } from 'src/app/shared/services/auth/login.service';
 
 @Component({
   selector: 'app-sidenav',

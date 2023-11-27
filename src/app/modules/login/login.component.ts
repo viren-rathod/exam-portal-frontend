@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { Roles } from 'src/app/shared/enums/roles.enum';
 import { CurrentUser, UserLoginRequest } from 'src/app/shared/models/auth.model';
-import { LoginService } from 'src/app/shared/services/login.service';
+import { LoginService } from 'src/app/shared/services/auth/login.service';
 
 @Component({
   selector: 'app-login',
