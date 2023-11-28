@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { NgToastService } from 'ng-angular-popup';
 import { Option, OptionList } from 'src/app/shared/models/api/option.model';
-import { Question, SelectBox } from 'src/app/shared/models/api/question.model';
+import { MapObject, Question, SelectBox } from 'src/app/shared/models/api/question.model';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { OptionsService } from 'src/app/shared/services/options/options.service';
 import { QuestionService } from 'src/app/shared/services/question/question.service';
@@ -29,6 +30,7 @@ export class AddEditQuestionComponent implements OnInit {
     private categoryService: CategoryService,
     private optionService: OptionsService,
     private route: ActivatedRoute,
+    private toast: NgToastService,
     private router: Router
   ) { }
 
@@ -61,7 +63,7 @@ export class AddEditQuestionComponent implements OnInit {
       question: ['', Validators.required],
       status: ['', Validators.required],
       description: [''],
-      answer: [],
+      answer: [, Validators.required],
       options: this.formBuilder.array([]),
     });
     this.addFirstOption();
@@ -74,71 +76,93 @@ export class AddEditQuestionComponent implements OnInit {
       this.questionForm.get(key)?.markAsDirty();
       this.questionForm.get(key)?.markAsTouched();
     });
+    //submit the data
     if (this.questionForm.valid) {
       let data = this.questionForm.value;
+      let questionId: number;
+      let allOptions: Option[] = [];
+      //create options list
+      for (let i = 0; i < data.options.length; i++) {
+        let optionIdIndex: number;
+        let newOptionId: number | undefined = undefined;
+        if (this.optionsTitleList.includes(data.options[i].option)) {
+          optionIdIndex = this.optionsTitleList.indexOf(data.options[i].option);
+          newOptionId = this.optionsIdList[optionIdIndex];
+        }
+        if (this.editMode) {
+          allOptions.push({
+            id: newOptionId,
+            title: data.options[i].option.trim(),
+            questionId: questionId!
+          });
+        } else {
+          allOptions.push({
+            title: data.options[i].option.trim(),
+            questionId: questionId!
+          });
+        }
+      }
+      //create question object
       let questionData: Question = {
-        id: undefined,
+        id: this.editMode ? this.id : undefined,
         title: data.question,
         description: data.description,
         categoryId: data.categories
       }
-      let questionId: number;
-      let allOptions: Option[] = [];
-      //Save the question
-      this.questionsService.addQuestion(questionData).subscribe({
-        next: (res) => {
-          questionId = res.data.questionDto.id;
-          // save the options
-          for (let i = 0; i < data.options.length; i++) {
-            let optionIdIndex: number;
-            let newOptionId: number | undefined = undefined;
-            if (this.optionsTitleList.includes(data.options[i].option)) {
-              optionIdIndex = this.optionsTitleList.indexOf(data.options[i].option);
-              newOptionId = this.optionsIdList[optionIdIndex];
-            } else {
-              newOptionId = undefined
-            }
-            if (this.editMode) {
-              allOptions.push({
-                id: newOptionId,
-                title: data.options[i].option.trim(),
-                questionId: questionId
-              });
-            } else {
-              allOptions.push({
-                title: data.options[i].option.trim(),
-                questionId: questionId
-              });
-            }
-          }
-          this.optionService.addAllOptions(allOptions).subscribe({
-            next: (res) => {
-              // console.log(res);
-            },
-            error: (error) => console.log(error.error.message)
-          });
-          // save the answer
-          let selectedItem: SelectBox = { key: 0, value: '' };
-          this.optionList.forEach(item => {
-            if (item.key == +data.answer) {
-              selectedItem = item
-            }
-          })
-          let answer: OptionList = {
-            id: selectedItem.key,
-            title: selectedItem.value,
-            questionId: questionId
-          }
-          console.log("answer", answer);
-          this.optionService.saveAnswer(answer).subscribe({
-            next: (res) => {
-              console.log(res);
-            },
-            error: (error) => console.log(error.error.message)
-          })
-        },
-        error: (error) => console.log(error.error.message)
-      });
+      let addEditQuestionData: MapObject = {
+        t: questionData,
+        k: allOptions
+      }
+      //Save the question with options
+      if (!this.editMode) {
+        this.questionsService.addQuestion(addEditQuestionData).subscribe({
+          next: (res) => {
+            //save the answer for this question
+            questionId = res.data.t.id!;
+            let savedOptions = res.data.k;
+            let answerOption = savedOptions.find(option => option.title === data.options[parseInt(data.answer) - 1].option);
+            this.optionService.saveAnswer({ id: answerOption?.id!, questionId: questionId, title: answerOption?.title! }).subscribe({
+              next: (res) => {
+                this.toast.success({
+                  detail: 'Success',
+                  summary: 'Question added Successfully!',
+                  duration: 3000,
+                  position: 'topRight',
+                });
+              },
+              error: (error) => console.log(error.error.message)
+            });
+            this.router.navigate(['exam-portal/admin/questions']);
+          },
+          error: (error) => console.log(error.error.message)
+        });
+      }
+      //Update the question with options
+      else {
+        let idsToDelete = this.optionsIdList.filter(id => !allOptions.some(option => option.id === id));
+        this.questionsService.editQuestion(addEditQuestionData).subscribe({
+          next: (res) => {
+            //save the answer for this question
+            questionId = res.data.t.id!;
+            let savedOptions = res.data.k;
+            let answerOption = savedOptions.find(option => option.title === data.options[parseInt(data.answer) - 1].option);
+            this.optionService.saveAnswer({ id: answerOption?.id!, questionId: questionId, title: answerOption?.title! }).subscribe({
+              next: (res) => {
+                this.toast.success({
+                  detail: 'Success',
+                  summary: 'Question updated Successfully!',
+                  duration: 3000,
+                  position: 'topRight',
+                });
+              },
+              error: (error) => console.log(error.error.message)
+            });
+            //Delete remaining Options
+            this.router.navigate(['exam-portal/admin/questions']);
+          },
+          error: (error) => console.log(error.error.message)
+        });
+      }
     }
   }
 
@@ -165,7 +189,7 @@ export class AddEditQuestionComponent implements OnInit {
 
   createOption(defaultValue: string = '') {
     return this.formBuilder.group({
-      option: [defaultValue],
+      option: [defaultValue, (formControl: FormControl) => (formControl.value).trim().length === 0 ? { isValid: true } : null],
     })
   }
 
@@ -182,6 +206,10 @@ export class AddEditQuestionComponent implements OnInit {
     }
     this.options.removeAt(id);
     this.getControls();
+  }
+
+  get checkValidity() {
+    return this.options.invalid;
   }
 
   getControls(): void {
@@ -225,38 +253,61 @@ export class AddEditQuestionComponent implements OnInit {
       question: '',
       status: '',
       description: '',
-      // answer: '',
-      // options: [{}]
+      answer: '',
+      options: {}
     }
     //Get question
     this.questionsService.getQuestionById(this.id).subscribe({
       next: (res) => {
-        // editForm.categories = res.data.categoryId;
-        // editForm.question = res.data.description;
-        editForm.status = res.status === 'ACTIVE' ? 'active' : 'inactive';
-        // editForm.description = res.data.title;
-        this.questionForm.controls['categories'].setValue(editForm.categories);
+        const questionData = res.data.t;
+        const optionsData = res.data.k;
+        let selectedAnswer: number;
+        optionsData.forEach(option => {
+          this.optionsTitleList.push(option.title);
+          this.optionsIdList.push(option.id!);
+          this.addOptionsContent(option.title);
+        });
+        this.questionsService.getAnswerByQuestionId(this.id).subscribe({
+          next: (res) => {
+            let answerData = this.optionsIdList.find(id => id === res.data.id);
+            selectedAnswer = this.optionsIdList.indexOf(answerData!);
+            this.questionForm.controls['answer'].setValue(selectedAnswer + 1);
+          },
+          error: (error) => console.log(error.error.message)
+        });
+        editForm = {
+          ...editForm,
+          categories: questionData.categoryId,
+          description: questionData.description,
+          question: questionData.title,
+          status: 'active',
+          options: optionsData,
+        };
+        this.questionForm.patchValue(editForm);
       },
       error: (error) => console.log(error.error.message)
     });
-
-    //Get answer of question
-    this.questionsService.getAnswerByQuestionId(this.id).subscribe({
-      next: (res) => {
-        // editForm.answer = res.data.title;
-        // this.questionForm.controls['answer'].setValue(editForm.answer);
-      },
-      error: (error) => console.log(error.error.message)
-    });
-
-    //Get options of question
-    this.optionService.getOptionsByQuestionId(this.id).subscribe({
-      next: (res) => {
-        // editForm.options = res.data;
-      },
-      error: (error) => console.log(error.error.message)
-    });
-    console.log(editForm);
-    this.questionForm.patchValue(editForm);
   }
 }
+/*
+{  "data": {
+    "t": {
+      "id": 6,
+      "title": "<p>Speaking structurally we can say that <strong>A extends B</strong> is a lot like ‘<strong>A is a superset of B</strong>’, or, to be more verbose, ‘<strong>A has all of B</strong>’s properties, and maybe some more’.</p>",
+      "description": "this is new question for Data Structures and Algorithms...",
+      "categoryId": 1,
+      "created_at": "2023-11-28T06:35:30.493+00:00",
+      "created_by": "admin@mail.com"
+    },
+    "k": [
+      {
+        "id": 14,
+        "title": "Error: cannot implement",
+        "questionId": 6,
+        "created_at": "2023-11-28T06:35:30.710+00:00",
+        "created_by": "admin@mail.com"
+      }
+    ]
+  },
+}
+*/

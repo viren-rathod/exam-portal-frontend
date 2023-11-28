@@ -60,12 +60,13 @@ export class QuestionsComponent implements OnInit {
     this.questionService.getQuestions(data).subscribe({
       next: (res) => {
         if (res) {
+          this.questionList = [];
           res.data.content.map(item => {
             let question: QuestionList = {
-              id: item.questionDto.id || 0,
-              title: item.questionDto.title,
-              description: item.questionDto.description,
-              categoryId: item.questionDto.categoryId,
+              id: item.t.id || 0,
+              title: item.t.title,
+              description: item.t.description,
+              categoryId: item.t.categoryId,
             }
             this.questionList.push(question);
           });

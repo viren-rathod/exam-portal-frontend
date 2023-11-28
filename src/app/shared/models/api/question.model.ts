@@ -25,8 +25,8 @@ export interface QuestionDataRequest {
 }
 
 export interface MapObject {
-  questionDto: QuestionList;
-  optionDtoList: OptionList[];
+  t: Question;
+  k: Option[];
 }
 
 export interface QuestionResponse extends BaseResponse {

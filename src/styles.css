@@ -178,3 +178,7 @@ form input[type="password"] {
 .page-link.active {
   background-color: #002f4b !important;
 }
+
+.ck-editor__editable_inline {
+  min-height: 230px !important;
+}

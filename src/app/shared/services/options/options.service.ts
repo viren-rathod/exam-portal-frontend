@@ -5,7 +5,6 @@ import {
   AddAllQuestionResponse,
   GetOptionsResponse,
   Option,
-  OptionList,
 } from '../../models/api/option.model';
 import BASE_URL from '../util';
 
@@ -13,7 +12,7 @@ import BASE_URL from '../util';
   providedIn: 'root',
 })
 export class OptionsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public getOptionsByQuestionId(id: number): Observable<GetOptionsResponse> {
     return this.http.get<GetOptionsResponse>(
@@ -28,7 +27,7 @@ export class OptionsService {
     );
   }
 
-  public saveAnswer(data: OptionList): Observable<AddAllQuestionResponse> {
+  public saveAnswer(data: Option): Observable<AddAllQuestionResponse> {
     return this.http.put<AddAllQuestionResponse>(
       `${BASE_URL}/api/option/saveAnswer`,
       data

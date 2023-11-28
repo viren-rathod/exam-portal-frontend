@@ -10,6 +10,7 @@ import {
   Question,
   AddQuestionResponse,
   DeleteQuestionResponse,
+  MapObject,
 } from '../../models/api/question.model';
 import { QuestionAnswerResponse } from '../../models/api/option.model';
 
@@ -17,7 +18,7 @@ import { QuestionAnswerResponse } from '../../models/api/option.model';
   providedIn: 'root',
 })
 export class QuestionService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    *  Get all Questions
@@ -41,14 +42,14 @@ export class QuestionService {
     );
   }
 
-  public addQuestion(data: Question): Observable<AddQuestionResponse> {
+  public addQuestion(data: MapObject): Observable<AddQuestionResponse> {
     return this.http.post<AddQuestionResponse>(
       `${BASE_URL}/api/questions`,
       data
     );
   }
 
-  public editQuestion(data: Question): Observable<AddQuestionResponse> {
+  public editQuestion(data: MapObject): Observable<AddQuestionResponse> {
     return this.http.put<AddQuestionResponse>(
       `${BASE_URL}/api/questions/`,
       data

@@ -60,10 +60,10 @@ export class DashboardComponent implements OnInit {
         // this.questionData = res.data;
         res.data.map(item => {
           let question: QuestionList = {
-            id: item.questionDto.id || 0,
-            title: item.questionDto.title,
-            description: item.questionDto.description,
-            categoryId: item.questionDto.categoryId,
+            id: item.t.id || 0,
+            title: item.t.title,
+            description: item.t.description,
+            categoryId: item.t.categoryId,
           }
           this.questionData.push(question);
         });
