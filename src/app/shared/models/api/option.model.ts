@@ -17,6 +17,16 @@ export interface QuestionAnswerResponse extends BaseResponse {
 export interface GetOptionsResponse extends BaseResponse {
   data: Option[];
 }
-export interface AddAllQuestionResponse extends BaseResponse {
+export interface AddAllOptionsResponse extends BaseResponse {
   data: string;
+}
+
+export interface QuestionAndOptions {
+  question: string;
+  options: Option[];
+  answer: string;
+  category: string;
+  description: string;
+  created_by?: string;
+  created_at?: string
 }

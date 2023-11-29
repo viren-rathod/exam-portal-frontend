@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  AddAllQuestionResponse,
+  AddAllOptionsResponse,
   GetOptionsResponse,
   Option,
 } from '../../models/api/option.model';
@@ -20,17 +20,20 @@ export class OptionsService {
     );
   }
 
-  public addAllOptions(data: Option[]): Observable<AddAllQuestionResponse> {
-    return this.http.post<AddAllQuestionResponse>(
+  public addAllOptions(data: Option[]): Observable<AddAllOptionsResponse> {
+    return this.http.post<AddAllOptionsResponse>(
       `${BASE_URL}/api/option/addAll`,
       data
     );
   }
 
-  public saveAnswer(data: Option): Observable<AddAllQuestionResponse> {
-    return this.http.put<AddAllQuestionResponse>(
+  public saveAnswer(data: Option): Observable<AddAllOptionsResponse> {
+    return this.http.put<AddAllOptionsResponse>(
       `${BASE_URL}/api/option/saveAnswer`,
       data
     );
+  }
+  public deleteOption(id: number): Observable<AddAllOptionsResponse> {
+    return this.http.delete<AddAllOptionsResponse>(`${BASE_URL}/api/option/${id}`);
   }
 }

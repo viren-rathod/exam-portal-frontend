@@ -158,6 +158,7 @@ export class AddEditQuestionComponent implements OnInit {
               error: (error) => console.log(error.error.message)
             });
             //Delete remaining Options
+            idsToDelete.forEach(id => this.optionService.deleteOption(id).subscribe());
             this.router.navigate(['exam-portal/admin/questions']);
           },
           error: (error) => console.log(error.error.message)

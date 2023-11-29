@@ -72,12 +72,16 @@
         </tbody>
         <tbody class="border" *ngFor="let question of questionList">
           <tr>
-            <td class="question-title pt-3 ps-4 w-75">{{ question.title }}</td>
-            <td class="pt-3">{{ categories[question.categoryId] }}</td>
-            <!-- <td class="text-center"></td> -->
+            <td class="question-title pt-3 ps-4 w-50">{{ question.title }}</td>
+            <td class="pt-3 w-25 ">{{ categories[question.categoryId] }}</td>
             <td class="action-btn-group text-center">
               <a
                 class="btn text-light bg-success rounded-1 me-1"
+                [routerLink]="['view', +question.id]"
+                ><i class="bi bi-eye"></i
+              ></a>
+              <a
+                class="btn text-light bg-success rounded-1"
                 [routerLink]="['edit', +question.id]"
                 ><i class="bi bi-pen-fill"></i
               ></a>

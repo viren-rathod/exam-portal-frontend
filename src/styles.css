@@ -18,6 +18,8 @@
   --badge-blue-fg: #3b88e9;
   --badge-red-bg: #efd9e6;
   --badge-red-fg: #eb5657;
+  --badge-primary-bg: #3895cc26;
+  --badge-primary-fg: #002f4b;
 }
 body {
   /* background-color: #eeeeee; */
@@ -170,6 +172,11 @@ form input[type="password"] {
   color: var(--badge-red-fg);
 }
 
+.tag.tag-primary {
+  background: var(--badge-primary-bg);
+  color: var(--badge-primary-fg);
+}
+
 .page-link {
   color: #002f4b;
 }
@@ -181,4 +188,10 @@ form input[type="password"] {
 
 .ck-editor__editable_inline {
   min-height: 230px !important;
+}
+input[type="radio"]:disabled {
+  border: 1px solid #002f4b;
+}
+input[type="radio"]:checked {
+  border: none !important;
 }

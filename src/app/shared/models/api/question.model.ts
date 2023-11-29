@@ -7,6 +7,8 @@ export interface Question {
   title: string;
   description: string;
   categoryId: number;
+  created_by?: string;
+  created_at?: Date
 }
 export interface QuestionList {
   id: number;

@@ -1,0 +1,50 @@
+<div class="card rounded-0 border-0">
+  <div class="card-head">
+    <div class="question d-flex align-items-center p-3">
+      <div class="title fs-5 fw-bold">Question # {{ id }}</div>
+      <span class="ms-3 tag tag-primary w-auto">{{
+        viewQuestionAndOptions.category
+      }}</span>
+    </div>
+  </div>
+
+  <!-- <hr class="p-0 m-0" /> -->
+  <div class="card-body z-0">
+    <div class="question-name" [innerHtml]="viewQuestionAndOptions.question">
+      &#x2022;
+    </div>
+    <div class="question-option py-3">
+      <div class="question_answer">
+        <div
+          class="form-check"
+          *ngFor="let item of viewQuestionAndOptions.options; let i = index"
+        >
+          <input
+            class="form-check-input opacity-100"
+            type="radio"
+            [checked]="answerId == item.id"
+            [disabled]="true"
+          />
+          <label class="form-check-label opacity-100"> {{ item.title }} </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="question-description py-2"
+      *ngIf="viewQuestionAndOptions.description !== ''"
+    >
+      <label>Description</label>
+      <div [innerHTML]="viewQuestionAndOptions.description"></div>
+    </div>
+    <div class="commnet-section">
+      <div class="py-3">
+        <label>Created By</label>
+        <div [innerHtml]="viewQuestionAndOptions.created_by"></div>
+      </div>
+      <div class="py-3">
+        <label>Created At</label>
+        <div [innerHTML]="viewQuestionAndOptions.created_at"></div>
+      </div>
+    </div>
+  </div>
+</div>
