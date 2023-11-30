@@ -48,14 +48,59 @@
           <tr>
             <th scope="col">
               <span class="ms-3 d-flex justify-content-between">
-                <span class="fw-medium">Title</span>
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="title"
+                  (click)="handleSort($event)"
+                  ><span> Name </span>
+                  <span>
+                    <img
+                      height="14px"
+                      src="../../../../assets/images/sort.png"
+                      alt=""
+                      class="px-1"
+                      [ngClass]="
+                        getQuestionData.sortField == 'title' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      "
+                    />
+                  </span>
+                </span>
                 <span class="fw-light">|</span>
               </span>
             </th>
             <th scope="col">
               <span class="d-flex justify-content-between">
-                <span class="fw-medium">Category</span>
-                <span class="fw-light">|</span>
+                <span class="d-flex justify-content-between">
+                  <span
+                    class="fw-medium"
+                    role="button"
+                    id="category"
+                    (click)="handleSort($event)"
+                    ><span>
+                      <span>Category</span>
+                      <span>
+                        <img
+                          height="14px"
+                          src="../../../../assets/images/sort.png"
+                          alt=""
+                          class="px-1"
+                          [ngClass]="
+                            getQuestionData.sortField == 'category' && sort != 3
+                              ? sort == 1
+                                ? 'rotate-180'
+                                : ''
+                              : 'rotate-180'
+                          "
+                        />
+                      </span> </span
+                  ></span>
+                  <span class="fw-light">|</span>
+                </span>
               </span>
             </th>
             <th scope="col" colspan="2">
@@ -73,7 +118,7 @@
         <tbody class="border" *ngFor="let question of questionList">
           <tr>
             <td class="question-title pt-3 ps-4 w-50">{{ question.title }}</td>
-            <td class="pt-3 w-25 ">{{ categories[question.categoryId] }}</td>
+            <td class="pt-3 w-25">{{ categories[question.categoryId] }}</td>
             <td class="action-btn-group text-center">
               <a
                 class="btn text-light bg-success rounded-1 me-1"

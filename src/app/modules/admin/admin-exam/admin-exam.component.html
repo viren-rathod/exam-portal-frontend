@@ -46,13 +46,57 @@
           <tr>
             <th scope="col">
               <span class="ms-3 d-flex justify-content-between">
-                <span class="fw-medium">Name</span>
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="title"
+                  (click)="handleSort($event)"
+                >
+                  <span> Name </span>
+                  <span>
+                    <img
+                      height="14px"
+                      src="../../../../assets/images/sort.png"
+                      alt=""
+                      class="px-1"
+                      [ngClass]="
+                        getExamData.sortField == 'title' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      "
+                    />
+                  </span>
+                </span>
                 <span class="fw-light">|</span>
               </span>
             </th>
             <th scope="col">
               <span class="d-flex justify-content-between">
-                <span class="fw-medium">Total Questions</span>
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="totalQuestions"
+                  (click)="handleSort($event)"
+                  ><span>
+                    <span>Total Questions</span>
+                    <span>
+                      <img
+                        height="14px"
+                        src="../../../../assets/images/sort.png"
+                        alt=""
+                        class="px-1"
+                        [ngClass]="
+                          getExamData.sortField == 'totalQuestions' && sort != 3
+                            ? sort == 1
+                              ? 'rotate-180'
+                              : ''
+                            : 'rotate-180'
+                        "
+                      />
+                    </span> </span
+                ></span>
                 <span class="fw-light">|</span>
               </span>
             </th>

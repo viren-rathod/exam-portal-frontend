@@ -40,9 +40,10 @@ export class CategoryComponent implements OnInit {
     searchData: '',
   };
   StatusType = Status;
+  sort: number = 1;
   private searchSubject = new Subject<string>();
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.searchSubject
@@ -60,8 +61,13 @@ export class CategoryComponent implements OnInit {
           this.currentPage = res.data.number;
           this.totalCategories = res.data.totalElements;
         } else {
-          this.categoryList = [];
-          this.totalPages = 0;
+          this.getCategory({
+            page: 0,
+            size: this.pageSize,
+            sortField: 'id',
+            sortOrder: 'asc',
+            searchData: '',
+          });
         }
         console.log('categoryData() -->', this.categoryList);
       },
@@ -90,10 +96,37 @@ export class CategoryComponent implements OnInit {
     this.getCategory(this.getCategoryData);
   }
 
+  /**
+   * Handling Sorting on Each field
+   * @param event 
+   */
+  handleSort(event: Event) {
+    let sortField: string = 'id';
+    let sortOrder: string = 'asc';
+    if (this.sort > 2) {
+      this.sort = 1;
+      sortField = 'id';
+      sortOrder = 'asc';
+    }
+    else {
+      this.sort += 1;
+      sortField = (event.currentTarget as HTMLInputElement).id;
+      sortOrder = this.sort == 2 ? 'dsc' : 'asc';
+    };
+
+    this.getCategoryData = {
+      ...this.getCategoryData,
+      sortField: sortField,
+      sortOrder: sortOrder
+    };
+    this.getCategory(this.getCategoryData);
+  }
+
   handleSizeChange(event: Event) {
     this.getCategoryData = {
       ...this.getCategoryData,
       size: +(event.target as HTMLInputElement).value,
+      page: 0,
     };
     this.getCategory(this.getCategoryData);
   }
@@ -115,6 +148,7 @@ export class CategoryComponent implements OnInit {
     this.getCategoryData = {
       ...this.getCategoryData,
       searchData: str,
+      page: 0,
     };
     this.getCategory(this.getCategoryData);
   }

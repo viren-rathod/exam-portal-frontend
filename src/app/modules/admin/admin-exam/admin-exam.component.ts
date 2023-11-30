@@ -40,13 +40,14 @@ export class AdminExamComponent implements OnInit {
     sortOrder: 'asc',
     searchData: '',
   };
+  sort: number = 1;
   private searchSubject = new Subject<string>();
 
-  constructor(private examService: ExamService) {}
+  constructor(private examService: ExamService) { }
 
   ngOnInit(): void {
     this.searchSubject
-      .pipe(debounceTime(3000), distinctUntilChanged())
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((res) => this.searchHandler(res));
     this.getExam(this.getExamData);
   }
@@ -64,8 +65,13 @@ export class AdminExamComponent implements OnInit {
           this.totalPages = res.data.totalPages;
           this.currentPage = res.data.number;
         } else {
-          this.examData = [];
-          this.totalPages = 0;
+          this.getExam({
+            page: 0,
+            size: this.pageSize,
+            sortField: 'id',
+            sortOrder: 'asc',
+            searchData: '',
+          });
         }
       },
       error: (error) => console.log(error.error.message),
@@ -126,6 +132,31 @@ export class AdminExamComponent implements OnInit {
     this.getExamData = { ...this.getExamData, page: index };
     this.getExam(this.getExamData);
   }
+  /**
+   * Handling Sorting on Each field
+   * @param event 
+   */
+  handleSort(event: Event) {
+    let sortField: string = 'id';
+    let sortOrder: string = 'asc';
+    if (this.sort > 2) {
+      this.sort = 1;
+      sortField = 'id';
+      sortOrder = 'asc';
+    }
+    else {
+      this.sort += 1;
+      sortField = (event.currentTarget as HTMLInputElement).id;
+      sortOrder = this.sort == 2 ? 'dsc' : 'asc';
+    };
+
+    this.getExamData = {
+      ...this.getExamData,
+      sortField: sortField,
+      sortOrder: sortOrder
+    };
+    this.getExam(this.getExamData);
+  }
 
   /**
    * Handling Items per page
@@ -135,6 +166,7 @@ export class AdminExamComponent implements OnInit {
     this.getExamData = {
       ...this.getExamData,
       size: +(event.target as HTMLInputElement).value,
+      page: 0,
     };
     this.getExam(this.getExamData);
   }
@@ -155,6 +187,7 @@ export class AdminExamComponent implements OnInit {
   searchHandler(str: string) {
     this.getExamData = {
       ...this.getExamData,
+      page: 0,
       searchData: str,
     };
     this.getExam(this.getExamData);
