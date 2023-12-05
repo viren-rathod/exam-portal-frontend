@@ -23,7 +23,7 @@
   </div>
   <!-- end row -->
 </div>
-<div class="row">
+<div class="row" *ngxPermissionsOnly="['ADMIN']">
   <div class="col-xl-3 col-lg-4 col-sm-6">
     <div
       class="border-left-primary icon-card mb-4"
@@ -105,4 +105,7 @@
     <!-- End Icon Cart -->
   </div>
   <!-- End Col -->
+</div>
+<div class="" *ngxPermissionsOnly="['USER']">
+  <h5>User's <i>Active Exams</i> goes here...!</h5>
 </div>

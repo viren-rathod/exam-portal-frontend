@@ -25,6 +25,7 @@
         [routerLink]="[data.routerLink]"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        *ngxPermissionsOnly="data.role"
       >
         <img
           class="sidenav-link-icon text-center d-flex justify-content-center text-light"
@@ -56,16 +57,34 @@
           (click)="toggleCollapse()"
         >
           <!-- <i class="bi bi-list-nested text-black fs-4"></i> -->
-          <img src="../../../../assets/images/Mediamodifier-Design.svg" height="22px" alt="ICON">
+          <img
+            src="../../../../assets/images/Mediamodifier-Design.svg"
+            height="22px"
+            alt="ICON"
+          />
         </button>
       </div>
-      <button
-        class="d-flex align-items-center border-0 bg-transparent me-5"
-        (click)="onLogout()"
+      <div
+        class="dropdown-center d-flex align-items-center border-0 bg-transparent me-5"
       >
-        <i class="bi bi-person-circle fs-5 px-1"></i>
-        <span>{{ loginUserName }}</span>
-      </button>
+        <a
+          class="align-items-center d-flex dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="bi bi-person-circle fs-5 px-1"></i>
+          <span>{{ loginUserName }}</span>
+        </a>
+
+        <ul class="dropdown-menu border-0 text-center">
+          <li>
+            <a class="dropdown-item" role="button" (click)="onLogout()"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </header>
   <main class="main-body py-5">

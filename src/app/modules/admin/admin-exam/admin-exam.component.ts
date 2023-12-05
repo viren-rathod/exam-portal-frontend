@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Status } from 'src/app/shared/enums/status.enum';
 import {
   ExamDataRequest,
   ExamList,
 } from 'src/app/shared/models/api/exam.model';
+import { LoginService } from 'src/app/shared/services/auth/login.service';
 import { ExamService } from 'src/app/shared/services/exam/exam.service';
 
 @Component({
@@ -13,6 +15,7 @@ import { ExamService } from 'src/app/shared/services/exam/exam.service';
   styleUrls: ['./admin-exam.component.css'],
 })
 export class AdminExamComponent implements OnInit {
+  role = '';
   examData: Array<ExamList> = [];
   totalExams: number = 0;
   totalPages: number = 0;
@@ -43,9 +46,14 @@ export class AdminExamComponent implements OnInit {
   sort: number = 1;
   private searchSubject = new Subject<string>();
 
-  constructor(private examService: ExamService) { }
+  constructor(
+    private examService: ExamService,
+    private permissionService: NgxPermissionsService,
+    private userService: LoginService) { }
 
   ngOnInit(): void {
+    this.role = this.userService.getUserRole()!;
+    this.permissionService.loadPermissions([this.role]);
     this.searchSubject
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((res) => this.searchHandler(res));

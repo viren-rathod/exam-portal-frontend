@@ -10,6 +10,8 @@ import { authIntercepterProviders } from './shared/interceptors/auth.interceptor
 import { RegisterComponent } from './modules/register/register.component';
 import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
+    NgxPermissionsModule.forRoot(),
   ],
   providers: [authIntercepterProviders],
   bootstrap: [AppComponent],
