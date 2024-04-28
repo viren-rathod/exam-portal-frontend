@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
      */
     this.categoryService.getAllCategories().subscribe({
       next: (res) => {
-        this.categoryData = res.data;
+        this.categoryData = res?.data;
         console.log('getAllCategories-->', this.categoryData);
       },
       error: (error) => {
@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
      */
     this.examService.getAllExams().subscribe({
       next: (res) => {
-        this.examData = res.data;
+        this.examData = res?.data;
         console.log('getAllExams-->', this.examData);
       },
       error: (error) => console.log(error.error.message),
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
     this.questionService.getAllQuestions().subscribe({
       next: (res) => {
         // this.questionData = res.data;
-        res.data.map(item => {
+        res?.data?.map(item => {
           let question: QuestionList = {
             id: item.t.id || 0,
             title: item.t.title,

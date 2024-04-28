@@ -167,7 +167,7 @@
         </tbody>
       </table>
 
-      <nav>
+      <nav *ngIf="totalPages > 0">
         <ul class="pagination float-end">
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(0)">&laquo;</a>

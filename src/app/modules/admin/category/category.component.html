@@ -53,7 +53,7 @@
                   role="button"
                   id="title"
                   (click)="handleSort($event)"
-                  ><span> Name </span>
+                ><span> Name </span>
                   <span>
                     <img
                       height="14px"
@@ -72,15 +72,14 @@
                 </span>
                 <span class="fw-light">|</span>
               </span>
-            </th>
-            <th scope="col">
+
               <span class="d-flex justify-content-between">
                 <span
                   class="fw-medium"
                   role="button"
                   id="description"
                   (click)="handleSort($event)"
-                  ><span>
+                ><span>
                     <span>Description</span>
                     <span>
                       <img
@@ -135,7 +134,7 @@
         </tbody>
       </table>
 
-      <nav>
+      <nav *ngIf="totalPages > 0">
         <ul class="pagination float-end">
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(0)">&laquo;</a>

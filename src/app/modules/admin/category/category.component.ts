@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { Status } from 'src/app/shared/enums/status.enum';
-import {
-  CategoryDataRequest,
-  CategoryList,
-} from 'src/app/shared/models/api/category.model';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
+import {Component, OnInit} from '@angular/core';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {Status} from 'src/app/shared/enums/status.enum';
+import {CategoryDataRequest, CategoryList,} from 'src/app/shared/models/api/category.model';
+import {CategoryService} from 'src/app/shared/services/category/category.service';
 
 @Component({
   selector: 'app-category',
@@ -43,11 +40,12 @@ export class CategoryComponent implements OnInit {
   sort: number = 1;
   private searchSubject = new Subject<string>();
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {
+  }
 
   ngOnInit(): void {
     this.searchSubject
-      .pipe(debounceTime(3000), distinctUntilChanged())
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((res) => this.searchHandler(res));
     this.getCategory(this.getCategoryData);
   }
@@ -60,7 +58,7 @@ export class CategoryComponent implements OnInit {
           this.totalPages = res.data.totalPages;
           this.currentPage = res.data.number;
           this.totalCategories = res.data.totalElements;
-        } else {
+        } else if (data.page !== 0) {
           this.getCategory({
             page: 0,
             size: this.pageSize,
@@ -68,6 +66,11 @@ export class CategoryComponent implements OnInit {
             sortOrder: 'asc',
             searchData: '',
           });
+        } else {
+          this.categoryList.length = 0;
+          this.totalCategories = 0
+          this.totalPages = 0;
+          this.currentPage = 0;
         }
         console.log('categoryData() -->', this.categoryList);
       },
@@ -92,13 +95,13 @@ export class CategoryComponent implements OnInit {
   }
 
   onParamsChange(index: number): void {
-    this.getCategoryData = { ...this.getCategoryData, page: index };
+    this.getCategoryData = {...this.getCategoryData, page: index};
     this.getCategory(this.getCategoryData);
   }
 
   /**
    * Handling Sorting on Each field
-   * @param event 
+   * @param event
    */
   handleSort(event: Event) {
     let sortField: string = 'id';
@@ -107,12 +110,11 @@ export class CategoryComponent implements OnInit {
       this.sort = 1;
       sortField = 'id';
       sortOrder = 'asc';
-    }
-    else {
+    } else {
       this.sort += 1;
       sortField = (event.currentTarget as HTMLInputElement).id;
       sortOrder = this.sort == 2 ? 'dsc' : 'asc';
-    };
+    }
 
     this.getCategoryData = {
       ...this.getCategoryData,
@@ -136,8 +138,8 @@ export class CategoryComponent implements OnInit {
    * @param event
    */
   onSearch(event: Event) {
-    let saerchString = (event.target as HTMLInputElement).value;
-    this.searchSubject.next(saerchString);
+    let searchString = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(searchString);
   }
 
   /**

@@ -9,7 +9,7 @@
       src="../../../../assets/images/Logo-Mark-SVG.svg"
       class="logo p-2"
       *ngIf="!collapsed"
-    />
+     alt=""/>
     <img
       src="../../../../assets/images/Green-Black-Logo.svg"
       class="logo-collapsed p-4"
@@ -31,11 +31,11 @@
           class="sidenav-link-icon text-center d-flex justify-content-center text-light"
           *ngIf="data.img"
           [src]="data.img"
-        />
+         alt=""/>
         <span
           class="sidenav-link-text text-light opacity-75 ms-3"
           *ngIf="collapsed"
-          >{{ data.label }}</span
+        >{{ data.label }}</span
         >
       </a>
     </li>
@@ -68,7 +68,7 @@
         class="dropdown-center d-flex align-items-center border-0 bg-transparent me-5"
       >
         <a
-          class="align-items-center d-flex dropdown-toggle"
+          class="align-items-center d-flex dropdown-toggle gap-1"
           role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -77,13 +77,15 @@
           <span>{{ loginUserName }}</span>
         </a>
 
-        <ul class="dropdown-menu border-0 text-center">
-          <li>
+        <!--        <ul class="dropdown-menu border-0 text-center">-->
+        <!--          <li>-->
+        <span class="dropdown-menu border-0 text-center">
             <a class="dropdown-item" role="button" (click)="onLogout()"
-              >Logout</a
+            >Logout</a
             >
-          </li>
-        </ul>
+        </span>
+        <!--          </li>-->
+        <!--        </ul>-->
       </div>
     </div>
   </header>

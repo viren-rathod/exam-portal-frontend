@@ -35,7 +35,7 @@ const NAVBAR_DATA = [
   {
     routerLink: '/exam-portal/dashboard',
     img: '../../../../assets/images/home.svg',
-    label: 'Dashhboard',
+    label: 'Dashboard',
     role: ['ADMIN', 'USER']
   },
   {

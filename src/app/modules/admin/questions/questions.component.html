@@ -117,7 +117,7 @@
         </tbody>
         <tbody class="border" *ngFor="let question of questionList">
           <tr>
-            <td class="question-title pt-3 ps-4 w-50">{{ question.title }}</td>
+            <td class="question-title pt-3 ps-4 w-50" [innerHTML]="question.title"></td>
             <td class="pt-3 w-25">{{ categories[question.categoryId] }}</td>
             <td class="action-btn-group text-center">
               <a
@@ -140,7 +140,7 @@
         </tbody>
       </table>
 
-      <nav>
+      <nav *ngIf="totalPages > 0">
         <ul class="pagination float-end">
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(0)">&laquo;</a>

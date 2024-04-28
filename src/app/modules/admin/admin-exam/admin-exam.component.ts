@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxPermissionsService } from 'ngx-permissions';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { Status } from 'src/app/shared/enums/status.enum';
-import {
-  ExamDataRequest,
-  ExamList,
-} from 'src/app/shared/models/api/exam.model';
-import { LoginService } from 'src/app/shared/services/auth/login.service';
-import { ExamService } from 'src/app/shared/services/exam/exam.service';
+import {Component, OnInit} from '@angular/core';
+import {NgxPermissionsService} from 'ngx-permissions';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {Status} from 'src/app/shared/enums/status.enum';
+import {ExamDataRequest, ExamList,} from 'src/app/shared/models/api/exam.model';
+import {LoginService} from 'src/app/shared/services/auth/login.service';
+import {ExamService} from 'src/app/shared/services/exam/exam.service';
 
 @Component({
   selector: 'app-admin-exam',
@@ -49,7 +46,8 @@ export class AdminExamComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private permissionService: NgxPermissionsService,
-    private userService: LoginService) { }
+    private userService: LoginService) {
+  }
 
   ngOnInit(): void {
     this.role = this.userService.getUserRole()!;
@@ -72,7 +70,7 @@ export class AdminExamComponent implements OnInit {
           this.totalExams = res.data.totalElements;
           this.totalPages = res.data.totalPages;
           this.currentPage = res.data.number;
-        } else {
+        } else if (data.page !== 0) {
           this.getExam({
             page: 0,
             size: this.pageSize,
@@ -80,6 +78,12 @@ export class AdminExamComponent implements OnInit {
             sortOrder: 'asc',
             searchData: '',
           });
+        }
+        else {
+          this.examData.length = 0;
+          this.totalExams = 0
+          this.totalPages = 0;
+          this.currentPage = 0;
         }
       },
       error: (error) => console.log(error.error.message),
@@ -137,12 +141,13 @@ export class AdminExamComponent implements OnInit {
    * @param index
    */
   onParamsChange(index: number): void {
-    this.getExamData = { ...this.getExamData, page: index };
+    this.getExamData = {...this.getExamData, page: index};
     this.getExam(this.getExamData);
   }
+
   /**
    * Handling Sorting on Each field
-   * @param event 
+   * @param event
    */
   handleSort(event: Event) {
     let sortField: string = 'id';
@@ -151,12 +156,12 @@ export class AdminExamComponent implements OnInit {
       this.sort = 1;
       sortField = 'id';
       sortOrder = 'asc';
-    }
-    else {
+    } else {
       this.sort += 1;
       sortField = (event.currentTarget as HTMLInputElement).id;
       sortOrder = this.sort == 2 ? 'dsc' : 'asc';
-    };
+    }
+    ;
 
     this.getExamData = {
       ...this.getExamData,
