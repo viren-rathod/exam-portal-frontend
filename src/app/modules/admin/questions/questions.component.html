@@ -7,10 +7,10 @@
       <a [routerLink]="['/exam-portal/admin/questions/add']">
         <button id="addQuestion" class="btn btn-danger rounded-1 d-flex px-4">
           <span class="px-1 d-flex align-items-center"
-            ><img
-              src="../../../../assets/images/add-plus.svg"
-              height="22px"
-              alt="Add button"
+          ><img
+            src="../../../../assets/images/add-plus.svg"
+            height="22px"
+            alt="Add button"
           /></span>
           <span class="px-1 d-flex align-items-center fw-semibold">Add</span>
         </button>
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <hr class="p-0 m-0" />
+  <hr class="p-0 m-0"/>
   <div class="card-body z-0">
     <div class="d-flex w-100 align-items-center">
       <select class="form-select w-auto" (change)="handleSizeChange($event)">
@@ -45,15 +45,15 @@
     <div>
       <table class="table table-hover">
         <thead>
-          <tr>
-            <th scope="col">
+        <tr>
+          <th scope="col">
               <span class="ms-3 d-flex justify-content-between">
                 <span
                   class="fw-medium"
                   role="button"
                   id="title"
                   (click)="handleSort($event)"
-                  ><span> Name </span>
+                ><span> Name </span>
                   <span>
                     <img
                       height="14px"
@@ -72,16 +72,15 @@
                 </span>
                 <span class="fw-light">|</span>
               </span>
-            </th>
-            <th scope="col">
-              <span class="d-flex justify-content-between">
-                <span class="d-flex justify-content-between">
+          </th>
+          <th scope="col">
+            <span class="d-flex justify-content-between">
                   <span
                     class="fw-medium"
                     role="button"
                     id="category"
                     (click)="handleSort($event)"
-                    ><span>
+                  ><span>
                       <span>Category</span>
                       <span>
                         <img
@@ -101,42 +100,41 @@
                   ></span>
                   <span class="fw-light">|</span>
                 </span>
-              </span>
-            </th>
-            <th scope="col" colspan="2">
+          </th>
+          <th scope="col" colspan="2">
               <span class="d-flex justify-content-center">
                 <span class="fw-medium">Action</span>
               </span>
-            </th>
-          </tr>
+          </th>
+        </tr>
         </thead>
         <tbody *ngIf="questionList && questionList.length <= 0">
-          <tr>
-            <td class="text-center" colspan="4">No data found</td>
-          </tr>
+        <tr>
+          <td class="text-center" colspan="4">No data found</td>
+        </tr>
         </tbody>
         <tbody class="border" *ngFor="let question of questionList">
-          <tr>
-            <td class="question-title pt-3 ps-4 w-50" [innerHTML]="question.title"></td>
-            <td class="pt-3 w-25">{{ categories[question.categoryId] }}</td>
-            <td class="action-btn-group text-center">
-              <a
-                class="btn text-light bg-success rounded-1 me-1"
-                [routerLink]="['view', +question.id]"
-                ><i class="bi bi-eye"></i
-              ></a>
-              <a
-                class="btn text-light bg-success rounded-1"
-                [routerLink]="['edit', +question.id]"
-                ><i class="bi bi-pen-fill"></i
-              ></a>
-              <a
-                class="btn text-light bg-danger rounded-1 ms-1"
-                (click)="onDelete(+question.id)"
-                ><i class="bi bi-trash-fill"></i
-              ></a>
-            </td>
-          </tr>
+        <tr>
+          <td class="question-title pt-3 ps-4 w-50" [innerHTML]="question.title"></td>
+          <td class="pt-3 w-25">{{ categories[question.categoryId] }}</td>
+          <td class="action-btn-group text-center">
+            <a
+              class="btn text-light bg-success rounded-1 me-1"
+              [routerLink]="['view', +question.id]"
+            ><i class="bi bi-eye"></i
+            ></a>
+            <a
+              class="btn text-light bg-success rounded-1"
+              [routerLink]="['edit', +question.id]"
+            ><i class="bi bi-pen-fill"></i
+            ></a>
+            <a
+              class="btn text-light bg-danger rounded-1 ms-1"
+              (click)="onDelete(+question.id)"
+            ><i class="bi bi-trash-fill"></i
+            ></a>
+          </td>
+        </tr>
         </tbody>
       </table>
 
@@ -148,7 +146,7 @@
 
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(currentPage - 1)"
-              >&lsaquo;</a
+            >&lsaquo;</a
             >
           </li>
 
@@ -165,7 +163,7 @@
             class="page-item"
           >
             <a class="page-link" (click)="onParamsChange(currentPage + 1)"
-              >&rsaquo;</a
+            >&rsaquo;</a
             >
           </li>
 
@@ -174,7 +172,7 @@
             class="page-item"
           >
             <a class="page-link" (click)="onParamsChange(totalPages - 1)"
-              >&raquo;</a
+            >&raquo;</a
             >
           </li>
         </ul>
