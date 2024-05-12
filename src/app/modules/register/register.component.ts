@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
-import { confirmPassword } from 'src/app/Validators/password.validators';
-import { LoginService } from 'src/app/shared/services/auth/login.service';
-import { UserService } from 'src/app/shared/services/user/user.service';
-import { UserRegistrationRequest } from 'src/app/shared/models/auth.model';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {confirmPassword} from 'src/app/Validators/password.validators';
+import {LoginService} from 'src/app/shared/services/auth/login.service';
+import {UserService} from 'src/app/shared/services/user/user.service';
+import {UserRegistrationRequest} from 'src/app/shared/models/auth.model';
+import {ToastService} from "../../shared/services/toast/toast.service";
 
 @Component({
   selector: 'app-register',
@@ -23,12 +23,14 @@ import { UserRegistrationRequest } from 'src/app/shared/models/auth.model';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
+
   constructor(
     private userService: UserService,
     private loginService: LoginService,
-    private toast: NgToastService,
+    private toast: ToastService,
     private route: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.loginService.getTokenFromLocalStorage() != null) {
@@ -56,15 +58,19 @@ export class RegisterComponent implements OnInit {
   get username() {
     return this.registerForm.get('username');
   }
+
   get email() {
     return this.registerForm.get('email');
   }
+
   get password() {
     return this.registerForm.get('password');
   }
+
   get repeatPassword() {
     return this.registerForm.get('repeatPassword');
   }
+
   get tnc() {
     return this.registerForm.get('tnc');
   }
@@ -82,36 +88,20 @@ export class RegisterComponent implements OnInit {
         email: this.registerForm.value.email,
         password: this.registerForm.value.password,
       };
-      console.log("UserRegistrationRequest --> ",data);
-      
+      console.log("UserRegistrationRequest --> ", data);
+
       this.userService.addUser(data).subscribe({
-        next: () => {
+        next: (res) => {
+          console.log("->", res)
           this.route.navigate(['login']);
-          this.openSuccess();
+          this.toast.openSuccess(res['message']);
         },
         error: (error) => {
-          this.openError(error.error);
+          this.toast.openError(error.error.message);
         },
       });
     }
     return;
   }
 
-  //toasts
-  openSuccess() {
-    this.toast.success({
-      detail: 'Registered',
-      summary: 'Registered Successfully!',
-      duration: 3000,
-      position: 'topRight',
-    });
-  }
-  openError(error: Error) {
-    this.toast.error({
-      detail: 'Registration Failed!',
-      summary: error.message,
-      duration: 3000,
-      position: 'topRight',
-    });
-  }
 }

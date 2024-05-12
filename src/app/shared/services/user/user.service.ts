@@ -1,16 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import BASE_URL from '../util';
-import { UserRegistrationRequest } from '../../models/auth.model';
+import {UserRegistrationRequest} from '../../models/auth.model';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   //Adding users
-  public addUser(user: UserRegistrationRequest) {
-    return this.http.post(`${BASE_URL}/api/auth/register`, user);
+  public addUser(user: UserRegistrationRequest): Observable<Record<string, string>> {
+    return this.http.post<Record<string, string>>(`${BASE_URL}/api/auth/register`, user);
   }
 }
