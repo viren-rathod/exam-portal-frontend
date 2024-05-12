@@ -1,12 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
-import {
-  Question,
-  QuestionDataRequest,
-  QuestionList,
-} from 'src/app/shared/models/api/question.model';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
-import { QuestionService } from 'src/app/shared/services/question/question.service';
+import {Component, OnInit} from '@angular/core';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {QuestionDataRequest, QuestionList,} from 'src/app/shared/models/api/question.model';
+import {CategoryService} from 'src/app/shared/services/category/category.service';
+import {QuestionService} from 'src/app/shared/services/question/question.service';
 
 @Component({
   selector: 'app-questions',
@@ -41,12 +37,14 @@ export class QuestionsComponent implements OnInit {
     searchData: '',
   };
   categories: String[] = [];
+  sort: number = 1;
   private searchSubject = new Subject<string>();
 
   constructor(
     private questionService: QuestionService,
     private categoryService: CategoryService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.searchSubject
@@ -73,9 +71,19 @@ export class QuestionsComponent implements OnInit {
           this.totalPages = res.data.totalPages;
           this.currentPage = res.data.number;
           this.totalQuestions = res.data.totalElements;
+        } else if (data.page !== 0) {
+          this.getQuestions({
+            page: 0,
+            size: this.pageSize,
+            sortField: 'id',
+            sortOrder: 'asc',
+            searchData: '',
+          });
         } else {
-          this.questionList = [];
+          this.questionList.length = 0;
+          this.totalQuestions = 0
           this.totalPages = 0;
+          this.currentPage = 0;
         }
         console.log('getQuestionData() -->', this.questionList);
       },
@@ -113,7 +121,32 @@ export class QuestionsComponent implements OnInit {
   }
 
   onParamsChange(index: number): void {
-    this.getQuestionData = { ...this.getQuestionData, page: index };
+    this.getQuestionData = {...this.getQuestionData, page: index};
+    this.getQuestions(this.getQuestionData);
+  }
+
+  /**
+   * Handling Sorting on Each field
+   * @param event
+   */
+  handleSort(event: Event) {
+    let sortField: string = 'id';
+    let sortOrder: string = 'asc';
+    if (this.sort > 2) {
+      this.sort = 1;
+      sortField = 'id';
+      sortOrder = 'asc';
+    } else {
+      this.sort += 1;
+      sortField = (event.currentTarget as HTMLInputElement).id;
+      sortOrder = this.sort == 2 ? 'dsc' : 'asc';
+    }
+
+    this.getQuestionData = {
+      ...this.getQuestionData,
+      sortField: sortField,
+      sortOrder: sortOrder
+    };
     this.getQuestions(this.getQuestionData);
   }
 
@@ -121,6 +154,7 @@ export class QuestionsComponent implements OnInit {
     this.getQuestionData = {
       ...this.getQuestionData,
       size: +(event.target as HTMLInputElement).value,
+      page: 0,
     };
     this.getQuestions(this.getQuestionData);
   }
@@ -130,8 +164,8 @@ export class QuestionsComponent implements OnInit {
    * @param event
    */
   onSearch(event: Event) {
-    let saerchString = (event.target as HTMLInputElement).value;
-    this.searchSubject.next(saerchString);
+    let searchString = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(searchString);
   }
 
   /**
@@ -142,6 +176,7 @@ export class QuestionsComponent implements OnInit {
     this.getQuestionData = {
       ...this.getQuestionData,
       searchData: str,
+      page: 0,
     };
     this.getQuestions(this.getQuestionData);
   }

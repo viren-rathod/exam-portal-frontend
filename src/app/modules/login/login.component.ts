@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
-import { Roles } from 'src/app/shared/enums/roles.enum';
-import { CurrentUser, UserLoginRequest } from 'src/app/shared/models/auth.model';
-import { LoginService } from 'src/app/shared/services/auth/login.service';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Roles} from 'src/app/shared/enums/roles.enum';
+import {CurrentUser, UserLoginRequest} from 'src/app/shared/models/auth.model';
+import {LoginService} from 'src/app/shared/services/auth/login.service';
+import {ToastService} from "../../shared/services/toast/toast.service";
 
 @Component({
   selector: 'app-login',
@@ -22,6 +22,7 @@ import { LoginService } from 'src/app/shared/services/auth/login.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+
   ngOnInit(): void {
     if (this.loginService.getTokenFromLocalStorage() != null) {
       this.route.navigate(['']);
@@ -34,15 +35,18 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required),
     });
   }
+
   constructor(
     private loginService: LoginService,
-    private toast: NgToastService,
+    private toast: ToastService,
     private route: Router
-  ) { }
+  ) {
+  }
 
   get email() {
     return this.loginForm.get('usernameOrEmail');
   }
+
   get password() {
     return this.loginForm.get('password');
   }
@@ -71,34 +75,18 @@ export class LoginComponent implements OnInit {
               }
             },
             error: (error) => {
-              this.openError(error.error);
+              this.toast.openError(error.error.message);
             },
           });
-          this.openSuccess();
+          this.toast.openSuccess(res.message);
         },
         error: (error) => {
           console.log('ERROR:-> ' + error.error.message);
-          this.openError(error.error);
+          this.toast.openError(error.error.message);
         },
       });
     }
     return;
   }
-  //toasts
-  openSuccess() {
-    this.toast.success({
-      detail: 'Logied In',
-      summary: 'Login Successfully!',
-      duration: 3000,
-      position: 'topRight',
-    });
-  }
-  openError(error: Error) {
-    this.toast.error({
-      detail: 'Login Failed!',
-      summary: error.message,
-      duration: 3000,
-      position: 'topRight',
-    });
-  }
+
 }

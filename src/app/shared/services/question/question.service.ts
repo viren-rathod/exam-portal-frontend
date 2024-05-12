@@ -7,7 +7,6 @@ import {
   QuestionDataRequest,
   QuestionResponse,
   GetQuestionResponse,
-  Question,
   AddQuestionResponse,
   DeleteQuestionResponse,
   MapObject,

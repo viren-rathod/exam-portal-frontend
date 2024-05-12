@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/auth/login.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class SidenavComponent implements OnInit {
     this.collapsed = false;
   }
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
     let loginData = this.loginService.getUserDetailsFromLocalStorage();
@@ -35,21 +35,25 @@ const NAVBAR_DATA = [
   {
     routerLink: '/exam-portal/dashboard',
     img: '../../../../assets/images/home.svg',
-    label: 'Dashhboard',
+    label: 'Dashboard',
+    role: ['ADMIN', 'USER']
   },
   {
     routerLink: '/exam-portal/admin/exam',
     img: '../../../../assets/images/book.svg',
     label: 'Exam',
+    role: ['ADMIN']
   },
   {
     routerLink: '/exam-portal/admin/category',
     img: '../../../../assets/images/category.svg',
     label: 'Category',
+    role: ['ADMIN']
   },
   {
     routerLink: '/exam-portal/admin/questions',
     img: '../../../../assets/images/question.svg',
     label: 'Questions',
+    role: ['ADMIN']
   },
 ];

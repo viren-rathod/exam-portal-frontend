@@ -6,6 +6,8 @@ import { authGuard } from './shared/guard/auth.guard';
 import { RegisterComponent } from './modules/register/register.component';
 import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
+import { Roles } from './shared/enums/roles.enum';
+import { ngxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
   {
@@ -35,6 +37,13 @@ const routes: Routes = [
       },
       {
         path: 'admin',
+        canActivate: [ngxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [Roles.Admin,],
+            redirectTo: '/exam-portal/dashboard'
+          }
+        },
         loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
       },
     ]

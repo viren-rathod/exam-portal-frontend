@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { NgToastService } from 'ng-angular-popup';
-import { Option, OptionList } from 'src/app/shared/models/api/option.model';
-import { MapObject, Question, SelectBox } from 'src/app/shared/models/api/question.model';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
-import { OptionsService } from 'src/app/shared/services/options/options.service';
-import { QuestionService } from 'src/app/shared/services/question/question.service';
+import {Option} from 'src/app/shared/models/api/option.model';
+import {MapObject, Question, SelectBox} from 'src/app/shared/models/api/question.model';
+import {CategoryService} from 'src/app/shared/services/category/category.service';
+import {OptionsService} from 'src/app/shared/services/options/options.service';
+import {QuestionService} from 'src/app/shared/services/question/question.service';
 
 @Component({
   selector: 'app-add-edit-question',
@@ -30,24 +29,28 @@ export class AddEditQuestionComponent implements OnInit {
     private categoryService: CategoryService,
     private optionService: OptionsService,
     private route: ActivatedRoute,
-    private toast: NgToastService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   public Editor = ClassicEditor;
 
   get categories() {
     return this.questionForm.get('categories');
   }
+
   get options() {
     return this.questionForm.get('options') as FormArray;
   }
+
   get question() {
     return this.questionForm.get('question');
   }
+
   get status() {
     return this.questionForm.get('status');
   }
+
   get answer() {
     return this.questionForm.get('answer');
   }
@@ -121,14 +124,13 @@ export class AddEditQuestionComponent implements OnInit {
             questionId = res.data.t.id!;
             let savedOptions = res.data.k;
             let answerOption = savedOptions.find(option => option.title === data.options[parseInt(data.answer) - 1].option);
-            this.optionService.saveAnswer({ id: answerOption?.id!, questionId: questionId, title: answerOption?.title! }).subscribe({
+            this.optionService.saveAnswer({
+              id: answerOption?.id!,
+              questionId: questionId,
+              title: answerOption?.title!
+            }).subscribe({
               next: (res) => {
-                this.toast.success({
-                  detail: 'Success',
-                  summary: 'Question added Successfully!',
-                  duration: 3000,
-                  position: 'topRight',
-                });
+                console.log(res.data)
               },
               error: (error) => console.log(error.error.message)
             });
@@ -146,14 +148,13 @@ export class AddEditQuestionComponent implements OnInit {
             questionId = res.data.t.id!;
             let savedOptions = res.data.k;
             let answerOption = savedOptions.find(option => option.title === data.options[parseInt(data.answer) - 1].option);
-            this.optionService.saveAnswer({ id: answerOption?.id!, questionId: questionId, title: answerOption?.title! }).subscribe({
+            this.optionService.saveAnswer({
+              id: answerOption?.id!,
+              questionId: questionId,
+              title: answerOption?.title!
+            }).subscribe({
               next: (res) => {
-                this.toast.success({
-                  detail: 'Success',
-                  summary: 'Question updated Successfully!',
-                  duration: 3000,
-                  position: 'topRight',
-                });
+                console.log(res.data)
               },
               error: (error) => console.log(error.error.message)
             });
@@ -190,7 +191,7 @@ export class AddEditQuestionComponent implements OnInit {
 
   createOption(defaultValue: string = '') {
     return this.formBuilder.group({
-      option: [defaultValue, (formControl: FormControl) => (formControl.value).trim().length === 0 ? { isValid: true } : null],
+      option: [defaultValue, (formControl: FormControl) => (formControl.value).trim().length === 0 ? {isValid: true} : null],
     })
   }
 
@@ -216,7 +217,7 @@ export class AddEditQuestionComponent implements OnInit {
   getControls(): void {
     this.optionList.splice(0, this.optionList.length);
     for (let i = 0; i < this.options.length; i++) {
-      this.optionList.push({ key: i + 1, value: `Option ${i + 1}` });
+      this.optionList.push({key: i + 1, value: `Option ${i + 1}`});
     }
   }
 
@@ -290,25 +291,3 @@ export class AddEditQuestionComponent implements OnInit {
     });
   }
 }
-/*
-{  "data": {
-    "t": {
-      "id": 6,
-      "title": "<p>Speaking structurally we can say that <strong>A extends B</strong> is a lot like ‘<strong>A is a superset of B</strong>’, or, to be more verbose, ‘<strong>A has all of B</strong>’s properties, and maybe some more’.</p>",
-      "description": "this is new question for Data Structures and Algorithms...",
-      "categoryId": 1,
-      "created_at": "2023-11-28T06:35:30.493+00:00",
-      "created_by": "admin@mail.com"
-    },
-    "k": [
-      {
-        "id": 14,
-        "title": "Error: cannot implement",
-        "questionId": 6,
-        "created_at": "2023-11-28T06:35:30.710+00:00",
-        "created_by": "admin@mail.com"
-      }
-    ]
-  },
-}
-*/

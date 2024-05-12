@@ -35,11 +35,7 @@ export class LoginService {
 
   public isUserLoggedIn(): boolean {
     let tokenStr = localStorage.getItem('token');
-    if (tokenStr == undefined || tokenStr == '' || tokenStr == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(tokenStr == undefined || tokenStr == '' || tokenStr == null);
   }
 
   public removeTokenFromStorage(): boolean {

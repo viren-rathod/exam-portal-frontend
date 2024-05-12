@@ -1,21 +1,16 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
-import { Observable, finalize } from 'rxjs';
-import { LoginService } from '../services/auth/login.service';
-import { LoaderService } from '../services/loader/loader.service';
+import {Injectable} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
+import {finalize, Observable} from 'rxjs';
+import {LoginService} from '../services/auth/login.service';
+import {LoaderService} from '../services/loader/loader.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
-    private loginSevice: LoginService,
+    private loginService: LoginService,
     private loaderService: LoaderService
-  ) {}
+  ) {
+  }
 
   intercept(
     request: HttpRequest<unknown>,
@@ -23,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     this.loaderService.showLoader();
     let authRequest = request;
-    const accessToken = this.loginSevice.getTokenFromLocalStorage();
+    const accessToken = this.loginService.getTokenFromLocalStorage();
     if (accessToken != null) {
       authRequest = authRequest.clone({
         setHeaders: {
@@ -39,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 }
 
-export const authIntercepterProviders = [
+export const authInterceptorProviders = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

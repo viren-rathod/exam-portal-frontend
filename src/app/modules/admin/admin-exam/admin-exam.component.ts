@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { Status } from 'src/app/shared/enums/status.enum';
-import {
-  ExamDataRequest,
-  ExamList,
-} from 'src/app/shared/models/api/exam.model';
-import { ExamService } from 'src/app/shared/services/exam/exam.service';
+import {Component, OnInit} from '@angular/core';
+import {NgxPermissionsService} from 'ngx-permissions';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {Status} from 'src/app/shared/enums/status.enum';
+import {ExamDataRequest, ExamList,} from 'src/app/shared/models/api/exam.model';
+import {LoginService} from 'src/app/shared/services/auth/login.service';
+import {ExamService} from 'src/app/shared/services/exam/exam.service';
 
 @Component({
   selector: 'app-admin-exam',
@@ -13,6 +12,7 @@ import { ExamService } from 'src/app/shared/services/exam/exam.service';
   styleUrls: ['./admin-exam.component.css'],
 })
 export class AdminExamComponent implements OnInit {
+  role = '';
   examData: Array<ExamList> = [];
   totalExams: number = 0;
   totalPages: number = 0;
@@ -40,13 +40,20 @@ export class AdminExamComponent implements OnInit {
     sortOrder: 'asc',
     searchData: '',
   };
+  sort: number = 1;
   private searchSubject = new Subject<string>();
 
-  constructor(private examService: ExamService) {}
+  constructor(
+    private examService: ExamService,
+    private permissionService: NgxPermissionsService,
+    private userService: LoginService) {
+  }
 
   ngOnInit(): void {
+    this.role = this.userService.getUserRole()!;
+    this.permissionService.loadPermissions([this.role]);
     this.searchSubject
-      .pipe(debounceTime(3000), distinctUntilChanged())
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((res) => this.searchHandler(res));
     this.getExam(this.getExamData);
   }
@@ -63,9 +70,20 @@ export class AdminExamComponent implements OnInit {
           this.totalExams = res.data.totalElements;
           this.totalPages = res.data.totalPages;
           this.currentPage = res.data.number;
-        } else {
-          this.examData = [];
+        } else if (data.page !== 0) {
+          this.getExam({
+            page: 0,
+            size: this.pageSize,
+            sortField: 'id',
+            sortOrder: 'asc',
+            searchData: '',
+          });
+        }
+        else {
+          this.examData.length = 0;
+          this.totalExams = 0
           this.totalPages = 0;
+          this.currentPage = 0;
         }
       },
       error: (error) => console.log(error.error.message),
@@ -123,7 +141,33 @@ export class AdminExamComponent implements OnInit {
    * @param index
    */
   onParamsChange(index: number): void {
-    this.getExamData = { ...this.getExamData, page: index };
+    this.getExamData = {...this.getExamData, page: index};
+    this.getExam(this.getExamData);
+  }
+
+  /**
+   * Handling Sorting on Each field
+   * @param event
+   */
+  handleSort(event: Event) {
+    let sortField: string = 'id';
+    let sortOrder: string = 'asc';
+    if (this.sort > 2) {
+      this.sort = 1;
+      sortField = 'id';
+      sortOrder = 'asc';
+    } else {
+      this.sort += 1;
+      sortField = (event.currentTarget as HTMLInputElement).id;
+      sortOrder = this.sort == 2 ? 'dsc' : 'asc';
+    }
+    ;
+
+    this.getExamData = {
+      ...this.getExamData,
+      sortField: sortField,
+      sortOrder: sortOrder
+    };
     this.getExam(this.getExamData);
   }
 
@@ -135,6 +179,7 @@ export class AdminExamComponent implements OnInit {
     this.getExamData = {
       ...this.getExamData,
       size: +(event.target as HTMLInputElement).value,
+      page: 0,
     };
     this.getExam(this.getExamData);
   }
@@ -155,6 +200,7 @@ export class AdminExamComponent implements OnInit {
   searchHandler(str: string) {
     this.getExamData = {
       ...this.getExamData,
+      page: 0,
       searchData: str,
     };
     this.getExam(this.getExamData);

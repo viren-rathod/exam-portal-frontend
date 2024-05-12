@@ -9,7 +9,7 @@
       src="../../../../assets/images/Logo-Mark-SVG.svg"
       class="logo p-2"
       *ngIf="!collapsed"
-    />
+     alt=""/>
     <img
       src="../../../../assets/images/Green-Black-Logo.svg"
       class="logo-collapsed p-4"
@@ -25,16 +25,17 @@
         [routerLink]="[data.routerLink]"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        *ngxPermissionsOnly="data.role"
       >
         <img
           class="sidenav-link-icon text-center d-flex justify-content-center text-light"
           *ngIf="data.img"
           [src]="data.img"
-        />
+         alt=""/>
         <span
           class="sidenav-link-text text-light opacity-75 ms-3"
           *ngIf="collapsed"
-          >{{ data.label }}</span
+        >{{ data.label }}</span
         >
       </a>
     </li>
@@ -56,16 +57,36 @@
           (click)="toggleCollapse()"
         >
           <!-- <i class="bi bi-list-nested text-black fs-4"></i> -->
-          <img src="../../../../assets/images/Mediamodifier-Design.svg" height="22px" alt="ICON">
+          <img
+            src="../../../../assets/images/Mediamodifier-Design.svg"
+            height="22px"
+            alt="ICON"
+          />
         </button>
       </div>
-      <button
-        class="d-flex align-items-center border-0 bg-transparent me-5"
-        (click)="onLogout()"
+      <div
+        class="dropdown-center d-flex align-items-center border-0 bg-transparent me-5"
       >
-        <i class="bi bi-person-circle fs-5 px-1"></i>
-        <span>{{ loginUserName }}</span>
-      </button>
+        <a
+          class="align-items-center d-flex dropdown-toggle gap-1"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="bi bi-person-circle fs-5 px-1"></i>
+          <span>{{ loginUserName }}</span>
+        </a>
+
+        <!--        <ul class="dropdown-menu border-0 text-center">-->
+        <!--          <li>-->
+        <span class="dropdown-menu border-0 text-center">
+            <a class="dropdown-item" role="button" (click)="onLogout()"
+            >Logout</a
+            >
+        </span>
+        <!--          </li>-->
+        <!--        </ul>-->
+      </div>
     </div>
   </header>
   <main class="main-body py-5">

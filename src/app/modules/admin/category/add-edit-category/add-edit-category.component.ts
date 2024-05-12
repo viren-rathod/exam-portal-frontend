@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
-import { Category } from 'src/app/shared/models/api/category.model';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Category} from 'src/app/shared/models/api/category.model';
+import {CategoryService} from 'src/app/shared/services/category/category.service';
 
 @Component({
   selector: 'app-add-edit-category',
@@ -20,12 +19,13 @@ export class AddEditCategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
-    private toast: NgToastService,
-  ) { }
+  ) {
+  }
 
   get title() {
     return this.categoryForm.get('title');
   }
+
   get description() {
     return this.categoryForm.get('description');
   }
@@ -55,50 +55,26 @@ export class AddEditCategoryComponent implements OnInit {
         title: this.categoryForm.value.title,
         description: this.categoryForm.value.description,
       };
-      console.log('addCategoryData()-->', { ...addCategoryData });
+      console.log('addCategoryData()-->', {...addCategoryData});
       if (this.editMode) {
         addCategoryData.id = +this.id;
         this.categoryService.editCategory(addCategoryData).subscribe({
           next: (res) => {
             console.log('Category Updated successfully...', res.data);
-            this.toast.success({
-              detail: 'Success',
-              summary: 'Category Updated Successfully!',
-              duration: 3000,
-              position: 'topRight',
-            });
             this.router.navigate(['exam-portal/admin/category']);
           },
           error: (error) => {
             console.log('Error updating Category!!', error.error.message);
-            this.toast.error({
-              detail: 'Failed!',
-              summary: error.error,
-              duration: 3000,
-              position: 'topRight',
-            });
           },
         });
       } else {
         this.categoryService.addCategory(addCategoryData).subscribe({
           next: (res) => {
-            console.log('Category addes successfully...', res.data);
-            this.toast.success({
-              detail: 'Success',
-              summary: 'Category Created Successfully!',
-              duration: 3000,
-              position: 'topRight',
-            });
+            console.log('Category added successfully...', res.data);
             this.router.navigate(['exam-portal/admin/category']);
           },
           error: (error) => {
             console.log('Error adding Category!!', error.error.message);
-            this.toast.error({
-              detail: 'Failed!',
-              summary: error.error,
-              duration: 3000,
-              position: 'topRight',
-            });
           },
         });
       }
@@ -106,7 +82,7 @@ export class AddEditCategoryComponent implements OnInit {
   }
 
   /**
-   * Check if Category to be Save or Update using id in param
+   * Check if Category to be Saved or Update using id in param
    */
   checkEditMode(): void {
     this.route.params.subscribe((params) => {
@@ -133,19 +109,14 @@ export class AddEditCategoryComponent implements OnInit {
         };
         this.categoryForm.patchValue(editForm);
       },
-      error: () => {
-        this.toast.error({
-          detail: 'Failed!',
-          summary: 'Something went Wrong!!',
-          duration: 3000,
-          position: 'topRight',
-        });
+      error: (err) => {
+        console.log(err)
       },
     });
   }
 
   onCancel() {
     this.router.navigate(['exam-portal/admin/category']);
-   }
+  }
 
 }

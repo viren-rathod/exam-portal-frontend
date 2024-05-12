@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
-import { Status } from 'src/app/shared/enums/status.enum';
-import { Category } from 'src/app/shared/models/api/category.model';
-import { Exam } from 'src/app/shared/models/api/exam.model';
-import { CategoryService } from 'src/app/shared/services/category/category.service';
-import { ExamService } from 'src/app/shared/services/exam/exam.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Status} from 'src/app/shared/enums/status.enum';
+import {Category} from 'src/app/shared/models/api/category.model';
+import {Exam} from 'src/app/shared/models/api/exam.model';
+import {CategoryService} from 'src/app/shared/services/category/category.service';
+import {ExamService} from 'src/app/shared/services/exam/exam.service';
 
 @Component({
   selector: 'app-add-edit-exam',
@@ -25,23 +24,27 @@ export class AddEditExamComponent implements OnInit {
     private formBuilder: FormBuilder,
     private examService: ExamService,
     private categoryService: CategoryService,
-    private toast: NgToastService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   get title() {
     return this.examForm.get('title');
   }
+
   get examTime() {
     return this.examForm.get('examTime');
   }
+
   get categories() {
     return this.examForm.get('categories');
   }
+
   get totalQuestions() {
     return this.examForm.get('totalQuestions');
   }
+
   get maxMarks() {
     return this.examForm.get('maxMarks');
   }
@@ -81,50 +84,26 @@ export class AddEditExamComponent implements OnInit {
         categories: this.selectedCategory,
         status: Status.InActive,
       };
-      console.log('addExamData()-->', { ...addExamData });
+      console.log('addExamData()-->', {...addExamData});
       if (this.editMode) {
         addExamData.id = +this.id;
         this.examService.editExam(addExamData).subscribe({
           next: (res) => {
             console.log('Exam Updated successfully...', res.data);
-            this.toast.success({
-              detail: 'Success',
-              summary: 'Exam Updated Successfully!',
-              duration: 3000,
-              position: 'topRight',
-            });
             this.router.navigate(['exam-portal/admin/exam']);
           },
           error: (error) => {
             console.log('Error updating Exam!!', error.error.message);
-            this.toast.error({
-              detail: 'Failed!',
-              summary: error.error,
-              duration: 3000,
-              position: 'topRight',
-            });
           },
         });
       } else {
         this.examService.addExam(addExamData).subscribe({
           next: (res) => {
-            console.log('Exam addes successfully...', res.data);
-            this.toast.success({
-              detail: 'Success',
-              summary: 'Exam Created Successfully!',
-              duration: 3000,
-              position: 'topRight',
-            });
+            console.log('Exam added successfully...', res.data);
             this.router.navigate(['exam-portal/admin/exam']);
           },
           error: (error) => {
             console.log('Error adding Exam!!', error.error.message);
-            this.toast.error({
-              detail: 'Failed!',
-              summary: error.error,
-              duration: 3000,
-              position: 'topRight',
-            });
           },
         });
       }
@@ -150,7 +129,7 @@ export class AddEditExamComponent implements OnInit {
         }
       });
     } else {
-      this.selectedCategory.filter((ele, i) => {
+      this.selectedCategory.filter((ele) => {
         if (!event.includes(ele)) {
           this.selectedCategory.forEach((value, i) => {
             if (ele === value) {
@@ -179,7 +158,7 @@ export class AddEditExamComponent implements OnInit {
   }
 
   /**
-   * Check if Exam to be Save or Update using id in param
+   * Check if Exam to be Saved or Update using id in param
    */
   checkEditMode(): void {
     this.route.params.subscribe((params) => {
@@ -215,12 +194,7 @@ export class AddEditExamComponent implements OnInit {
         this.examForm.patchValue(editForm);
       },
       error: () => {
-        this.toast.error({
-          detail: 'Failed!',
-          summary: 'Something went Wrong!!',
-          duration: 3000,
-          position: 'topRight',
-        });
+
       },
     });
   }

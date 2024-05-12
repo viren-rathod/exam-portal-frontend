@@ -7,10 +7,10 @@
       <a [routerLink]="['/exam-portal/admin/category/add']">
         <button id="addCategory" class="btn btn-danger rounded-1 d-flex px-4">
           <span class="px-1 d-flex align-items-center"
-            ><img
-              src="../../../../assets/images/add-plus.svg"
-              height="22px"
-              alt="Add button"
+          ><img
+            src="../../../../assets/images/add-plus.svg"
+            height="22px"
+            alt="Add button"
           /></span>
           <span class="px-1 d-flex align-items-center fw-semibold">Add</span>
         </button>
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <hr class="p-0 m-0" />
+  <hr class="p-0 m-0"/>
   <div class="card-body z-0">
     <div class="d-flex w-100 align-items-center">
       <select class="form-select w-auto" (change)="handleSizeChange($event)">
@@ -45,53 +45,98 @@
     <div>
       <table class="table table-hover">
         <thead>
-          <tr>
-            <th scope="col">
+        <tr>
+          <th scope="col">
               <span class="ms-3 d-flex justify-content-between">
-                <span class="fw-medium">Name</span>
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="title"
+                  (click)="handleSort($event)"
+                ><span> Name </span>
+                  <span>
+                    <img
+                      height="14px"
+                      src="../../../../assets/images/sort.png"
+                      alt=""
+                      class="px-1"
+                      [ngClass]="
+                        getCategoryData.sortField == 'title' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      "
+                    />
+                  </span>
+                </span>
                 <span class="fw-light">|</span>
               </span>
-            </th>
-            <th scope="col">
+
+          </th>
+          <th>
               <span class="d-flex justify-content-between">
-                <span class="fw-medium">Description</span>
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="description"
+                  (click)="handleSort($event)"
+                ><span>
+                    <span>Description</span>
+                    <span>
+                      <img
+                        height="14px"
+                        src="../../../../assets/images/sort.png"
+                        alt=""
+                        class="px-1"
+                        [ngClass]="
+                          getCategoryData.sortField == 'description' &&
+                          sort != 3
+                            ? sort == 1
+                              ? 'rotate-180'
+                              : ''
+                            : 'rotate-180'
+                        "
+                      />
+                    </span> </span
+                ></span>
                 <span class="fw-light">|</span>
               </span>
-            </th>
-            <th scope="col" colspan="2">
+          </th>
+          <th scope="col" colspan="2">
               <span class="d-flex justify-content-center">
                 <span class="fw-medium">Action</span>
               </span>
-            </th>
-          </tr>
+          </th>
+        </tr>
         </thead>
         <tbody *ngIf="categoryList && categoryList.length <= 0">
-          <tr>
-            <td class="text-center" colspan="4">No data found</td>
-          </tr>
+        <tr>
+          <td class="text-center" colspan="4">No data found</td>
+        </tr>
         </tbody>
         <tbody class="border" *ngFor="let category of categoryList">
-          <tr>
-            <td class="pt-3 ps-4">{{ category.title }}</td>
-            <td class="pt-3">{{ category.description }}</td>
-            <td class="text-center"></td>
-            <td class="action-btn-group text-center">
-              <a
-                class="btn text-light bg-success rounded-1 me-1"
-                [routerLink]="['edit', +category.id]"
-                ><i class="bi bi-pen-fill"></i
-              ></a>
-              <a
-                class="btn text-light bg-danger rounded-1 ms-1"
-                (click)="onDelete(+category.id)"
-                ><i class="bi bi-trash-fill"></i
-              ></a>
-            </td>
-          </tr>
+        <tr>
+          <td class="pt-3 ps-4">{{ category.title }}</td>
+          <td class="pt-3">{{ category.description }}</td>
+          <td class="text-center"></td>
+          <td class="action-btn-group text-center">
+            <a
+              class="btn text-light bg-success rounded-1 me-1"
+              [routerLink]="['edit', +category.id]"
+            ><i class="bi bi-pen-fill"></i
+            ></a>
+            <a
+              class="btn text-light bg-danger rounded-1 ms-1"
+              (click)="onDelete(+category.id)"
+            ><i class="bi bi-trash-fill"></i
+            ></a>
+          </td>
+        </tr>
         </tbody>
       </table>
 
-      <nav>
+      <nav *ngIf="totalPages > 0">
         <ul class="pagination float-end">
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(0)">&laquo;</a>
@@ -99,7 +144,7 @@
 
           <li class="page-item" [ngClass]="currentPage <= 0 ? 'disabled' : ''">
             <a class="page-link" (click)="onParamsChange(currentPage - 1)"
-              >&lsaquo;</a
+            >&lsaquo;</a
             >
           </li>
 
@@ -116,7 +161,7 @@
             class="page-item"
           >
             <a class="page-link" (click)="onParamsChange(currentPage + 1)"
-              >&rsaquo;</a
+            >&rsaquo;</a
             >
           </li>
           <li
@@ -124,7 +169,7 @@
             class="page-item"
           >
             <a class="page-link" (click)="onParamsChange(totalPages - 1)"
-              >&raquo;</a
+            >&raquo;</a
             >
           </li>
         </ul>
