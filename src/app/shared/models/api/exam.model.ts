@@ -17,6 +17,7 @@ export interface ExamList {
   title: string;
   description: string;
   maxMarks: string;
+  examCode:string;
   totalQuestions: string;
   examTime: number;
   status: Status;
@@ -71,12 +72,13 @@ export interface GetActiveExamsRequest {
 
 export interface ActiveExam {
   id: number;
-  name: string;
-  exam_time: number;
-  total_question: number;
-  exam_code?: string;
-  candidates_count: number;
-  candidate_status: string;
+  title: string;
+  status:Status ;
+  examTime: number;
+  totalQuestions: number;
+  examCode?: string;
+  candidateCount: number;
+  candidateStatus: string;
   candidate_id: number;
 }
 
