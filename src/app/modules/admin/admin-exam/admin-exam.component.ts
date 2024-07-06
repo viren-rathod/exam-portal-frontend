@@ -78,8 +78,7 @@ export class AdminExamComponent implements OnInit {
             sortOrder: 'asc',
             searchData: '',
           });
-        }
-        else {
+        } else {
           this.examData.length = 0;
           this.totalExams = 0
           this.totalPages = 0;
@@ -161,7 +160,6 @@ export class AdminExamComponent implements OnInit {
       sortField = (event.currentTarget as HTMLInputElement).id;
       sortOrder = this.sort == 2 ? 'dsc' : 'asc';
     }
-    ;
 
     this.getExamData = {
       ...this.getExamData,

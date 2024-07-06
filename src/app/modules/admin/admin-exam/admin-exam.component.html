@@ -72,6 +72,33 @@
               </span>
             </th>
             <th scope="col">
+              <span class="ms-3 d-flex justify-content-between">
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="examCode"
+                  (click)="handleSort($event)"
+                ><span> Code </span>
+                  <span>
+                    <img
+                      height="14px"
+                      src="../../../../assets/images/sort.png"
+                      alt=""
+                      class="px-1"
+                      [ngClass]="
+                        getExamData.sortField == 'examCode' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      "
+                    />
+                  </span>
+                </span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
               <span class="d-flex justify-content-between">
                 <span
                   class="fw-medium"
@@ -120,6 +147,7 @@
         <tbody class="border" *ngFor="let exam of examData">
           <tr>
             <td class="pt-3 ps-4">{{ exam.title }}</td>
+            <td class="pt-3 ps-4">{{ exam.examCode }}</td>
             <td class="pt-3">{{ exam.totalQuestions }}</td>
             <td class="pt-3">
               <span
