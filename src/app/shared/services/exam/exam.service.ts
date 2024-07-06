@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {
   AddExamResponse,
   DeleteExamResponse,
@@ -11,13 +11,13 @@ import {
   PaginatedExamResponse,
 } from '../../models/api/exam.model';
 import BASE_URL from '../util';
-import { BaseResponse } from '../../models/base-response.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExamService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * Get All Exams with filter and Pagination
@@ -34,7 +34,7 @@ export class ExamService {
     // .append('filter', JSON.stringify(filterData))
     return this.http.get<PaginatedExamResponse>(
       `${BASE_URL}/api/exam/paginated`,
-      { params }
+      {params}
     );
   }
 
@@ -62,9 +62,9 @@ export class ExamService {
   }
 
   /**
-   * 
+   *
    * @param id Start the exam for students
-   * @returns 
+   * @returns
    */
   public startExam(id: number): Observable<GetExamResponse> {
     return this.http.put<GetExamResponse>(`${BASE_URL}/api/exam/start`, id)
