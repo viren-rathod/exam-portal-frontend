@@ -13,6 +13,7 @@ import {LoaderComponent} from './shared/components/loader/loader.component';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {SharedModule} from './shared/shared.module';
 import {ErrorHandlerInterceptor} from "./shared/interceptors/error.handler.interceptor";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,6 @@ import {ErrorHandlerInterceptor} from "./shared/interceptors/error.handler.inter
     RegisterComponent,
     LoginComponent,
     SidenavComponent,
-    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +29,7 @@ import {ErrorHandlerInterceptor} from "./shared/interceptors/error.handler.inter
     HttpClientModule,
     SharedModule,
     NgxPermissionsModule.forRoot(),
+    NgbModule
   ],
   providers: [
     authInterceptorProviders,

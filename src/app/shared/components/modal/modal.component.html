@@ -1,0 +1,35 @@
+<!-- modal.component.html -->
+<ng-template #content let-modal>
+  <div class="modal-header border-0">
+    <div class="d-flex align-items-center">
+      <img [src]="getCloseButtonImage()" height="34px" alt="Delete" />
+      <h4 class="modal-title ms-2">{{ title }}</h4>
+    </div>
+    <button type="button" class="btn" (click)="close()">
+      <img
+        src="../../../../assets/images/cross-icon.svg"
+        height="22px"
+        alt="X"
+      />
+    </button>
+  </div>
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="modal-footer border-0">
+    <button
+      type="button"
+      class="btn btn-outline-secondary text-dark"
+      (click)="close()"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      [ngClass]="'btn ' + getBtnClass()"
+      (click)="saveChanges()"
+    >
+      Submit
+    </button>
+  </div>
+</ng-template>

@@ -11,7 +11,6 @@ export const authGuard: CanActivateFn = (_route, _state) => {
   const userService = inject(LoginService);
 
   const roles = [userService.getUserRole()!];
-  console.log(roles);
   permissionService.loadPermissions(roles);
   if (token) {
     return true;

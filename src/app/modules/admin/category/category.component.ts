@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
-import {Status} from 'src/app/shared/enums/status.enum';
-import {CategoryDataRequest, CategoryList,} from 'src/app/shared/models/api/category.model';
-import {CategoryService} from 'src/app/shared/services/category/category.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { Status } from 'src/app/shared/enums/status.enum';
+import {
+  CategoryDataRequest,
+  CategoryList,
+} from 'src/app/shared/models/api/category.model';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
 
 @Component({
   selector: 'app-category',
@@ -10,6 +14,9 @@ import {CategoryService} from 'src/app/shared/services/category/category.service
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit {
+  @ViewChild('deleteModal') modal?: ModalComponent;
+
+  categoryId?: number;
   categoryList: CategoryList[] = [];
   totalCategories: number = 0;
   totalPages: number = 0;
@@ -40,8 +47,7 @@ export class CategoryComponent implements OnInit {
   sort: number = 1;
   private searchSubject = new Subject<string>();
 
-  constructor(private categoryService: CategoryService) {
-  }
+  constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.searchSubject
@@ -68,7 +74,7 @@ export class CategoryComponent implements OnInit {
           });
         } else {
           this.categoryList.length = 0;
-          this.totalCategories = 0
+          this.totalCategories = 0;
           this.totalPages = 0;
           this.currentPage = 0;
         }
@@ -82,8 +88,8 @@ export class CategoryComponent implements OnInit {
    * Delete Exam
    * @param id
    */
-  onDelete(id: number) {
-    if (confirm('Are you sure')) {
+  onDelete(id?: number) {
+    if (id) {
       this.categoryService.deleteCategory(id).subscribe({
         next: (res) => {
           console.log(res);
@@ -95,7 +101,7 @@ export class CategoryComponent implements OnInit {
   }
 
   onParamsChange(index: number): void {
-    this.getCategoryData = {...this.getCategoryData, page: index};
+    this.getCategoryData = { ...this.getCategoryData, page: index };
     this.getCategory(this.getCategoryData);
   }
 
@@ -119,7 +125,7 @@ export class CategoryComponent implements OnInit {
     this.getCategoryData = {
       ...this.getCategoryData,
       sortField: sortField,
-      sortOrder: sortOrder
+      sortOrder: sortOrder,
     };
     this.getCategory(this.getCategoryData);
   }
@@ -153,5 +159,12 @@ export class CategoryComponent implements OnInit {
       page: 0,
     };
     this.getCategory(this.getCategoryData);
+  }
+
+  openModal(id: number) {
+    if (this.modal) {
+      this.categoryId = id;
+      this.modal.open();
+    }
   }
 }

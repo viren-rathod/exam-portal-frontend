@@ -51,7 +51,7 @@
                   role="button"
                   id="title"
                   (click)="handleSort($event)"
-                ><span> Name </span>
+                  ><span> Name </span>
                   <span>
                     <img
                       height="14px"
@@ -78,7 +78,7 @@
                   role="button"
                   id="examCode"
                   (click)="handleSort($event)"
-                ><span> Code </span>
+                  ><span> Code </span>
                   <span>
                     <img
                       height="14px"
@@ -172,8 +172,9 @@
                   *ngIf="exam.status == StatusType.Active ? true : false"
                   class="btn btn-danger rounded-1 shadow-sm text-center w-75"
                   (click)="onStop(+exam.id)"
-                  >Stop</a
                 >
+                  Stop
+                </a>
               </span>
             </td>
             <td class="action-btn-group text-center">
@@ -181,14 +182,16 @@
                 class="btn text-light bg-success rounded-1 me-1"
                 [routerLink]="['edit', +exam.id]"
                 *ngIf="exam.status == StatusType.InActive ? true : false"
-                ><i class="bi bi-pen-fill"></i
-              ></a>
+              >
+                <i class="bi bi-pen-fill"></i>
+              </a>
               <a
                 class="btn text-light bg-danger rounded-1 ms-1"
-                (click)="onDelete(+exam.id)"
+                (click)="openModal(exam.id)"
                 *ngIf="exam.status == StatusType.InActive ? true : false"
-                ><i class="bi bi-trash-fill"></i
-              ></a>
+              >
+                <i class="bi bi-trash-fill"></i>
+              </a>
             </td>
           </tr>
         </tbody>
@@ -235,3 +238,12 @@
     </div>
   </div>
 </div>
+
+<app-modal
+  #deleteModal
+  title="Delete"
+  [onSubmit]="onDelete.bind(this,examId)"
+  variant="danger"
+>
+  <p class="fw-medium fs-5">Are you sure you want to <strong>Delete</strong> this Exam ? This Action can't be undone.</p>
+</app-modal>

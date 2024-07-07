@@ -130,7 +130,7 @@
             ></a>
             <a
               class="btn text-light bg-danger rounded-1 ms-1"
-              (click)="onDelete(+question.id)"
+              (click)="openModal(+question.id)"
             ><i class="bi bi-trash-fill"></i
             ></a>
           </td>
@@ -180,3 +180,12 @@
     </div>
   </div>
 </div>
+
+<app-modal
+  #deleteModal
+  title="Delete"
+  [onSubmit]="onDelete.bind(this,questionId)"
+  variant="danger"
+>
+  <p class="fw-medium fs-5">Are you sure you want to <strong>Delete</strong> this Question ? This Action can't be undone.</p>
+</app-modal>

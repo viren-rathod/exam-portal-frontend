@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddEditQuestionComponent } from './add-edit-question/add-edit-question.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ViewQuestionComponent } from './view-question/view-question.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [QuestionsComponent, AddEditQuestionComponent, ViewQuestionComponent],
@@ -15,7 +16,8 @@ import { ViewQuestionComponent } from './view-question/view-question.component';
     QuestionsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CKEditorModule
+    CKEditorModule,
+    SharedModule
   ],
 })
 export class QuestionsModule {}
