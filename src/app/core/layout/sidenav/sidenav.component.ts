@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { LoginService } from 'src/app/shared/services/auth/login.service';
 
 @Component({
@@ -7,6 +8,8 @@ import { LoginService } from 'src/app/shared/services/auth/login.service';
   styleUrls: ['./sidenav.component.css'],
 })
 export class SidenavComponent implements OnInit {
+  @ViewChild('logoutModal') modal?: ModalComponent;
+
   navData = NAVBAR_DATA;
   collapsed = true;
   screenWidth = 0;
@@ -19,16 +22,22 @@ export class SidenavComponent implements OnInit {
     this.collapsed = false;
   }
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
     let loginData = this.loginService.getUserDetailsFromLocalStorage();
     this.loginUserName = loginData?.username;
   }
 
-  onLogout() {
-    if (confirm('Are u sure ?')) this.loginService.removeTokenFromStorage();
-  }
+  onLogout = () => {
+    this.loginService.removeTokenFromStorage();
+  };
+
+  openModal = () => {
+    if (this.modal) {
+      this.modal.open();
+    }
+  };
 }
 
 const NAVBAR_DATA = [
@@ -36,24 +45,24 @@ const NAVBAR_DATA = [
     routerLink: '/exam-portal/dashboard',
     img: '../../../../assets/images/home.svg',
     label: 'Dashboard',
-    role: ['ADMIN', 'USER']
+    role: ['ADMIN', 'USER'],
   },
   {
     routerLink: '/exam-portal/admin/exam',
     img: '../../../../assets/images/book.svg',
     label: 'Exam',
-    role: ['ADMIN']
+    role: ['ADMIN'],
   },
   {
     routerLink: '/exam-portal/admin/category',
     img: '../../../../assets/images/category.svg',
     label: 'Category',
-    role: ['ADMIN']
+    role: ['ADMIN'],
   },
   {
     routerLink: '/exam-portal/admin/questions',
     img: '../../../../assets/images/question.svg',
     label: 'Questions',
-    role: ['ADMIN']
+    role: ['ADMIN'],
   },
 ];

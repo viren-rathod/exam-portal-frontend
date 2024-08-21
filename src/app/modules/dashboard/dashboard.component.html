@@ -1,0 +1,119 @@
+<div class="card rounded-0 border-0">
+  <div class="card-head">
+    <div class="d-flex exams justify-content-between align-items-center p-3">
+      <div class="title fs-5 fw-bold">Dashboard</div>
+    </div>
+  </div>
+
+  <hr class="p-0 m-0" />
+  <div class="card-body z-0">
+    <div class="d-flex w-100 align-items-center">
+    </div>
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">
+              <span class="ms-3 d-flex justify-content-between">
+                <span class="fw-medium" role="button" id="title" (click)="handleSort($event)">
+                  <span>Exam Name </span>
+                  <span>
+                    <img height="14px" src="../../../../assets/images/sort.png" alt="" class="px-1" [ngClass]="
+                    getActiveExamsData.sortField == 'title' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      " />
+                  </span>
+                </span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
+              <span class="d-flex justify-content-between">
+                <span class="fw-medium" role="button" id="examTime" (click)="handleSort($event)">
+                  <span>Exam TIme</span>
+                  <span>
+                    <img height="14px" src="../../../../assets/images/sort.png" alt="" class="px-1" [ngClass]="
+                        getActiveExamsData.sortField == 'examTime' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      " />
+                  </span>
+                </span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
+              <span class="d-flex justify-content-between">
+                <span class="fw-medium" role="button" id="totalQuestions" (click)="handleSort($event)">
+                  <span>Total Questions</span>
+                </span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col" *ngxPermissionsOnly="['ADMIN']">
+              <span class="ms-3 d-flex justify-content-between">
+                <span class="fw-medium" role="button" id="examCode"><span> Code </span>
+                </span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col" *ngxPermissionsOnly="['ADMIN']">
+              <span class="d-flex justify-content-between">
+                <span class="fw-medium">Total Candidates</span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col" colspan="2">
+              <span class="d-flex justify-content-center">
+                <span class="fw-medium">Action</span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listOfData && listOfData.length <= 0">
+          <tr>
+            <td class="text-center" colspan="4">No data found</td>
+          </tr>
+        </tbody>
+        <tbody class="border" *ngFor="let exam of listOfData; let i = index">
+          <tr>
+            <td class="pt-3 ps-4">{{ exam.title }}</td>
+            <td class="pt-3 ps-4">{{ exam.examTime }}</td>
+            <td class="pt-3">{{ exam.totalQuestions }}</td>
+            <td class="pt-3 ps-4 fw-bold" *ngxPermissionsOnly="['ADMIN']">{{ exam.examCode }}</td>
+            <td class="pt-3 ps-4 " *ngxPermissionsOnly="['ADMIN']">{{ exam.candidateCount }}</td>
+            <td class="pt-3">
+              <span *ngIf="status[i] == 'NOT_ATTENDED'">
+                <a role="button" *ngxPermissionsOnly="['USER']" class="btn btn-success rounded-1 shadow-sm text-center w-75">
+                  Start
+                </a>
+              </span>
+              <span *ngIf="status[i] == 'ATTENDED'">
+                <a *ngxPermissionsOnly="['USER']"
+                  class="disabled btn-warning rounded-1 shadow-sm text-center w-75">
+                  Attended
+                </a>
+              </span>
+              <span *ngIf="status[i] == 'ATTENDING'">
+                <a *ngxPermissionsOnly="['USER']"
+                  class="btn-warning rounded-1 shadow-sm text-center w-75">
+                  Continue
+                </a>
+              </span>
+
+            </td>
+            <td class="text-center">
+              <span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

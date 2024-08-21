@@ -51,7 +51,7 @@
                   role="button"
                   id="title"
                   (click)="handleSort($event)"
-                ><span> Name </span>
+                  ><span> Name </span>
                   <span>
                     <img
                       height="14px"
@@ -60,6 +60,33 @@
                       class="px-1"
                       [ngClass]="
                         getExamData.sortField == 'title' && sort != 3
+                          ? sort == 1
+                            ? 'rotate-180'
+                            : ''
+                          : 'rotate-180'
+                      "
+                    />
+                  </span>
+                </span>
+                <span class="fw-light">|</span>
+              </span>
+            </th>
+            <th scope="col">
+              <span class="ms-3 d-flex justify-content-between">
+                <span
+                  class="fw-medium"
+                  role="button"
+                  id="examCode"
+                  (click)="handleSort($event)"
+                  ><span> Code </span>
+                  <span>
+                    <img
+                      height="14px"
+                      src="../../../../assets/images/sort.png"
+                      alt=""
+                      class="px-1"
+                      [ngClass]="
+                        getExamData.sortField == 'examCode' && sort != 3
                           ? sort == 1
                             ? 'rotate-180'
                             : ''
@@ -120,6 +147,7 @@
         <tbody class="border" *ngFor="let exam of examData">
           <tr>
             <td class="pt-3 ps-4">{{ exam.title }}</td>
+            <td class="pt-3 ps-4">{{ exam.examCode }}</td>
             <td class="pt-3">{{ exam.totalQuestions }}</td>
             <td class="pt-3">
               <span
@@ -144,8 +172,9 @@
                   *ngIf="exam.status == StatusType.Active ? true : false"
                   class="btn btn-danger rounded-1 shadow-sm text-center w-75"
                   (click)="onStop(+exam.id)"
-                  >Stop</a
                 >
+                  Stop
+                </a>
               </span>
             </td>
             <td class="action-btn-group text-center">
@@ -153,14 +182,16 @@
                 class="btn text-light bg-success rounded-1 me-1"
                 [routerLink]="['edit', +exam.id]"
                 *ngIf="exam.status == StatusType.InActive ? true : false"
-                ><i class="bi bi-pen-fill"></i
-              ></a>
+              >
+                <i class="bi bi-pen-fill"></i>
+              </a>
               <a
                 class="btn text-light bg-danger rounded-1 ms-1"
-                (click)="onDelete(+exam.id)"
+                (click)="openModal(exam.id)"
                 *ngIf="exam.status == StatusType.InActive ? true : false"
-                ><i class="bi bi-trash-fill"></i
-              ></a>
+              >
+                <i class="bi bi-trash-fill"></i>
+              </a>
             </td>
           </tr>
         </tbody>
@@ -207,3 +238,12 @@
     </div>
   </div>
 </div>
+
+<app-modal
+  #deleteModal
+  title="Delete"
+  [onSubmit]="onDelete.bind(this,examId)"
+  variant="danger"
+>
+  <p class="fw-medium fs-5">Are you sure you want to <strong>Delete</strong> this Exam ? This Action can't be undone.</p>
+</app-modal>

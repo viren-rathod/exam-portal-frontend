@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { NgToastModule, NgToastComponent } from 'ng-angular-popup';
-import { LoginComponent } from './modules/login/login.component';
-import { authGuard } from './shared/guard/auth.guard';
-import { RegisterComponent } from './modules/register/register.component';
-import { SidenavComponent } from './core/layout/sidenav/sidenav.component';
-import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
-import { Roles } from './shared/enums/roles.enum';
-import { ngxPermissionsGuard } from 'ngx-permissions';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {NgToastComponent, NgToastModule} from 'ng-angular-popup';
+import {LoginComponent} from './modules/login/login.component';
+import {authGuard} from './shared/guard/auth.guard';
+import {RegisterComponent} from './modules/register/register.component';
+import {SidenavComponent} from './core/layout/sidenav/sidenav.component';
+import {Roles} from './shared/enums/roles.enum';
+import {ngxPermissionsGuard} from 'ngx-permissions';
 
 const routes: Routes = [
   {
@@ -31,11 +30,6 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'dashboard',
-        component: DashboardComponent,
-        pathMatch: "full"
-      },
-      {
         path: 'admin',
         canActivate: [ngxPermissionsGuard],
         data: {
@@ -46,6 +40,20 @@ const routes: Routes = [
         },
         loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
       },
+      {
+        path: 'user',
+        canActivate: [ngxPermissionsGuard],
+        data: {
+          permissions: {
+            only: Roles.User,
+          }
+        },
+        loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
     ]
 
   },
@@ -55,4 +63,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes), NgToastModule],
   exports: [RouterModule, NgToastComponent],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

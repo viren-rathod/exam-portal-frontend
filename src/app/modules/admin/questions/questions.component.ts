@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import {QuestionDataRequest, QuestionList,} from 'src/app/shared/models/api/question.model';
 import {CategoryService} from 'src/app/shared/services/category/category.service';
 import {QuestionService} from 'src/app/shared/services/question/question.service';
@@ -10,6 +11,9 @@ import {QuestionService} from 'src/app/shared/services/question/question.service
   styleUrls: ['./questions.component.css'],
 })
 export class QuestionsComponent implements OnInit {
+  @ViewChild('deleteModal') modal?: ModalComponent;
+
+  questionId?: number;
   questionList: QuestionList[] = [];
   totalQuestions: number = 0;
   totalPages: number = 0;
@@ -108,8 +112,8 @@ export class QuestionsComponent implements OnInit {
    * Delete Exam
    * @param id
    */
-  onDelete(id: number) {
-    if (confirm('Are you sure')) {
+  onDelete(id?: number) {
+    if (id) {
       this.questionService.deleteQuestion(id).subscribe({
         next: (res) => {
           console.log(res);
@@ -179,5 +183,12 @@ export class QuestionsComponent implements OnInit {
       page: 0,
     };
     this.getQuestions(this.getQuestionData);
+  }
+
+  openModal(id: number) {
+    if (this.modal) {
+      this.questionId = id;
+      this.modal.open();
+    }
   }
 }

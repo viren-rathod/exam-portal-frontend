@@ -1,10 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {NgxPermissionsService} from 'ngx-permissions';
-import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
-import {Status} from 'src/app/shared/enums/status.enum';
-import {ExamDataRequest, ExamList,} from 'src/app/shared/models/api/exam.model';
-import {LoginService} from 'src/app/shared/services/auth/login.service';
-import {ExamService} from 'src/app/shared/services/exam/exam.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
+import { Status } from 'src/app/shared/enums/status.enum';
+import {
+  ExamDataRequest,
+  ExamList,
+} from 'src/app/shared/models/api/exam.model';
+import { LoginService } from 'src/app/shared/services/auth/login.service';
+import { ExamService } from 'src/app/shared/services/exam/exam.service';
 
 @Component({
   selector: 'app-admin-exam',
@@ -12,6 +16,9 @@ import {ExamService} from 'src/app/shared/services/exam/exam.service';
   styleUrls: ['./admin-exam.component.css'],
 })
 export class AdminExamComponent implements OnInit {
+  @ViewChild('deleteModal') modal?: ModalComponent;
+
+  examId?: number;
   role = '';
   examData: Array<ExamList> = [];
   totalExams: number = 0;
@@ -46,8 +53,8 @@ export class AdminExamComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private permissionService: NgxPermissionsService,
-    private userService: LoginService) {
-  }
+    private userService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.role = this.userService.getUserRole()!;
@@ -78,10 +85,9 @@ export class AdminExamComponent implements OnInit {
             sortOrder: 'asc',
             searchData: '',
           });
-        }
-        else {
+        } else {
           this.examData.length = 0;
-          this.totalExams = 0
+          this.totalExams = 0;
           this.totalPages = 0;
           this.currentPage = 0;
         }
@@ -124,8 +130,8 @@ export class AdminExamComponent implements OnInit {
    * Delete Exam
    * @param id
    */
-  onDelete(id: number) {
-    if (confirm('Are you sure')) {
+  onDelete(id?: number) {
+    if (id) {
       this.examService.deleteExam(id).subscribe({
         next: (res) => {
           console.log(res);
@@ -141,7 +147,7 @@ export class AdminExamComponent implements OnInit {
    * @param index
    */
   onParamsChange(index: number): void {
-    this.getExamData = {...this.getExamData, page: index};
+    this.getExamData = { ...this.getExamData, page: index };
     this.getExam(this.getExamData);
   }
 
@@ -161,12 +167,11 @@ export class AdminExamComponent implements OnInit {
       sortField = (event.currentTarget as HTMLInputElement).id;
       sortOrder = this.sort == 2 ? 'dsc' : 'asc';
     }
-    ;
 
     this.getExamData = {
       ...this.getExamData,
       sortField: sortField,
-      sortOrder: sortOrder
+      sortOrder: sortOrder,
     };
     this.getExam(this.getExamData);
   }
@@ -204,5 +209,12 @@ export class AdminExamComponent implements OnInit {
       searchData: str,
     };
     this.getExam(this.getExamData);
+  }
+
+  openModal(id: number) {
+    if (this.modal) {
+      this.examId = id;
+      this.modal.open();
+    }
   }
 }
