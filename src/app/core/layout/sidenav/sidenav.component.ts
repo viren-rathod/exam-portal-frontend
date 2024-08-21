@@ -29,15 +29,15 @@ export class SidenavComponent implements OnInit {
     this.loginUserName = loginData?.username;
   }
 
-  onLogout() {
+  onLogout = () => {
     this.loginService.removeTokenFromStorage();
-  }
+  };
 
-  openModal() {
+  openModal = () => {
     if (this.modal) {
       this.modal.open();
     }
-  }
+  };
 }
 
 const NAVBAR_DATA = [
