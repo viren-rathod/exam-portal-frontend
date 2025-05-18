@@ -1,40 +1,97 @@
-<div class="sidenav position-fixed z-1 top-0" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
-  <div class="logo-container d-flex justify-content-center align-items-center bg-body border-end">
-    <img src="../../../../assets/images/Logo-Mark-SVG.svg" class="logo p-2" *ngIf="!collapsed" alt="" />
-    <img src="../../../../assets/images/Green-Black-Logo.svg" class="logo-collapsed p-4" *ngIf="collapsed" />
+<div
+  class="sidenav position-fixed z-1 top-0"
+  [ngClass]="collapsed ? 'sidenav-collapsed' : ''"
+>
+  <div
+    class="logo-container d-flex justify-content-center align-items-center bg-body border-end"
+  >
+    <img
+      src="../../../../assets/images/Logo-Mark-SVG.svg"
+      class="logo p-2"
+      *ngIf="!collapsed"
+      alt=""
+    />
+    <img
+      src="../../../../assets/images/Green-Black-Logo.svg"
+      class="logo-collapsed p-4"
+      *ngIf="collapsed"
+    />
   </div>
-  <ul class="sidenav-nav p-0 m-0 list-unstyled d-flex flex-column align-items-center">
+  <ul
+    class="sidenav-nav p-0 m-0 list-unstyled d-flex flex-column align-items-center"
+  >
     <li class="sidenav-nav-item w-100" *ngFor="let data of navData">
-      <a class="sidenav-nav-link d-flex align-items-center text-decoration-none" [routerLink]="[data.routerLink]"
-        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *ngxPermissionsOnly="data.role">
-        <img class="sidenav-link-icon text-center d-flex justify-content-center text-light" *ngIf="data.img"
-          [src]="data.img" alt="" />
-        <span class="sidenav-link-text text-light opacity-75 ms-3" *ngIf="collapsed">{{ data.label }}</span>
+      <a
+        class="sidenav-nav-link d-flex align-items-center text-decoration-none"
+        [routerLink]="[data.routerLink]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngxPermissionsOnly="data.role"
+      >
+        <img
+          class="sidenav-link-icon text-center d-flex justify-content-center text-light"
+          *ngIf="data.img"
+          [src]="data.img"
+          alt=""
+        />
+        <span
+          class="sidenav-link-text text-light opacity-75 ms-3"
+          *ngIf="collapsed"
+          >{{ data.label }}</span
+        >
       </a>
     </li>
   </ul>
 </div>
 
-<div class="main-body-wrap px-5" [ngClass]="collapsed ? 'main-body-wrap-collapsed' : ''">
-  <header class="header d-flex align-items-center position-fixed top-0 end-0 bg-light"
-    [ngClass]="collapsed ? 'full-header' : ''">
+<div
+  class="main-body-wrap px-5"
+  [ngClass]="collapsed ? 'main-body-wrap-collapsed' : ''"
+>
+  <header
+    class="header d-flex align-items-center position-fixed top-0 end-0 bg-light"
+    [ngClass]="collapsed ? 'full-header' : ''"
+  >
     <div class="d-flex justify-content-between align-items-center w-100 px-3">
       <div>
-        <button class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
-          (click)="toggleCollapse()">
+        <button
+          class="btn-closed d-flex justify-content-center align-items-center ms-5 bg-transparent"
+          (click)="toggleCollapse()"
+        >
           <!-- <i class="bi bi-list-nested text-black fs-4"></i> -->
-          <img src="../../../../assets/images/Mediamodifier-Design.svg" height="22px" alt="ICON" />
+          <img
+            src="../../../../assets/images/Mediamodifier-Design.svg"
+            height="22px"
+            alt="ICON"
+          />
         </button>
       </div>
-      <div class="dropdown-center d-flex align-items-center border-0 bg-transparent me-5">
-        <a class="align-items-center d-flex dropdown-toggle gap-1" role="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          <i class="bi bi-person-circle fs-5 px-1"></i>
+      <div
+        class="dropdown-center d-flex align-items-center border-0 bg-transparent me-5"
+      >
+        <a
+          class="align-items-center d-flex dropdown-toggle gap-1"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            *ngIf="profileImage; else defaultIcon"
+            [src]="profileImage"
+            height="22px"
+            alt="ICON"
+            class="rounded-5"
+          />
+          <ng-template #defaultIcon>
+            <i class="bi bi-person-circle fs-5 px-1"></i>
+          </ng-template>
           <span>{{ loginUserName }}</span>
         </a>
 
         <span class="dropdown-menu border-0 text-center">
-          <a class="dropdown-item" role="button" (click)="openModal()">Logout</a>
+          <a class="dropdown-item" role="button" (click)="openModal()"
+            >Logout</a
+          >
         </span>
       </div>
     </div>
@@ -47,6 +104,6 @@
   </footer>
 </div>
 
-<app-modal #logoutModal title="Logout" [onSubmit]='onLogout' variant="logout">
+<app-modal #logoutModal title="Logout" [onSubmit]="onLogout" variant="logout">
   <p>Are you sure you want to logout ?</p>
 </app-modal>

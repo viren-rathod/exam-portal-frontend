@@ -14,6 +14,7 @@ export class SidenavComponent implements OnInit {
   collapsed = true;
   screenWidth = 0;
   loginUserName: string | undefined;
+  profileImage?: string | null;
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
@@ -27,6 +28,7 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     let loginData = this.loginService.getUserDetailsFromLocalStorage();
     this.loginUserName = loginData?.username;
+    this.profileImage = loginData?.profile_image;
   }
 
   onLogout = () => {
