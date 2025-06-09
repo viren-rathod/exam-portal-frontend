@@ -27,6 +27,7 @@
     "ng-angular-popup": "^0.4.7",
     "ngx-permissions": "^16.0.1",
     "rxjs": "~7.8.0",
+    "serve": "^14.2.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
