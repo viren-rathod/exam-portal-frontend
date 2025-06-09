@@ -5,6 +5,7 @@ import {Roles} from 'src/app/shared/enums/roles.enum';
 import {CurrentUser, UserLoginRequest} from 'src/app/shared/models/auth.model';
 import {LoginService} from 'src/app/shared/services/auth/login.service';
 import {ToastService} from "../../shared/services/toast/toast.service";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ import {ToastService} from "../../shared/services/toast/toast.service";
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  googleLoginUrl = `${environment.baseUrl}/oauth2/authorization/google`;
 
   ngOnInit(): void {
     if (this.loginService.getTokenFromLocalStorage() != null) {
