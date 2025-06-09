@@ -7,6 +7,8 @@ import {RegisterComponent} from './modules/register/register.component';
 import {SidenavComponent} from './core/layout/sidenav/sidenav.component';
 import {Roles} from './shared/enums/roles.enum';
 import {ngxPermissionsGuard} from 'ngx-permissions';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { LoginSuccessComponent } from './modules/login-success/login-success.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,9 @@ const routes: Routes = [
     ]
 
   },
+  { path: 'login-success', component: LoginSuccessComponent },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: '/not-found' },
 ];
 
 @NgModule({

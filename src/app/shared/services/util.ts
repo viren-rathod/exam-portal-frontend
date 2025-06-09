@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:9191';
-// const BASE_URL = 'http://192.168.1.9:9191'
+import { environment } from 'src/environments/environment';
 
+const BASE_URL = environment.baseUrl;
 export default BASE_URL;

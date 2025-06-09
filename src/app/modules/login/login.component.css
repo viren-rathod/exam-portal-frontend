@@ -77,3 +77,19 @@ button[disabled] {
     height: auto;
   }
 }
+
+.google-login a {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /* border: 1px solid var(--primary-blue); */
+  border: 1px solid #ccc;
+}
+
+.google-login img {
+  margin-right: 8px; 
+}

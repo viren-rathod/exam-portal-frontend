@@ -14,6 +14,7 @@ import {NgxPermissionsModule} from 'ngx-permissions';
 import {SharedModule} from './shared/shared.module';
 import {ErrorHandlerInterceptor} from "./shared/interceptors/error.handler.interceptor";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginSuccessComponent } from './modules/login-success/login-success.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     LoginComponent,
     SidenavComponent,
+    LoginSuccessComponent,
   ],
   imports: [
     BrowserModule,

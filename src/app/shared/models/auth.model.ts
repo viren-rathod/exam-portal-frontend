@@ -4,6 +4,7 @@ export interface User {
   id: number;
   username: string;
   email: string;
+  profile_image?: string | null;
   roles: Array<string>;
 }
 
@@ -12,7 +13,7 @@ export interface UserRegistrationRequest {
   email: string;
   password: string;
 }
-export interface UserRegistrationResponse extends BaseResponse { }
+export interface UserRegistrationResponse extends BaseResponse {}
 
 export interface UserLoginRequest {
   usernameOrEmail: string;
