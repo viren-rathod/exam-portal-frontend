@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import BASE_URL from '../../../../shared/services/util';
+import { BaseResponse } from '../../../../shared/models/base-response.model';
 
 interface ExamCandidate {
   candidateId: number;
@@ -15,6 +16,10 @@ interface ExamCandidate {
   totalQuestions: number | null;
   examStartTime: string | null;
   examEndTime: string | null;
+}
+
+interface ExamCandidateResponse extends BaseResponse {
+  data: ExamCandidate[];
 }
 
 @Component({
@@ -41,7 +46,7 @@ export class ExamCandidatesComponent implements OnInit {
 
   loadCandidates(): void {
     this.isLoading = true;
-    this.http.get<any>(`${BASE_URL}/api/exam/${this.examId}/candidates`).subscribe({
+    this.http.get<ExamCandidateResponse>(`${BASE_URL}/api/exam/${this.examId}/candidates`).subscribe({
       next: (res) => {
         this.candidates = res?.data || [];
         this.isLoading = false;

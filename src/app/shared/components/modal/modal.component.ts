@@ -1,5 +1,5 @@
 // modal.component.ts
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, TemplateRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,7 +12,7 @@ export class ModalComponent {
   @Input() variant: 'primary' | 'success' | 'danger' | 'logout' = 'primary';
   @Input() onSubmit?: () => void;
 
-  @ViewChild('content') modalContent!: any;
+  @ViewChild('content') modalContent!: TemplateRef<unknown>;
   private modalRef?: NgbModalRef;
 
   constructor(private modalService: NgbModal) {}
