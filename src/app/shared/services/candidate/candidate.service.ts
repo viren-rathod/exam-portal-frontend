@@ -21,4 +21,8 @@ export class CandidateService {
   public getAllCandidates(): Observable<CandidateResponse> {
     return this.http.get<CandidateResponse>(`${BASE_URL}/api/user/`);
   }
+
+  public addCandidate(data: any): Observable<any> {
+    return this.http.post<any>(`${BASE_URL}/api/user`, data);
+  }
 }

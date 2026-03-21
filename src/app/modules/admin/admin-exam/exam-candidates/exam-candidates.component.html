@@ -1,0 +1,64 @@
+<div class="card rounded-0 border-0">
+  <div class="card-head">
+    <div class="d-flex exams justify-content-between align-items-center p-3">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-outline-secondary btn-sm" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i> Back
+        </button>
+        <div class="title fs-5 fw-bold">Exam Candidates</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="p-0 m-0" />
+  <div class="card-body z-0">
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Table -->
+    <div *ngIf="!isLoading && !errorMessage">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"><span class="ms-3">Username</span></th>
+            <th scope="col">Email</th>
+            <th scope="col">Enrollment No.</th>
+            <th scope="col">College</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Status</th>
+            <th scope="col">Score</th>
+            <th scope="col">Percentage</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="candidates.length === 0">
+          <tr>
+            <td class="text-center" colspan="8">No candidates found for this exam</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let c of candidates">
+            <td class="pt-3 ps-4">{{ c.username }}</td>
+            <td class="pt-3">{{ c.email }}</td>
+            <td class="pt-3">{{ c.enrollmentNumber }}</td>
+            <td class="pt-3">{{ c.collegeName }}</td>
+            <td class="pt-3">{{ c.contactNumber }}</td>
+            <td class="pt-3">
+              <span [ngClass]="getStatusClass(c.status)">{{ c.status }}</span>
+            </td>
+            <td class="pt-3 fw-bold">{{ getScoreDisplay(c) }}</td>
+            <td class="pt-3 fw-bold">{{ getPercentage(c) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
