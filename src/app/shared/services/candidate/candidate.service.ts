@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CandidateDataRequest, CandidateResponse, CandidateResponsePaginated } from '../../models/api/candidate.model';
+import { Candidate, CandidateDataRequest, CandidateResponse, CandidateResponsePaginated } from '../../models/api/candidate.model';
 import { Observable } from 'rxjs';
 import BASE_URL from '../util';
 
@@ -20,5 +20,9 @@ export class CandidateService {
 
   public getAllCandidates(): Observable<CandidateResponse> {
     return this.http.get<CandidateResponse>(`${BASE_URL}/api/user/`);
+  }
+
+  public addCandidate(data: Candidate): Observable<CandidateResponse> {
+    return this.http.post<CandidateResponse>(`${BASE_URL}/api/user`, data);
   }
 }

@@ -1,0 +1,184 @@
+<div class="exam-container" *ngIf="!isFinished">
+  <!-- Header with timer -->
+  <header class="exam-header">
+    <div class="exam-title">
+      <i class="bi bi-journal-text"></i>
+      <h4>{{ examTitle }}</h4>
+    </div>
+    <div class="exam-timer" [ngClass]="timerClass">
+      <i class="bi bi-clock"></i>
+      <span class="timer-value">{{ timerDisplay }}</span>
+    </div>
+    <div class="exam-actions-header">
+      <button class="btn btn-outline-danger btn-sm" (click)="confirmFinish()" [disabled]="isSubmitting">
+        <i class="bi bi-check2-circle"></i> Finish Exam
+      </button>
+    </div>
+  </header>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3">Loading exam questions...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="errorMessage && !isLoading" class="error-container">
+    <div class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="exam-body" *ngIf="!isLoading && !errorMessage">
+    <div class="question-section">
+      <!-- Question card -->
+      <div class="question-card" *ngIf="currentQuestion">
+        <div class="question-header">
+          <span class="question-number">Question {{ currentIndex + 1 }} of {{ questions.length }}</span>
+        </div>
+        <div class="question-content">
+          <h5 class="question-title">{{ currentQuestion.title }}</h5>
+          <p class="question-description" *ngIf="currentQuestion.description">{{ currentQuestion.description }}</p>
+        </div>
+        <div class="options-list">
+          <div
+            *ngFor="let option of currentQuestion.options; let i = index"
+            class="option-item"
+            [ngClass]="{'option-selected': currentQuestion.selectedOptionId === option.id}"
+            (click)="selectOption(option.id)"
+          >
+            <span class="option-marker">{{ ['A', 'B', 'C', 'D', 'E', 'F'][i] }}</span>
+            <span class="option-text">{{ option.title }}</span>
+          </div>
+        </div>
+
+        <!-- Clear answer -->
+        <div class="clear-answer" *ngIf="currentQuestion.selectedOptionId != null">
+          <button class="btn btn-sm btn-outline-secondary" (click)="clearAnswer()">
+            <i class="bi bi-x-circle"></i> Clear Answer
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="question-navigation">
+        <button class="btn btn-outline-primary" (click)="prevQuestion()" [disabled]="currentIndex === 0">
+          <i class="bi bi-arrow-left"></i> Previous
+        </button>
+        <button class="btn btn-outline-primary" (click)="nextQuestion()" [disabled]="currentIndex === questions.length - 1">
+          Next <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar: Question Palette -->
+    <div class="palette-section">
+      <div class="palette-card">
+        <h6 class="palette-title">Question Palette</h6>
+        <div class="palette-legend">
+          <span class="legend-item"><span class="legend-dot answered"></span> Answered</span>
+          <span class="legend-item"><span class="legend-dot unanswered"></span> Not Answered</span>
+          <span class="legend-item"><span class="legend-dot current"></span> Current</span>
+        </div>
+        <div class="palette-grid">
+          <button
+            *ngFor="let q of questions; let i = index"
+            class="palette-btn"
+            [ngClass]="{
+              'palette-current': i === currentIndex,
+              'palette-answered': q.selectedOptionId != null && i !== currentIndex,
+              'palette-unanswered': q.selectedOptionId == null && i !== currentIndex
+            }"
+            (click)="goToQuestion(i)"
+          >
+            {{ i + 1 }}
+          </button>
+        </div>
+        <div class="palette-stats">
+          <div class="stat-item">
+            <span class="stat-value text-success">{{ answeredCount }}</span>
+            <span class="stat-label">Answered</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value text-secondary">{{ unansweredCount }}</span>
+            <span class="stat-label">Unanswered</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value text-primary">{{ questions.length }}</span>
+            <span class="stat-label">Total</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submitting overlay -->
+  <div class="submitting-overlay" *ngIf="isSubmitting">
+    <div class="spinner-border text-light" role="status"></div>
+    <p class="text-light mt-3">Submitting your exam...</p>
+  </div>
+
+  <!-- Finish confirmation modal -->
+  <div class="confirm-overlay" *ngIf="showFinishConfirm">
+    <div class="confirm-dialog">
+      <h5>Finish Exam?</h5>
+      <p *ngIf="unansweredCount > 0" class="text-danger">
+        <i class="bi bi-exclamation-triangle"></i>
+        You have <strong>{{ unansweredCount }}</strong> unanswered question(s).
+      </p>
+      <p *ngIf="unansweredCount === 0" class="text-success">
+        <i class="bi bi-check-circle"></i> All questions have been answered!
+      </p>
+      <p>Are you sure you want to submit your exam?</p>
+      <div class="confirm-actions">
+        <button class="btn btn-outline-secondary" (click)="cancelFinish()">Cancel</button>
+        <button class="btn btn-danger" (click)="finishExam()">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Result Screen -->
+<div class="result-container" *ngIf="isFinished && examResult">
+  <div class="result-card">
+    <div class="result-icon">
+      <i class="bi bi-trophy-fill"></i>
+    </div>
+    <h3>Exam Completed!</h3>
+    <h5 class="text-muted">{{ examResult.examTitle }}</h5>
+
+    <div class="result-stats">
+      <div class="result-stat-item">
+        <span class="result-stat-value">{{ examResult.totalQuestions }}</span>
+        <span class="result-stat-label">Total Questions</span>
+      </div>
+      <div class="result-stat-item">
+        <span class="result-stat-value text-success">{{ examResult.correctAnswers }}</span>
+        <span class="result-stat-label">Correct Answers</span>
+      </div>
+      <div class="result-stat-item">
+        <span class="result-stat-value text-primary">{{ examResult.scoredMarks }} / {{ examResult.totalMarks }}</span>
+        <span class="result-stat-label">Score</span>
+      </div>
+    </div>
+
+    <div class="result-percentage">
+      <div class="progress" style="height: 24px;">
+        <div class="progress-bar bg-success" role="progressbar"
+          [style.width.%]="(examResult.scoredMarks / examResult.totalMarks) * 100"
+          [attr.aria-valuenow]="examResult.scoredMarks"
+          aria-valuemin="0"
+          [attr.aria-valuemax]="examResult.totalMarks">
+          {{ ((examResult.scoredMarks / examResult.totalMarks) * 100) | number:'1.0-0' }}%
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-4" (click)="closeWindow()">
+      <i class="bi bi-x-circle"></i> Close Window
+    </button>
+  </div>
+</div>

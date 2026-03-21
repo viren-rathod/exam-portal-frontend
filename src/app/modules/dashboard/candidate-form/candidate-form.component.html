@@ -1,0 +1,68 @@
+<app-modal #candidateModal title="Candidate Registration" [onSubmit]="onSubmitForm" variant="primary">
+  <form [formGroup]="candidateForm" class="candidate-form">
+    <div *ngIf="errorMessage" class="alert alert-danger py-2 mb-3">
+      {{ errorMessage }}
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="email" class="form-label fw-medium">Email <span class="text-danger">*</span></label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter email">
+        <div *ngIf="candidateForm.get('email')?.touched && candidateForm.get('email')?.invalid" class="text-danger small mt-1">
+          Valid email is required.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="contactNumber" class="form-label fw-medium">Contact Number <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber" placeholder="10-digit number">
+        <div *ngIf="candidateForm.get('contactNumber')?.touched && candidateForm.get('contactNumber')?.invalid" class="text-danger small mt-1">
+          Valid 10-digit number is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="enrollmentNumber" class="form-label fw-medium">Enrollment Number <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="enrollmentNumber" formControlName="enrollmentNumber" placeholder="Enter enrollment number">
+        <div *ngIf="candidateForm.get('enrollmentNumber')?.touched && candidateForm.get('enrollmentNumber')?.invalid" class="text-danger small mt-1">
+          Enrollment number is required.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="collegeId" class="form-label fw-medium">College <span class="text-danger">*</span></label>
+        <select class="form-select" id="collegeId" formControlName="collegeId">
+          <option value="" disabled>Select College</option>
+          <option *ngFor="let college of colleges" [value]="college.id">{{ college.name }}</option>
+        </select>
+        <div *ngIf="candidateForm.get('collegeId')?.touched && candidateForm.get('collegeId')?.invalid" class="text-danger small mt-1">
+          Please select a college.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="sscPercentage" class="form-label fw-medium">SSC % <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="sscPercentage" formControlName="sscPercentage" placeholder="0-100">
+        <div *ngIf="candidateForm.get('sscPercentage')?.touched && candidateForm.get('sscPercentage')?.invalid" class="text-danger small mt-1">
+          Valid percentage (0-100) required.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="hscPercentage" class="form-label fw-medium">HSC % <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="hscPercentage" formControlName="hscPercentage" placeholder="0-100">
+        <div *ngIf="candidateForm.get('hscPercentage')?.touched && candidateForm.get('hscPercentage')?.invalid" class="text-danger small mt-1">
+          Valid percentage (0-100) required.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="cgpa" class="form-label fw-medium">CGPA <span class="text-danger">*</span></label>
+        <input type="number" class="form-control" id="cgpa" formControlName="cgpa" placeholder="0-10" step="0.1">
+        <div *ngIf="candidateForm.get('cgpa')?.touched && candidateForm.get('cgpa')?.invalid" class="text-danger small mt-1">
+          Valid CGPA (0-10) required.
+        </div>
+      </div>
+    </div>
+  </form>
+</app-modal>

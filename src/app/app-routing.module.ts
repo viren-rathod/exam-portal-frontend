@@ -59,6 +59,11 @@ const routes: Routes = [
     ]
 
   },
+  {
+    path: 'exam-portal/exam/:examId',
+    canActivate: [authGuard],
+    loadChildren: () => import('./modules/exam-window/exam-window.module').then(m => m.ExamWindowModule)
+  },
   { path: 'login-success', component: LoginSuccessComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },

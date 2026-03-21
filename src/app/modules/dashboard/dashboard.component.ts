@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from "../../shared/services/auth/login.service";
 import {NgxPermissionsService} from "ngx-permissions";
@@ -7,6 +7,8 @@ import {ActiveExam, GetActiveExamsRequest} from "../../shared/models/api/exam.mo
 import {Status} from "../../shared/enums/status.enum";
 import {Roles} from "../../shared/enums/roles.enum";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
+import {CandidateFormComponent} from "./candidate-form/candidate-form.component";
+import {StudentExamService} from "../../shared/services/student-exam/student-exam.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +16,8 @@ import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('candidateForm') candidateForm?: CandidateFormComponent;
+
   count: number | null = null;
   isCandidateActive: boolean = false;
   listOfData: ActiveExam[] = [];
@@ -39,6 +43,7 @@ export class DashboardComponent implements OnInit {
     private permissionService: NgxPermissionsService,
     private router: Router,
     private dashboardService: DashboardService,
+    private studentExamService: StudentExamService,
   ) {
   }
 
@@ -70,7 +75,6 @@ export class DashboardComponent implements OnInit {
     if (lastPage < this.getActiveExamsData.page) {
       this.getActiveExamsData.page = lastPage;
     }
-    // this.storage.store('status', true);
     this.status = [];
     this.dashboardService.getActiveExams(data)
       .subscribe({
@@ -82,7 +86,7 @@ export class DashboardComponent implements OnInit {
               this.isCandidateActive = exam.candidateStatus == Status.Active;
               return !this.isCandidateActive;
             })
-            this.listOfData.forEach(item => this.status.push(item.candidateStatus));
+            this.listOfData.forEach(item => this.status.push(item.candidateStatus || 'NO_CANDIDATE'));
           }
         },
         error: (error) => console.log(error.error.message),
@@ -113,23 +117,91 @@ export class DashboardComponent implements OnInit {
    * @param event
    */
   handleSort(event: Event) {
-    // let sortField: string = 'id';
-    // let sortOrder: string = 'asc';
-    // if (this.sort > 2) {
-    //   this.sort = 1;
-    //   sortField = 'id';
-    //   sortOrder = 'asc';
-    // } else {
-    //   this.sort += 1;
-    //   sortField = (event.currentTarget as HTMLInputElement).id;
-    //   sortOrder = this.sort == 2 ? 'dsc' : 'asc';
-    // }
+  }
 
-    // this.getExamData = {
-    //   ...this.getExamData,
-    //   sortField: sortField,
-    //   sortOrder: sortOrder
-    // };
-    // this.getExam(this.getExamData);
+  // ===== USER ACTIONS =====
+
+  /**
+   * When USER clicks "Start" on an exam with NOT_ATTENDED status
+   * Opens candidate registration form
+   */
+  onStartExam(exam: ActiveExam, needsForm: boolean = true): void {
+    if (needsForm) {
+      if (this.candidateForm) {
+        this.candidateForm.open(exam.id);
+      }
+    } else {
+      // Candidate exists, but exam not started
+      this.studentExamService.startExam(exam.id).subscribe({
+        next: () => {
+          this.openExamWindow(exam.id);
+          this.getActiveExams(this.getActiveExamsData);
+        },
+        error: (err) => {
+          console.error('Failed to start exam:', err);
+          this.openExamWindow(exam.id);
+        }
+      });
+    }
+  }
+
+  /**
+   * Called after candidate form is successfully submitted
+   * Starts the exam and opens the popup window
+   */
+  onCandidateFormSubmitted(examId: number): void {
+    this.studentExamService.startExam(examId).subscribe({
+      next: () => {
+        this.openExamWindow(examId);
+        this.getActiveExams(this.getActiveExamsData);
+      },
+      error: (err) => {
+        console.error('Failed to start exam:', err);
+        // Still try to open the window — the exam might have already started
+        this.openExamWindow(examId);
+      }
+    });
+  }
+
+  /**
+   * When USER clicks "Continue" on an exam with ATTENDING status
+   * Re-opens the exam popup window (resumes from where they left)
+   */
+  onContinueExam(exam: ActiveExam): void {
+    this.openExamWindow(exam.id);
+  }
+
+  /**
+   * Opens the exam in a secure popup window
+   */
+  openExamWindow(examId: number): void {
+    const width = Math.min(screen.width, 1200);
+    const height = Math.min(screen.height, 800);
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+
+    const features = [
+      `width=${width}`,
+      `height=${height}`,
+      `left=${left}`,
+      `top=${top}`,
+      'menubar=no',
+      'toolbar=no',
+      'location=no',
+      'status=no',
+      'scrollbars=yes',
+      'resizable=yes'
+    ].join(',');
+
+    window.open(`/exam-portal/exam/${examId}`, `exam_${examId}`, features);
+  }
+
+  // ===== ADMIN ACTIONS =====
+
+  /**
+   * When ADMIN clicks "View Candidates" — navigates to exam detail
+   */
+  viewCandidates(examId: number): void {
+    this.router.navigate(['/exam-portal/admin/exam', examId, 'candidates']);
   }
 }
